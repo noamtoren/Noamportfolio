@@ -1,8 +1,8 @@
 import svgPaths from "./svg-ps7w7kajkw";
-import imgDepth6Frame1 from "figma:asset/5aac9895856382ee3143853addb5ed6cfa4d0672.png";
-import imgDepth6Frame2 from "figma:asset/ac0697f18de9327cf68ebd5054ef7f1539d79a13.png";
-import imgDepth6Frame3 from "figma:asset/b67da1da081846643aaaa2160038b366d68d1c29.png";
-import imgDepth6Frame4 from "figma:asset/1f0acd2696ed75de9a451681fba7ad778dfd97e2.png";
+import imgDepth6Frame1 from "../assets/5aac9895856382ee3143853addb5ed6cfa4d0672.png";
+import imgDepth6Frame2 from "../assets/ac0697f18de9327cf68ebd5054ef7f1539d79a13.png";
+import imgDepth6Frame3 from "../assets/b67da1da081846643aaaa2160038b366d68d1c29.png";
+import imgDepth6Frame4 from "../assets/1f0acd2696ed75de9a451681fba7ad778dfd97e2.png";
 
 function CoreTrafficLightsBigSur({ className }: { className?: string }) {
   return (

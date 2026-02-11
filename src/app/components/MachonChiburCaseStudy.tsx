@@ -1,21 +1,21 @@
 import { ArrowLeft, Check, FileText, Shield, Scale } from 'lucide-react';
 import { Footer } from '@/app/components/Footer';
 import { ImageWithFallback } from '@/app/components/figma/ImageWithFallback';
-import intakeStartImg from 'figma:asset/4da5aa04250589ceabba90f46d9d5eb35823d09f.png';
-import intakeMiddleImg from 'figma:asset/6a70cc2ac4adf411579c789cc467ade4e7c03c01.png';
-import intakeSuccessImg from 'figma:asset/f7a46f167b7078a4f8e6542c5df195f776773b14.png';
-import mainDashboardImg from 'figma:asset/555012e72bdc0e1c9e229b999b8d53902c28ca93.png';
-import heroLaptopImg from 'figma:asset/7e4406feba492b743bbe79e43d5ab8ec1d25e103.png';
-import knowYourRightsImg from 'figma:asset/4ded4f6621f3769bf84821201029aba0cbba4079.png';
-import welfareOptionsImg from 'figma:asset/f59877637369cdf4d6c8fac6c4b7b6af861914ce.png';
-import commonQuestionsImg from 'figma:asset/f9cf9b0820aa088cbf068681c0406636887f6e2d.png';
-import questionnaireImg from 'figma:asset/4539e4c1b0630345cbee893c45a400876abb8df6.png';
-import resultsImg from 'figma:asset/f15bf7ba406af1bdb77ebb7675191e3fc71005ee.png';
-import emotionalToolsImg from 'figma:asset/7d284a43775e44a2d5cb51e19a8cf579e67c34fa.png';
-import chatImg from 'figma:asset/f47a1bedc64351fab2729de6136a0a43e262fd14.png';
-import expertSelectionImg from 'figma:asset/b8f082375407022bd94b7f0a8dbddb6952af62f5.png';
-import expertMatchImg from 'figma:asset/bf54ac24176d6a2c0b8550062a8b79bbcd24afeb.png';
-import expertChatImg from 'figma:asset/63a1e0bc44b3cfb11631655d7fd5e9cd120ed9eb.png';
+import intakeStartImg from '../../assets/4da5aa04250589ceabba90f46d9d5eb35823d09f.png';
+import intakeMiddleImg from '../../assets/6a70cc2ac4adf411579c789cc467ade4e7c03c01.png';
+import intakeSuccessImg from '../../assets/f7a46f167b7078a4f8e6542c5df195f776773b14.png';
+import mainDashboardImg from '../../assets/555012e72bdc0e1c9e229b999b8d53902c28ca93.png';
+import heroLaptopImg from '../../assets/7e4406feba492b743bbe79e43d5ab8ec1d25e103.png';
+import knowYourRightsImg from '../../assets/4ded4f6621f3769bf84821201029aba0cbba4079.png';
+import welfareOptionsImg from '../../assets/f59877637369cdf4d6c8fac6c4b7b6af861914ce.png';
+import commonQuestionsImg from '../../assets/f9cf9b0820aa088cbf068681c0406636887f6e2d.png';
+import questionnaireImg from '../../assets/4539e4c1b0630345cbee893c45a400876abb8df6.png';
+import resultsImg from '../../assets/f15bf7ba406af1bdb77ebb7675191e3fc71005ee.png';
+import emotionalToolsImg from '../../assets/7d284a43775e44a2d5cb51e19a8cf579e67c34fa.png';
+import chatImg from '../../assets/f47a1bedc64351fab2729de6136a0a43e262fd14.png';
+import expertSelectionImg from '../../assets/b8f082375407022bd94b7f0a8dbddb6952af62f5.png';
+import expertMatchImg from '../../assets/bf54ac24176d6a2c0b8550062a8b79bbcd24afeb.png';
+import expertChatImg from '../../assets/63a1e0bc44b3cfb11631655d7fd5e9cd120ed9eb.png';
 
 // Improved wrapper that uses a ref to scale content
 import { useEffect, useRef, useState } from 'react';

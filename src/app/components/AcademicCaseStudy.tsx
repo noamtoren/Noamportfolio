@@ -1,12 +1,12 @@
 import { ArrowLeft } from 'lucide-react';
 import { Footer } from '@/app/components/Footer';
 import { ImageWithFallback } from '@/app/components/figma/ImageWithFallback';
-import entryScenariosImage from 'figma:asset/8f3d0f7f00dfebcc8a19cae89b91bdfa32bafbeb.png';
-import expertGridImage from 'figma:asset/5aa8c2c4647d1233c789d8f38d54bd734f24d03c.png';
-import expertPlayerImage from 'figma:asset/c6e46aec833b43f6d4425d7cc6a04b6fe9310a8d.png';
-import dashboardImage from 'figma:asset/5f857b4e1c1e4a7d4218a376633531836947dcd7.png';
-import adaptiveToolboxImage from 'figma:asset/9b1f392b4896bf7fb9cf2624c06d952a48814049.png';
-import desktopMockupImage from 'figma:asset/2ce63c0fab5bed905e4a9ef77a72b0e1c015b40b.png';
+import entryScenariosImage from '../../assets/8f3d0f7f00dfebcc8a19cae89b91bdfa32bafbeb.png';
+import expertGridImage from '../../assets/5aa8c2c4647d1233c789d8f38d54bd734f24d03c.png';
+import expertPlayerImage from '../../assets/c6e46aec833b43f6d4425d7cc6a04b6fe9310a8d.png';
+import dashboardImage from '../../assets/5f857b4e1c1e4a7d4218a376633531836947dcd7.png';
+import adaptiveToolboxImage from '../../assets/9b1f392b4896bf7fb9cf2624c06d952a48814049.png';
+import desktopMockupImage from '../../assets/2ce63c0fab5bed905e4a9ef77a72b0e1c015b40b.png';
 
 interface AcademicCaseStudyProps {
   onBack: () => void;

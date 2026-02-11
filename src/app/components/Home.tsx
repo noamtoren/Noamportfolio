@@ -1,10 +1,10 @@
 import { Footer } from '@/app/components/Footer';
 import { ImageWithFallback } from '@/app/components/figma/ImageWithFallback';
-import profileImage from 'figma:asset/99a913ce6253b1dc7d05b1c7995c57d8d1596876.png';
-import bellaMockup from 'figma:asset/f4d14d9769234e371e3b2c43f272901073d360c7.png';
-import supplyNetHero from 'figma:asset/57b61d37a32011c4d800094d142fc794b97687b4.png';
-import deepBreathHero from 'figma:asset/2ce63c0fab5bed905e4a9ef77a72b0e1c015b40b.png';
-import machonChiburHero from 'figma:asset/7e4406feba492b743bbe79e43d5ab8ec1d25e103.png';
+import profileImage from '../../assets/99a913ce6253b1dc7d05b1c7995c57d8d1596876.png';
+import bellaMockup from '../../assets/f4d14d9769234e371e3b2c43f272901073d360c7.png';
+import supplyNetHero from '../../assets/57b61d37a32011c4d800094d142fc794b97687b4.png';
+import deepBreathHero from '../../assets/2ce63c0fab5bed905e4a9ef77a72b0e1c015b40b.png';
+import machonChiburHero from '../../assets/7e4406feba492b743bbe79e43d5ab8ec1d25e103.png';
 
 interface HomeProps {
   onProjectClick?: (projectId: string) => void;

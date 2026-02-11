@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Footer } from '@/app/components/Footer';
-import shelfImage from 'figma:asset/03d57eb367e80d93c04f4eeced97b1e07dd810c3.png';
-import reichmanLogo from 'figma:asset/0eca1c1712117942a77aaf2eac0853d722a8d9db.png';
-import sapirLogo from 'figma:asset/10465119e0965d66c2f44af33ec2c1346d923774.png';
-import israelFlag from 'figma:asset/62542f660fa3bba0da99ce087f58a22bf4518361.png';
+import shelfImage from '../../assets/03d57eb367e80d93c04f4eeced97b1e07dd810c3.png';
+import reichmanLogo from '../../assets/0eca1c1712117942a77aaf2eac0853d722a8d9db.png';
+import sapirLogo from '../../assets/10465119e0965d66c2f44af33ec2c1346d923774.png';
+import israelFlag from '../../assets/62542f660fa3bba0da99ce087f58a22bf4518361.png';
 
 export function About() {
   const [currentTime, setCurrentTime] = useState('');

@@ -3,26 +3,26 @@ import { Footer } from '@/app/components/Footer';
 import { Search } from 'lucide-react';
 
 // Import all images from Figma
-import imgProductDemo41 from "figma:asset/ef7292e727ddf3625d8ba05b5a08271a4b72063e.png";
-import img62639 from "figma:asset/0b636203327e25b90277e746bfc700620c67501c.png";
-import imgProductDemo61 from "figma:asset/ad36effa6289a58ab66047110bd32725dad73f93.png";
-import imgProductDemo81 from "figma:asset/830186151ef07cdc246e219e528d13495cda70bd.png";
-import imgProductDemo51 from "figma:asset/50dce0a13c5dfbdbea42e3b6140cbca93fd6bebf.png";
-import imgProductDemo91 from "figma:asset/f4e91cc7832a156dc237af9011ed057abacd80b6.png";
-import img4445 from "figma:asset/a12ad2dd2bd2f498d23513e1a554fe2a6617c750.png";
-import img62640 from "figma:asset/6309514f13b228416409849673cf837baf1a4e22.png";
-import img202506301420161 from "figma:asset/ae0ab82474fb3c77e11eb3d91c7086696bc766b9.png";
-import img202506301420291 from "figma:asset/b10f90f4bc731b1f8fefb198efa0994417c58026.png";
-import imgProductDemo71 from "figma:asset/e190e8c0eff6cd1440a9e734fc8419f23f963ce5.png";
-import img5556 from "figma:asset/564ed6813df469948618023eab6bc5d3a595bf38.png";
-import imgNewIphone from "figma:asset/5c6d88ea01b09a90ea895fe370aad6d6916ff6ca.png";
-import imgAvatar from "figma:asset/2780e16db1a4a364d3d872737f7fe9563d7abb29.png";
-import imgImage from "figma:asset/9ca412fa840de131974162b09d68033e23a850b5.png";
-import imgShalomItai from "figma:asset/95f48903aba87a3e0a53b55bf6649fe1f317be60.png";
-import imgProgressAnalytics from "figma:asset/2cb7054d18780e63213a6fa94f06e185f63e7fec.png";
-import imgProcessHistory from "figma:asset/9f48da776c98b01005b50a4d39da112c1cbb60e6.png";
-import imgNavLinks from "figma:asset/6dada3ccecbcbefe565d79594340c9ad3e8d92d2.png";
-import imgBlogCard from "figma:asset/62f99cbba99dd732ec7f8436a1fcd198130acb13.png";
+import imgProductDemo41 from "../../assets/ef7292e727ddf3625d8ba05b5a08271a4b72063e.png";
+import img62639 from "../../assets/0b636203327e25b90277e746bfc700620c67501c.png";
+import imgProductDemo61 from "../../assets/ad36effa6289a58ab66047110bd32725dad73f93.png";
+import imgProductDemo81 from "../../assets/830186151ef07cdc246e219e528d13495cda70bd.png";
+import imgProductDemo51 from "../../assets/50dce0a13c5dfbdbea42e3b6140cbca93fd6bebf.png";
+import imgProductDemo91 from "../../assets/f4e91cc7832a156dc237af9011ed057abacd80b6.png";
+import img4445 from "../../assets/a12ad2dd2bd2f498d23513e1a554fe2a6617c750.png";
+import img62640 from "../../assets/6309514f13b228416409849673cf837baf1a4e22.png";
+import img202506301420161 from "../../assets/ae0ab82474fb3c77e11eb3d91c7086696bc766b9.png";
+import img202506301420291 from "../../assets/b10f90f4bc731b1f8fefb198efa0994417c58026.png";
+import imgProductDemo71 from "../../assets/e190e8c0eff6cd1440a9e734fc8419f23f963ce5.png";
+import img5556 from "../../assets/564ed6813df469948618023eab6bc5d3a595bf38.png";
+import imgNewIphone from "../../assets/5c6d88ea01b09a90ea895fe370aad6d6916ff6ca.png";
+import imgAvatar from "../../assets/2780e16db1a4a364d3d872737f7fe9563d7abb29.png";
+import imgImage from "../../assets/9ca412fa840de131974162b09d68033e23a850b5.png";
+import imgShalomItai from "../../assets/95f48903aba87a3e0a53b55bf6649fe1f317be60.png";
+import imgProgressAnalytics from "../../assets/2cb7054d18780e63213a6fa94f06e185f63e7fec.png";
+import imgProcessHistory from "../../assets/9f48da776c98b01005b50a4d39da112c1cbb60e6.png";
+import imgNavLinks from "../../assets/6dada3ccecbcbefe565d79594340c9ad3e8d92d2.png";
+import imgBlogCard from "../../assets/62f99cbba99dd732ec7f8436a1fcd198130acb13.png";
 
 // Base design dimensions - FIXED VIEWPORT
 const BASE_WIDTH = 1440;

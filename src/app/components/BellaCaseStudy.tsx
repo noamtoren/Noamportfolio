@@ -1,18 +1,18 @@
 import { ArrowLeft, Search, User, ShoppingBag } from 'lucide-react';
 import { Footer } from '@/app/components/Footer';
 import { ImageWithFallback } from '@/app/components/figma/ImageWithFallback';
-import heroImage from 'figma:asset/f4d14d9769234e371e3b2c43f272901073d360c7.png';
-import strategyFilterImage from 'figma:asset/3f24ea7874dd37ca8cda54ecaed3080b2a4d8c28.png';
-import strategyNeedsCardsImage from 'figma:asset/2dfd007ccff4a3ab5905a1bc67d5535205ea07e2.png';
-import quizStartImage from 'figma:asset/ef4cb93d4bdaa208f60882e23720c518b7904228.png';
-import quizQuestionImage from 'figma:asset/1458d6abffcc02c19fe235eabf0be0bd373ab73b.png';
-import quizResultImage from 'figma:asset/67a1633c68713005694129658cd90189f7e8a3e9.png';
-import storiesImage from 'figma:asset/c0c0facfa6f14e57ca71a7e8222654a5a77a734e.png';
-import reviewsImage from 'figma:asset/645f031c54e6fcf7dd2fecb04e889118fac43f5c.png';
-import hubMainImage from 'figma:asset/2b35accf6040327f1a4293aad8b40fdd0928d71c.png';
-import hubGuideImage from 'figma:asset/70a34bb10e1f97f29587650c22e9351af6a312ea.png';
-import hubMobileImage from 'figma:asset/6b4d03b54622b096008e4efc8b3e88afcc6eb605.png';
-import newInteractiveImage from 'figma:asset/fa4778ad5b7f683ff5d1d9f18574a3b7d95c4c92.png';
+import heroImage from '../../assets/f4d14d9769234e371e3b2c43f272901073d360c7.png';
+import strategyFilterImage from '../../assets/3f24ea7874dd37ca8cda54ecaed3080b2a4d8c28.png';
+import strategyNeedsCardsImage from '../../assets/2dfd007ccff4a3ab5905a1bc67d5535205ea07e2.png';
+import quizStartImage from '../../assets/ef4cb93d4bdaa208f60882e23720c518b7904228.png';
+import quizQuestionImage from '../../assets/1458d6abffcc02c19fe235eabf0be0bd373ab73b.png';
+import quizResultImage from '../../assets/67a1633c68713005694129658cd90189f7e8a3e9.png';
+import storiesImage from '../../assets/c0c0facfa6f14e57ca71a7e8222654a5a77a734e.png';
+import reviewsImage from '../../assets/645f031c54e6fcf7dd2fecb04e889118fac43f5c.png';
+import hubMainImage from '../../assets/2b35accf6040327f1a4293aad8b40fdd0928d71c.png';
+import hubGuideImage from '../../assets/70a34bb10e1f97f29587650c22e9351af6a312ea.png';
+import hubMobileImage from '../../assets/6b4d03b54622b096008e4efc8b3e88afcc6eb605.png';
+import newInteractiveImage from '../../assets/fa4778ad5b7f683ff5d1d9f18574a3b7d95c4c92.png';
 
 interface BellaCaseStudyProps {
   onBack: () => void;

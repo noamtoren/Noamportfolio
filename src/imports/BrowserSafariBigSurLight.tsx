@@ -1,9 +1,9 @@
 import svgPaths from "./svg-u1znxugp9r";
-import imgImageWithFallback from "figma:asset/277b515b57557e8060ff2f384601f18b925772a6.png";
-import imgImageWithFallback1 from "figma:asset/f8040edb9d4a8b2ab49adb61e7a94659cf9b043b.png";
-import imgImageWithFallback2 from "figma:asset/c3079b572891de1aa34fce00acbc1b5dd6484036.png";
-import imgImage from "figma:asset/d4fb6fc45bb9cee91f0824f972ea989a3c6ddbdb.png";
-import imgBellaLogo from "figma:asset/b9e75f17642c3df6987d2477c1dd73a6047f49da.png";
+import imgImageWithFallback from "../assets/277b515b57557e8060ff2f384601f18b925772a6.png";
+import imgImageWithFallback1 from "../assets/f8040edb9d4a8b2ab49adb61e7a94659cf9b043b.png";
+import imgImageWithFallback2 from "../assets/c3079b572891de1aa34fce00acbc1b5dd6484036.png";
+import imgImage from "../assets/d4fb6fc45bb9cee91f0824f972ea989a3c6ddbdb.png";
+import imgBellaLogo from "../assets/b9e75f17642c3df6987d2477c1dd73a6047f49da.png";
 
 function CoreTrafficLightsBigSur({ className }: { className?: string }) {
   return (
