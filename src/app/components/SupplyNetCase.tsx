@@ -14,180 +14,171 @@ interface SupplyNetCaseProps {
   onBack: () => void;
 }
 
-function StickyTitle({ children }: { children: React.ReactNode }) {
+function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
-    <div className="sticky top-8 z-10 py-6 flex justify-start pointer-events-none">
-      <div className="inline-flex px-4 py-2 bg-white/95 backdrop-blur-md border border-neutral-200 shadow-sm rounded-lg">
-        <p className="text-[10px] md:text-xs font-semibold text-neutral-900 tracking-widest uppercase font-sans">
-          {children}
-        </p>
-      </div>
+    <p className="text-xs md:text-sm text-neutral-400 tracking-wide mb-6">
+      {children}
+    </p>
+  );
+}
+
+function Pillar({
+  label,
+  heading,
+  body,
+  children,
+}: {
+  label: string;
+  heading: string;
+  body: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div>
+      <SectionLabel>{label}</SectionLabel>
+      <h3 className="text-2xl md:text-[28px] font-semibold tracking-tight text-neutral-900 mb-4 leading-[1.2]">
+        {heading}
+      </h3>
+      <p className="text-base md:text-[17px] leading-[1.7] text-neutral-700 max-w-2xl mb-10">
+        {body}
+      </p>
+      {children}
+    </div>
+  );
+}
+
+function ImageFrame({
+  src,
+  alt,
+  className = '',
+}: {
+  src: string;
+  alt: string;
+  className?: string;
+}) {
+  return (
+    <div className={`rounded-xl bg-[#F2F0EC] p-6 md:p-10 flex items-center justify-center ${className}`}>
+      <ImageWithFallback
+        src={src}
+        alt={alt}
+        className="w-full h-auto object-contain rounded-md"
+      />
     </div>
   );
 }
 
 export function SupplyNetCase({ onBack }: SupplyNetCaseProps) {
   return (
-    <div className="absolute inset-0 overflow-auto pb-0 bg-white text-neutral-600 font-sans">
-      {/* Top Navigation */}
-      <div className="px-6 md:px-12 lg:px-24 py-12 max-w-7xl mx-auto">
-        <button
-          onClick={onBack}
-          className="group flex items-center gap-3 text-neutral-500 hover:text-neutral-900 transition-colors"
-        >
-          <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
-          <span className="text-sm font-medium tracking-wide">Back to Home</span>
-        </button>
+    <div className="absolute inset-0 overflow-auto bg-white">
+      {/* Editorial framed container */}
+      <div className="max-w-5xl mx-auto border-x border-neutral-100">
+        {/* Top bar */}
+        <div className="px-6 md:px-16 pt-8 md:pt-12">
+          <button
+            onClick={onBack}
+            className="group inline-flex items-center gap-2 rounded-md border border-neutral-200 px-3 py-1.5 text-xs md:text-[13px] text-neutral-500 hover:text-neutral-900 hover:border-neutral-300 transition-colors"
+          >
+            <ArrowLeft className="w-3.5 h-3.5 transition-transform group-hover:-translate-x-0.5" />
+            <span>Back to home</span>
+          </button>
+        </div>
+
+        {/* Hero block */}
+        <div className="px-6 md:px-16 pt-16 md:pt-24 pb-12 md:pb-16">
+          <h1 className="text-5xl md:text-[64px] font-semibold tracking-tight text-neutral-900 leading-[1.05] mb-5">
+            Supply Net
+          </h1>
+          <p className="text-base md:text-[17px] text-neutral-500">
+            <span>Case Study</span>
+            <span className="mx-2 text-neutral-300">|</span>
+            <span>2025</span>
+          </p>
+        </div>
+
+        <div className="mx-6 md:mx-16 border-t border-neutral-200" />
+
+        {/* Overview */}
+        <section className="px-6 md:px-16 py-16 md:py-20">
+          <SectionLabel>Overview</SectionLabel>
+          <div className="space-y-5 text-base md:text-[17px] leading-[1.7] text-neutral-700 max-w-2xl">
+            <p>
+              Supply Net is a strategic B2B marketplace bridging the gap between developers and suppliers in construction. We designed a transparent ecosystem where developers maximize buying power through collaboration, and suppliers gain equal access to new business opportunities.
+            </p>
+            <p>
+              My role spanned UX/UI design and product strategy — shaping the core flows, visual system, and the collaborative buying mechanics that sit at the heart of the product.
+            </p>
+          </div>
+        </section>
+
+        <div className="mx-6 md:mx-16 border-t border-neutral-200" />
+
+        {/* Hero image */}
+        <section className="px-6 md:px-16 py-16 md:py-20">
+          <ImageFrame src={heroImage} alt="Supply Net Hero" />
+        </section>
+
+        <div className="mx-6 md:mx-16 border-t border-neutral-200" />
+
+        {/* The Challenge */}
+        <section className="px-6 md:px-16 py-16 md:py-20">
+          <SectionLabel>The Challenge</SectionLabel>
+          <h2 className="text-3xl md:text-[40px] font-semibold tracking-tight text-neutral-900 leading-[1.15] mb-6 max-w-2xl">
+            Dismantling procurement monopolies.
+          </h2>
+          <p className="text-base md:text-[17px] leading-[1.7] text-neutral-700 max-w-2xl">
+            In the construction industry, access to suppliers is often restricted by non-transparent pricing. Supply Net empowers developers with corporate-level leverage by digitizing the management of materials, timelines, and the collective demand that historically lived in spreadsheets.
+          </p>
+        </section>
+
+        <div className="mx-6 md:mx-16 border-t border-neutral-200" />
+
+        {/* UX Strategy */}
+        <section className="px-6 md:px-16 py-16 md:py-20">
+          <SectionLabel>UX Strategy</SectionLabel>
+          <h2 className="text-3xl md:text-[40px] font-semibold tracking-tight text-neutral-900 leading-[1.15] mb-16 max-w-2xl">
+            Three pillars that make the product work.
+          </h2>
+
+          <div className="space-y-24 md:space-y-28">
+            {/* Pillar 1 */}
+            <Pillar
+              label="Pillar 01 — Search"
+              heading="Availability-first search engine."
+              body="An advanced module that filters by quantities and delivery dates, providing real-time price comparison and joint-purchase proposals — so buyers find leverage, not just listings."
+            >
+              <div className="space-y-6">
+                <ImageFrame src={searchEmptyState} alt="Search — empty state" />
+                <ImageFrame src={searchResultsState} alt="Search — results" />
+              </div>
+            </Pillar>
+
+            {/* Pillar 2 */}
+            <Pillar
+              label="Pillar 02 — Buying Groups"
+              heading="Collective power through connectivity."
+              body="Developers can initiate or join buying groups to secure bulk pricing and network with other industry professionals. The flow surfaces live groups relevant to the buyer's current material list."
+            >
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <ImageFrame src={buyingGroupState1} alt="Buying groups — search" />
+                <ImageFrame src={buyingGroupState2} alt="Buying groups — results" />
+                <ImageFrame src={buyingGroupState3} alt="Buying groups — details" />
+              </div>
+            </Pillar>
+
+            {/* Pillar 3 */}
+            <Pillar
+              label="Pillar 03 — Automation"
+              heading="Automated material lifecycle."
+              body="Static BOQ files become dynamic management tools with automated categorization and smart order reminders — turning a spreadsheet chore into a decision-making surface."
+            >
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <ImageFrame src={fileAnalysis1} alt="File analysis — project setup" />
+                <ImageFrame src={fileAnalysis2} alt="File analysis — data entry" />
+              </div>
+            </Pillar>
+          </div>
+        </section>
       </div>
-
-      {/* Hero Section */}
-      <section className="px-6 md:px-12 lg:px-24 pb-32 max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24 items-center">
-          <div className="lg:col-span-5 flex flex-col justify-center lg:translate-y-16">
-            <p className="text-xs font-semibold text-neutral-400 mb-3 tracking-widest uppercase">
-              Startup
-            </p>
-            <h1 className="font-display text-3xl md:text-4xl font-normal text-neutral-900 mb-4 leading-tight">
-              SUPPLY NET
-            </h1>
-            <p className="text-base md:text-lg text-neutral-600 font-light leading-relaxed mb-6">
-              A strategic B2B marketplace bridging the gap between developers and suppliers. We built a transparent ecosystem where developers maximize buying power through collaboration, and suppliers gain equal access to new business opportunities.
-            </p>
-            <p className="text-xs md:text-sm text-neutral-400 font-light tracking-wide">
-              UX/UI Design & Strategy | 2025
-            </p>
-          </div>
-          <div className="lg:col-span-7 translate-y-16 lg:translate-x-8">
-             <div className="w-full lg:scale-105 relative flex items-center justify-center">
-                <ImageWithFallback 
-                  src={heroImage} 
-                  alt="Supply Net Hero" 
-                  className="w-full h-auto object-contain"
-                />
-             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Challenge Section */}
-      <section className="px-6 md:px-12 lg:px-24 max-w-7xl mx-auto relative pb-32 border-t border-neutral-100">
-        <StickyTitle>The Challenge</StickyTitle>
-        <div className="max-w-3xl pt-12">
-            <h2 className="font-display text-2xl md:text-3xl font-normal text-neutral-900 mb-4 leading-tight">Dismantling Procurement Monopolies</h2>
-            <p className="text-base md:text-lg text-neutral-600 leading-relaxed font-light">
-                In the construction industry, access to suppliers is often restricted by non-transparent pricing. We empowered developers with corporate-level leverage by digitizing the management of materials and timelines.
-            </p>
-        </div>
-      </section>
-
-      {/* UX Strategy Section */}
-      <section className="px-6 md:px-12 lg:px-24 max-w-7xl mx-auto relative pb-32 border-t border-neutral-100">
-         <StickyTitle>UX Strategy</StickyTitle>
-         
-         <div className="max-w-6xl mx-auto pt-12">
-            {/* Pillar 1: Smart Search & Comparison */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24 items-center mb-32 border-b border-neutral-100 pb-24 last:border-0 last:pb-0">
-                <div className="lg:col-span-5">
-                    <h3 className="font-display text-2xl md:text-3xl font-normal text-neutral-900 mb-4">Availability-First Search Engine</h3>
-                    <p className="text-base text-neutral-600 font-light leading-relaxed">
-                        An advanced module filtering by quantities and delivery dates, providing real-time price comparison and joint-purchase proposals.
-                    </p>
-                </div>
-                <div className="lg:col-span-7">
-                     <div className="relative w-full py-8">
-                         {/* Image 1: Smaller, offset left/top */}
-                         <div className="w-[70%] relative z-0">
-                             <ImageWithFallback 
-                               src={searchEmptyState}
-                               alt="Search Interface - Empty State" 
-                               className="w-full h-auto block rounded-lg opacity-90"
-                             />
-                         </div>
-                         
-                         {/* Image 2: Larger, overlapping, offset right/bottom */}
-                         <div className="w-[85%] ml-auto -mt-[20%] relative z-10">
-                             <ImageWithFallback 
-                               src={searchResultsState}
-                               alt="Search Interface - Results" 
-                               className="w-full h-auto block rounded-lg"
-                             />
-                         </div>
-                     </div>
-                </div>
-            </div>
-
-            {/* Pillar 2: Buying Groups */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24 items-center mb-32 border-b border-neutral-100 pb-24 last:border-0 last:pb-0">
-                <div className="lg:col-span-7 order-2 lg:order-1">
-                     <div className="relative w-full flex flex-col py-8 -ml-3 md:-ml-6">
-                        {/* State 1: Search - Top Left */}
-                        <div className="w-[80%] relative z-10">
-                            <ImageWithFallback 
-                                src={buyingGroupState1} 
-                                alt="Buying Groups - Search" 
-                                className="w-full h-auto rounded-lg" 
-                            />
-                        </div>
-
-                        {/* State 2: Results - Middle, uniform offset */}
-                        <div className="w-[80%] ml-[10%] -mt-[25%] relative z-20">
-                             <ImageWithFallback 
-                                src={buyingGroupState2} 
-                                alt="Buying Groups - Results List" 
-                                className="w-full h-auto rounded-lg" 
-                            />
-                        </div>
-
-                        {/* State 3: Details - Bottom, uniform offset */}
-                        <div className="w-[80%] ml-[20%] -mt-[25%] relative z-30">
-                             <ImageWithFallback 
-                                src={buyingGroupState3} 
-                                alt="Buying Groups - Group Details" 
-                                className="w-full h-auto rounded-lg" 
-                            />
-                        </div>
-                     </div>
-                </div>
-                <div className="lg:col-span-5 order-1 lg:order-2">
-                    <h3 className="font-display text-2xl md:text-3xl font-normal text-neutral-900 mb-4">Collective Power through Connectivity</h3>
-                    <p className="text-base text-neutral-600 font-light leading-relaxed">
-                        Enables developers to initiate or join buying groups to secure bulk pricing and network with other industry professionals.
-                    </p>
-                </div>
-            </div>
-
-            {/* Pillar 3: Data Intelligence */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24 items-center">
-                <div className="lg:col-span-5">
-                    <h3 className="font-display text-2xl md:text-3xl font-normal text-neutral-900 mb-4">Automated Material Lifecycle</h3>
-                    <p className="text-base text-neutral-600 font-light leading-relaxed">
-                        Transforms static BOQ files into dynamic management tools with automated categorization and smart order reminders.
-                    </p>
-                </div>
-                <div className="lg:col-span-7">
-                     <div className="relative w-full flex flex-col py-8 -ml-3 md:-ml-6">
-                        {/* Image 1: Identification Details - Back/Left */}
-                        <div className="w-[90%] relative z-10">
-                            <ImageWithFallback 
-                                src={fileAnalysis1} 
-                                alt="File Analysis - Project Setup" 
-                                className="w-full h-auto rounded-lg"
-                            />
-                        </div>
-
-                        {/* Image 2: Physical Characteristics - Front/Right overlapping */}
-                        <div className="w-[90%] ml-[10%] -mt-[20%] relative z-20">
-                             <ImageWithFallback 
-                                src={fileAnalysis2} 
-                                alt="File Analysis - Data Entry" 
-                                className="w-full h-auto rounded-lg"
-                            />
-                        </div>
-                     </div>
-                </div>
-            </div>
-         </div>
-      </section>
 
       <Footer />
     </div>
