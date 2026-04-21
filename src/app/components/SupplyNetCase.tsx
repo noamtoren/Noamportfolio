@@ -220,15 +220,15 @@ export function SupplyNetCase({ onBack, onSelectProject }: SupplyNetCaseProps) {
 
           <div className="mt-10 md:grid md:grid-cols-3">
             <div className="py-6 border-b md:py-0 md:pr-8 md:border-b-0 md:border-r border-neutral-200">
-              <p className="text-[48px] font-semibold tracking-[-1.5px] leading-none text-[#1B6FDE]">~40%</p>
+              <p className="text-[48px] font-semibold tracking-[-1.5px] leading-none text-[#131313]">~40%</p>
               <p className="text-[13px] text-[rgba(19,19,19,0.6)] mt-3 leading-[1.5]">Less time spent on sourcing rounds</p>
             </div>
             <div className="py-6 border-b md:py-0 md:px-8 md:border-b-0 md:border-r border-neutral-200">
-              <p className="text-[48px] font-semibold tracking-[-1.5px] leading-none text-[#1B6FDE]">~3×</p>
+              <p className="text-[48px] font-semibold tracking-[-1.5px] leading-none text-[#131313]">~3×</p>
               <p className="text-[13px] text-[rgba(19,19,19,0.6)] mt-3 leading-[1.5]">More competitive suppliers reached per project</p>
             </div>
             <div className="py-6 md:py-0 md:pl-8">
-              <p className="text-[48px] font-semibold tracking-[-1.5px] leading-none text-[#1B6FDE]">70%+</p>
+              <p className="text-[48px] font-semibold tracking-[-1.5px] leading-none text-[#131313]">70%+</p>
               <p className="text-[13px] text-[rgba(19,19,19,0.6)] mt-3 leading-[1.5]">Of high-volume orders routed through joint-buying</p>
             </div>
           </div>
