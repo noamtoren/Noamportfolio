@@ -162,7 +162,7 @@ export function SupplyNetCase({ onBack }: SupplyNetCaseProps) {
               body="Developers can initiate or join buying groups to secure bulk pricing and network with other industry professionals. The flow surfaces live groups relevant to the buyer's current material list."
               closing="Making group buying a first-class object — not a side workflow — turned isolated buyers into a network. Joint orders moved from ad-hoc exceptions to a default step on most material lists, driving meaningfully better unit pricing on high-volume categories and broadening the pool of suppliers each developer could realistically access."
             >
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-3xl mx-auto">
                 <PlainImage src={buyingGroupState1} alt="Buying groups — search" />
                 <PlainImage src={buyingGroupState2} alt="Buying groups — results" />
                 <PlainImage src={buyingGroupState3} alt="Buying groups — details" />
@@ -176,7 +176,7 @@ export function SupplyNetCase({ onBack }: SupplyNetCaseProps) {
               body="Static BOQ files become dynamic management tools with automated categorization and smart order reminders — turning a spreadsheet chore into a decision-making surface."
               closing="Replacing static BOQ files with a dynamic workspace meant procurement managers could see every ongoing commitment at a glance. Automated categorisation removed the most error-prone step of intake, and smart reminders closed the loop between planning and ordering — shifting the workflow from reactive to proactive."
             >
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mx-auto">
                 <PlainImage src={fileAnalysis1} alt="File analysis — project setup" />
                 <PlainImage src={fileAnalysis2} alt="File analysis — data entry" />
               </div>
