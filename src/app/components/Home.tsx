@@ -78,7 +78,7 @@ export function Home({ onProjectClick }: HomeProps) {
           >
             Hey, I'm Noam! A UI/UX designer who
             {' '}<span className="text-[#B8552E] font-semibold">designs and ships</span>
-            {' '}digital products — taking them from first idea to working interface.
+            {' '}digital products, from first idea to working interface.
           </p>
 
           {/* Social links — quiet grey text row, inside hero block */}
