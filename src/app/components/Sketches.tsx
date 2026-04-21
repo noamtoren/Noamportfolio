@@ -35,9 +35,6 @@ export function Sketches() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [containerWidth, setContainerWidth] = useState(BASE_WIDTH);
   const [isTouch, setIsTouch] = useState(false);
-  const [editMode, setEditMode] = useState(false);
-  const [showPositionsModal, setShowPositionsModal] = useState(false);
-  const [positionsJSON, setPositionsJSON] = useState('');
 
   // Minimum scale factor to prevent elements from becoming too small on mobile
   // 0.26 is iPhone SE size (too small). 0.55 ensures legible text and usable tap targets.
@@ -64,39 +61,6 @@ export function Sketches() {
     window.addEventListener('resize', updateContainerWidth);
     return () => window.removeEventListener('resize', updateContainerWidth);
   }, []);
-
-  // Lock/unlock scroll when edit mode changes
-  useEffect(() => {
-    if (editMode) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'auto';
-    }
-    
-    return () => {
-      document.body.style.overflow = 'auto';
-    };
-  }, [editMode]);
-
-  const logPositions = () => {
-    console.log('=== CURRENT POSITIONS (PERCENTAGE FROM CENTER) ===');
-    console.log(JSON.stringify(globalPositions, null, 2));
-    
-    // Convert to pixel coordinates for reference
-    const pixelPositions: Record<string, { x: number; y: number }> = {};
-    Object.entries(globalPositions).forEach(([id, pos]) => {
-      pixelPositions[id] = {
-        x: Math.round((pos.xPercent / 100) * BASE_WIDTH + BASE_WIDTH / 2),
-        y: Math.round((pos.yPercent / 100) * BASE_HEIGHT)
-      };
-    });
-    
-    console.log('=== AS PIXEL COORDINATES (1440px base) ===');
-    console.log(JSON.stringify(pixelPositions, null, 2));
-    
-    setPositionsJSON(JSON.stringify(pixelPositions, null, 2));
-    setShowPositionsModal(true);
-  };
 
   return (
     <div className="absolute inset-0 overflow-auto bg-white">
@@ -426,31 +390,6 @@ export function Sketches() {
       </div>
 
       <Footer />
-
-      {/* Positions Modal */}
-      {showPositionsModal && (
-        <div className="fixed inset-0 bg-black/50 z-[300] flex items-center justify-center">
-          <div className="bg-white p-6 rounded-lg shadow-lg max-w-2xl w-full">
-            <h2 className="font-display text-xl md:text-2xl leading-relaxed font-normal mb-3 text-[#C87137]">
-              מיקומים נוכחיים של האלמנטים
-            </h2>
-            <p className="font-['Inter'] text-sm text-neutral-500 leading-relaxed mb-2">
-              המיקומים של כל אלמנט בפורמט של קואורדינטות פיקסלים (בבסיס 1440 פיקסלים).
-            </p>
-            <textarea
-              className="w-full h-40 bg-gray-100 p-2 rounded-lg mb-3"
-              value={positionsJSON}
-              readOnly
-            />
-            <button
-              className="bg-[#C87137] text-white px-4 py-2 md:px-6 md:py-3 rounded-xl shadow-2xl hover:bg-[#A85C2E] transition-all duration-300 font-['Inter'] font-semibold text-xs md:text-sm"
-              onClick={() => setShowPositionsModal(false)}
-            >
-              סגור
-            </button>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
