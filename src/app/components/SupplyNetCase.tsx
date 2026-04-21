@@ -33,13 +33,13 @@ type PillarImage = { src: string; alt: string };
 
 // Design-system rule: the more images in a row, the smaller each one is.
 const PILLAR_IMAGE_WIDTHS: Record<number, number> = {
-  1: 340,
-  2: 280,
-  3: 220,
-  4: 170,
+  1: 520,
+  2: 400,
+  3: 260,
+  4: 190,
 };
 
-const PILLAR_IMAGE_ROW_HEIGHT = 300;
+const PILLAR_IMAGE_ROW_HEIGHT = 440;
 
 function PillarImages({ images }: { images: PillarImage[] }) {
   const width = PILLAR_IMAGE_WIDTHS[images.length] ?? 220;
