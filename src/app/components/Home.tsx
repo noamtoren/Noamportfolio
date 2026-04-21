@@ -66,7 +66,7 @@ export function Home({ onProjectClick }: HomeProps) {
 
           {/* Role */}
           <p className="text-xs text-neutral-500 mb-8 tracking-normal font-normal">
-            UX designer
+            UX Designer
           </p>
 
           {/* Personal Image */}

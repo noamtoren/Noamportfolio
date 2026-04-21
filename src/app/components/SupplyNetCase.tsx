@@ -44,10 +44,10 @@ export function SupplyNetCase({ onBack }: SupplyNetCaseProps) {
       <section className="px-6 md:px-12 lg:px-24 pb-32 max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24 items-center">
           <div className="lg:col-span-5 flex flex-col justify-center lg:translate-y-16">
-            <p className="text-xs font-semibold text-neutral-400 mb-6 tracking-widest uppercase">
+            <p className="text-xs font-semibold text-neutral-400 mb-3 tracking-widest uppercase">
               Startup
             </p>
-            <h1 className="font-display text-3xl md:text-4xl font-normal text-neutral-900 mb-6 leading-tight">
+            <h1 className="font-display text-3xl md:text-4xl font-normal text-neutral-900 mb-4 leading-tight">
               SUPPLY NET
             </h1>
             <p className="text-base md:text-lg text-neutral-600 font-light leading-relaxed mb-6">
