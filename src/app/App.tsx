@@ -79,7 +79,7 @@ export default function App() {
                   <a
                     key={tab.id}
                     href="mailto:noam.toren12@gmail.com"
-                    className="relative flex items-center justify-center py-2.5 px-4 rounded-md transition-all duration-300 text-neutral-400 hover:text-neutral-200 hover:bg-neutral-800/30"
+                    className="relative flex items-center justify-center py-2.5 px-4 rounded-md bg-neutral-700/60 text-neutral-200 transition-colors duration-300 hover:bg-neutral-700/80 hover:text-white"
                   >
                     <span className="text-sm whitespace-nowrap">
                       {tab.label}
@@ -92,13 +92,13 @@ export default function App() {
                 <button
                   key={tab.id}
                   onClick={() => {
-                    setSelectedProject(null); // Clear project selection when changing tabs
+                    setSelectedProject(null);
                     setActiveTab(tab.id);
                   }}
-                  className={`relative flex items-center justify-center py-2.5 px-4 rounded-md transition-all duration-300 ${
-                    isActive 
-                      ? 'bg-neutral-800/90 text-white shadow-lg' 
-                      : 'text-neutral-400 hover:text-neutral-200 hover:bg-neutral-800/30'
+                  className={`relative flex items-center justify-center py-2.5 px-4 rounded-md transition-colors duration-300 ${
+                    isActive
+                      ? 'text-white'
+                      : 'text-neutral-400 hover:text-neutral-200'
                   }`}
                 >
                   <span className={`text-sm whitespace-nowrap ${isActive ? 'font-medium' : ''}`}>
