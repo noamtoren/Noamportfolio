@@ -68,7 +68,7 @@ export default function App() {
       </main>
 
       {/* Floating Bottom Tab Navigation */}
-      <nav className="fixed bottom-10 left-1/2 -translate-x-1/2 z-50">
+      <nav className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50">
         <div className="bg-neutral-900/95 backdrop-blur-xl rounded-lg px-1 py-1 shadow-[0_14px_40px_-8px_rgba(0,0,0,0.25)] ring-1 ring-black/5">
           <div className="flex items-center gap-0.5">
             {tabs.map((tab) => {
@@ -79,7 +79,7 @@ export default function App() {
                   <a
                     key={tab.id}
                     href="mailto:noam.toren12@gmail.com"
-                    className="relative flex items-center justify-center py-2.5 px-4 rounded-md bg-neutral-700/40 border border-neutral-500/60 text-neutral-300 transition-colors duration-300 hover:bg-white hover:text-neutral-900 hover:border-white"
+                    className="relative flex items-center justify-center py-3 px-4 rounded-md bg-neutral-700/40 border border-neutral-500/60 text-neutral-300 transition-colors duration-300 hover:bg-white hover:text-neutral-900 hover:border-white"
                   >
                     <span className="text-[13px] whitespace-nowrap">
                       {tab.label}
@@ -95,7 +95,7 @@ export default function App() {
                     setSelectedProject(null);
                     setActiveTab(tab.id);
                   }}
-                  className={`relative flex items-center justify-center py-2.5 px-4 rounded-md transition-colors duration-300 ${
+                  className={`relative flex items-center justify-center py-3 px-4 rounded-md transition-colors duration-300 ${
                     isActive
                       ? 'text-white'
                       : 'text-neutral-400 hover:text-neutral-200'
