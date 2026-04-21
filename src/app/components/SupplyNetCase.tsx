@@ -109,6 +109,9 @@ export function SupplyNetCase({ onBack }: SupplyNetCaseProps) {
             <p>
               My role spanned UX/UI design and product strategy — shaping the core flows, visual system, and the collaborative buying mechanics that sit at the heart of the product.
             </p>
+            <p className="text-[rgba(19,19,19,0.6)]">
+              Scope note: this engagement covered the developer (contractor) side of the marketplace only. The supplier-facing experience was not designed as part of this project.
+            </p>
           </div>
         </section>
 
