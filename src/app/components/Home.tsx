@@ -48,17 +48,17 @@ export function Home({ onProjectClick }: HomeProps) {
             className="rise-in text-sm md:text-[15px] leading-relaxed"
             style={{ animationDelay: '0ms' }}
           >
-            <span className="text-neutral-400">UX Designer </span>
+            <span className="text-neutral-400">UI/UX Designer </span>
             <span className="text-neutral-900">Noam Toren</span>
           </p>
 
-          {/* Line 2: currently at / location */}
+          {/* Line 2: availability */}
           <p
             className="rise-in text-sm md:text-[15px] leading-relaxed mb-10"
             style={{ animationDelay: '100ms' }}
           >
-            <span className="text-neutral-400">Based in </span>
-            <span className="text-neutral-900">Israel</span>
+            <span className="text-neutral-400">Open for </span>
+            <span className="text-neutral-900">full-time &amp; freelance</span>
           </p>
 
           {/* Profile image — square with slightly rounded corners */}
