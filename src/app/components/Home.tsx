@@ -1,241 +1,202 @@
-import { useEffect, useRef, useState } from 'react';
 import { Footer } from '@/app/components/Footer';
 import { ImageWithFallback } from '@/app/components/figma/ImageWithFallback';
 import profileImage from '../../assets/99a913ce6253b1dc7d05b1c7995c57d8d1596876.png';
-
-// DEEP BREATH screens
+import bellaMockup from '../../assets/f4d14d9769234e371e3b2c43f272901073d360c7.png';
+import supplyNetHero from '../../assets/57b61d37a32011c4d800094d142fc794b97687b4.png';
 import deepBreathHero from '../../assets/2ce63c0fab5bed905e4a9ef77a72b0e1c015b40b.png';
-import deepBreathHub from '../../assets/2b35accf6040327f1a4293aad8b40fdd0928d71c.png';
-import deepBreathMobile from '../../assets/6b4d03b54622b096008e4efc8b3e88afcc6eb605.png';
-import deepBreathQuiz from '../../assets/ef4cb93d4bdaa208f60882e23720c518b7904228.png';
-
-// BELLA screens
-import bellaHero from '../../assets/f4d14d9769234e371e3b2c43f272901073d360c7.png';
-import bellaDashboard from '../../assets/5f857b4e1c1e4a7d4218a376633531836947dcd7.png';
-import bellaStrategy from '../../assets/2dfd007ccff4a3ab5905a1bc67d5535205ea07e2.png';
-import bellaStories from '../../assets/c0c0facfa6f14e57ca71a7e8222654a5a77a734e.png';
-
-// MACHON CHIBUR screens
-import machonHero from '../../assets/7e4406feba492b743bbe79e43d5ab8ec1d25e103.png';
-import machonExpert from '../../assets/bf54ac24176d6a2c0b8550062a8b79bbcd24afeb.png';
-import machonIntake from '../../assets/4da5aa04250589ceabba90f46d9d5eb35823d09f.png';
-import machonQuestions from '../../assets/f9cf9b0820aa088cbf068681c0406636887f6e2d.png';
-
-// SUPPLY NET screens
-import supplyHero from '../../assets/57b61d37a32011c4d800094d142fc794b97687b4.png';
-import supplyBuying from '../../assets/9f500214e40b40199b69860288a6b22b6789eee3.png';
-import supplySearch from '../../assets/336f0a82eac66094ade8528c0e3c91ee117d61cf.png';
-import supplyFile from '../../assets/48533b611e84bb2db1d4446e96e32e39a9f9253a.png';
+import machonChiburHero from '../../assets/7e4406feba492b743bbe79e43d5ab8ec1d25e103.png';
 
 interface HomeProps {
   onProjectClick?: (projectId: string) => void;
 }
 
-type ProjectId = 'academic' | 'bella' | 'machon-chibur' | 'supply-net';
-
-interface Project {
-  id: ProjectId;
-  title: string;
-  category: string;
-  year: string;
-  screens: string[];
-}
-
-const projects: Project[] = [
-  {
-    id: 'academic',
-    title: 'Deep Breath',
-    category: 'Smoking Cessation Platform',
-    year: '2024',
-    screens: [deepBreathHero, deepBreathHub, deepBreathMobile, deepBreathQuiz],
-  },
-  {
-    id: 'bella',
-    title: 'Bella',
-    category: 'Maternal E-Commerce',
-    year: '2024',
-    screens: [bellaHero, bellaDashboard, bellaStrategy, bellaStories],
-  },
-  {
-    id: 'machon-chibur',
-    title: 'Machon Chibur',
-    category: 'Therapeutic Web Platform',
-    year: '2025',
-    screens: [machonHero, machonExpert, machonIntake, machonQuestions],
-  },
-  {
-    id: 'supply-net',
-    title: 'Supply Net',
-    category: 'B2B AI Procurement',
-    year: '2025',
-    screens: [supplyHero, supplyBuying, supplySearch, supplyFile],
-  },
-];
-
 export function Home({ onProjectClick }: HomeProps) {
-  const listRef = useRef<HTMLDivElement>(null);
-  const [hovered, setHovered] = useState<ProjectId | null>(null);
-  const [screenIdx, setScreenIdx] = useState(0);
-  const [mouse, setMouse] = useState({ x: 0, y: 0 });
-
-  // Cycle through screens while hovering a project
-  useEffect(() => {
-    if (!hovered) return;
-    const id = setInterval(() => {
-      setScreenIdx((i) => i + 1);
-    }, 900);
-    return () => clearInterval(id);
-  }, [hovered]);
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (!listRef.current) return;
-    const rect = listRef.current.getBoundingClientRect();
-    setMouse({ x: e.clientX - rect.left, y: e.clientY - rect.top });
-  };
-
-  const activeProject = projects.find((p) => p.id === hovered);
-  const activeScreen = activeProject
-    ? activeProject.screens[screenIdx % activeProject.screens.length]
-    : null;
+  const projects = [
+    { 
+      id: 'academic', 
+      title: "DEEP BREATH", 
+      category: "Smoking Cessation Platform",
+      context: "CASE STUDY",
+      image: deepBreathHero,
+      // Removed drop-shadow to ensure seamless blending between the image's white background and the card's white background
+      customCardStyle: "bg-white flex items-center justify-center p-8",
+      imageFit: "object-contain" 
+    },
+    { 
+      id: 'bella', 
+      title: "BELLA", 
+      category: "Maternal E-Commerce Experience",
+      context: "E-COMMERCE",
+      image: bellaMockup,
+      // Applied same style as DEEP BREATH: White background + Centered contained image
+      customCardStyle: "bg-white flex items-center justify-center p-8",
+      imageFit: "object-contain"
+    },
+    { 
+      id: 'machon-chibur', 
+      title: "MACHON CHIBUR", 
+      category: "Therapeutic Web Platform",
+      context: "CASE STUDY",
+      image: machonChiburHero,
+      // Same consistent style: White background + Centered contained image
+      customCardStyle: "bg-white flex items-center justify-center p-8",
+      imageFit: "object-contain"
+    },
+    { 
+      id: 'supply-net', 
+      title: "Supply Net", 
+      category: "B2B AI Procurement Platform",
+      context: "STARTUP",
+      image: supplyNetHero,
+      // Same consistent style: White background + Centered contained image
+      customCardStyle: "bg-white flex items-center justify-center p-8",
+      imageFit: "object-contain"
+    }
+  ];
 
   return (
-    <div className="absolute inset-0 overflow-auto bg-[#FBFAF7] text-neutral-900">
-      {/* Hero */}
-      <section className="max-w-4xl mx-auto px-6 md:px-12 pt-20 md:pt-28 pb-24 md:pb-32">
-        {/* Profile image — small, quiet */}
-        <div className="mb-8">
-          <img
-            src={profileImage}
-            alt="Noam Toren"
-            className="w-20 h-20 rounded-full object-cover"
-            style={{ objectPosition: 'center 35%' }}
-          />
-        </div>
+    <div className="absolute inset-0 overflow-auto pb-32">
+      {/* Hero Section */}
+      <div className="px-6 md:px-12 py-12 md:py-16 max-w-5xl mx-auto">
+        <div className="mb-16">
+          {/* Name - Primary Identifier */}
+          <h1 className="text-lg font-semibold text-black mb-1 tracking-tight">
+            Noam Toren
+          </h1>
 
-        {/* Eyebrow */}
-        <p className="text-sm text-neutral-500 mb-3 tracking-normal">
-          UX Designer
-        </p>
+          {/* Role */}
+          <p className="text-xs text-neutral-500 mb-8 tracking-normal font-normal">
+            UX Designer
+          </p>
 
-        {/* Name — large italic serif display */}
-        <h1 className="font-display text-6xl md:text-8xl leading-[0.95] text-neutral-900 mb-6">
-          Noam Toren
-        </h1>
-
-        {/* Status line */}
-        <p className="text-sm md:text-base text-neutral-500 mb-10">
-          Currently <span className="font-display text-neutral-900">based in Israel</span>
-        </p>
-
-        {/* Intro paragraph — sans with italic serif emphasis */}
-        <p className="text-lg md:text-xl text-neutral-700 leading-relaxed font-normal max-w-2xl mb-12">
-          Hey, I'm Noam! A UX Designer crafting digital products that feel
-          {' '}<span className="font-display text-[#B85C38]">natural</span>,
-          {' '}<span className="font-display text-[#B85C38]">clear</span>, and
-          {' '}<span className="font-display text-[#B85C38]">thoughtfully made</span>
-          {' '}for the people who use them.
-        </p>
-
-        {/* Social row */}
-        <div className="flex flex-wrap items-center gap-x-8 gap-y-3 text-sm">
-          <a
-            href="https://www.instagram.com/toren.design_/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-neutral-600 hover:text-[#B85C38] transition-colors duration-300"
-          >
-            Instagram
-          </a>
-          <a
-            href="https://www.linkedin.com/in/noam-toren/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-neutral-600 hover:text-[#B85C38] transition-colors duration-300"
-          >
-            LinkedIn
-          </a>
-          <a
-            href="mailto:noam.toren12@gmail.com"
-            className="text-neutral-600 hover:text-[#B85C38] transition-colors duration-300"
-          >
-            Email
-          </a>
-        </div>
-      </section>
-
-      {/* Projects list */}
-      <section className="max-w-4xl mx-auto px-6 md:px-12 pb-24 md:pb-32">
-        {/* Small section label */}
-        <p className="text-xs text-neutral-400 tracking-widest uppercase mb-6">
-          Selected Work
-        </p>
-
-        <div
-          ref={listRef}
-          onMouseMove={handleMouseMove}
-          onMouseLeave={() => setHovered(null)}
-          className="relative border-t border-neutral-200"
-        >
-          {/* Cursor-follow preview */}
-          <div
-            className="pointer-events-none absolute z-20 w-[320px] md:w-[380px] aspect-[4/3] rounded-md overflow-hidden shadow-[0_20px_60px_-15px_rgba(0,0,0,0.25)] ring-1 ring-black/5 bg-white transition-opacity duration-300 ease-out hidden md:block"
-            style={{
-              left: mouse.x,
-              top: mouse.y,
-              transform: 'translate(-50%, -110%)',
-              opacity: hovered ? 1 : 0,
-            }}
-          >
-            {activeScreen && (
-              <ImageWithFallback
-                key={activeScreen}
-                src={activeScreen}
-                alt=""
-                className="w-full h-full object-cover animate-fade-in"
-              />
-            )}
+          {/* Personal Image */}
+          <div className="mb-8">
+            <img 
+              src={profileImage} 
+              alt="Noam" 
+              className="w-24 h-24 rounded-xl object-cover" 
+              style={{ objectPosition: 'center 35%' }}
+            />
           </div>
 
-          {projects.map((project, index) => {
-            const isHovered = hovered === project.id;
-            const isDimmed = hovered !== null && !isHovered;
-            return (
-              <div
-                key={project.id}
-                onClick={() => onProjectClick?.(project.id)}
-                onMouseEnter={() => {
-                  setHovered(project.id);
-                  setScreenIdx(0);
+          {/* Personal Statement - Below Image */}
+          <p className="font-display text-xl md:text-2xl leading-relaxed mb-10 max-w-2xl font-normal">
+            <span className="text-[#C87137]">Hey, I'm Noam!</span>
+            <span className="text-neutral-800"> I design digital products that feel natural, clear, and thoughtfully crafted for the <span className="relative inline-block px-1">
+              <svg 
+                className="absolute left-0 top-1/2 w-full h-full pointer-events-none" 
+                viewBox="0 0 100 40" 
+                preserveAspectRatio="none"
+                style={{ 
+                  filter: 'blur(0.3px)',
+                  transform: 'translateY(-50%) rotate(-2.5deg)'
                 }}
-                className="group flex items-baseline justify-between gap-6 py-7 md:py-9 border-b border-neutral-200 cursor-pointer transition-opacity duration-300"
-                style={{ opacity: isDimmed ? 0.35 : 1 }}
               >
-                <div className="flex items-baseline gap-6 md:gap-10 min-w-0">
-                  <span className="text-xs md:text-sm text-neutral-400 tabular-nums w-6 flex-shrink-0">
-                    0{index + 1}
-                  </span>
-                  <h3
-                    className={`font-display text-3xl md:text-5xl leading-tight truncate transition-colors duration-300 ${
-                      isHovered ? 'text-[#B85C38]' : 'text-neutral-900'
-                    }`}
-                  >
-                    {project.title}
-                  </h3>
-                </div>
-                <div className="flex items-baseline gap-6 md:gap-10 flex-shrink-0">
-                  <p className="text-xs md:text-sm text-neutral-500 hidden sm:block">
-                    {project.category}
-                  </p>
-                  <span className="text-xs md:text-sm text-neutral-400 tabular-nums">
-                    {project.year}
-                  </span>
+                {/* Simple, elegant brush stroke */}
+                <path
+                  d="M0,22 Q15,19.5 30,20 Q50,19 70,20.5 Q85,19.5 100,21.5 L100,27 Q85,28 70,28.5 Q50,28 30,27.5 Q15,28.5 0,26.5 Z"
+                  fill="#FFA866"
+                  fillOpacity="0.35"
+                />
+              </svg>
+              <span className="relative">people</span>
+            </span> who use them.</span>
+          </p>
+
+          {/* Social Links Row */}
+          <div className="flex items-center gap-6 text-sm pb-8">
+            <a 
+              href="https://www.instagram.com/toren.design_/" 
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-neutral-500 hover:text-neutral-900 transition-colors duration-300"
+            >
+              Instagram
+            </a>
+            <a href="https://www.linkedin.com/in/noam-toren/" target="_blank" rel="noopener noreferrer" className="text-neutral-500 hover:text-neutral-900 transition-colors duration-300">
+              LinkedIn
+            </a>
+            <a 
+              href="mailto:noam.toren12@gmail.com" 
+              className="text-neutral-500 hover:text-neutral-900 transition-colors duration-300"
+            >
+              Email
+            </a>
+          </div>
+
+          {/* Divider */}
+          <div className="h-px bg-neutral-100" />
+        </div>
+      </div>
+
+      {/* Projects Grid */}
+      <div className="px-6 md:px-12 pb-16 max-w-5xl mx-auto pt-0 relative">
+        {/* Subtle orange-tinted background layer */}
+        <div className="absolute inset-0 -mx-[100vw] bg-gradient-to-b from-[#FFF5F0]/30 via-[#FFEEE5]/20 to-[#FFF5F0]/10 -z-10" />
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+          {projects.map((project, index) => (
+            <div
+              key={project.id}
+              className="group cursor-pointer block transition-transform duration-500 ease-out hover:-translate-y-1.5"
+              onClick={() => onProjectClick && onProjectClick(project.id)}
+            >
+              {/* Context Label — shifts to brand orange on hover */}
+              <p className="text-xs text-neutral-400 mb-3 tracking-wide uppercase transition-colors duration-300 group-hover:text-[#C87137]">
+                {project.context}
+              </p>
+
+              {/* Project Image / Preview */}
+              <div className={`aspect-[4/3] rounded-lg mb-4 relative overflow-hidden shadow-sm transition-all duration-500 group-hover:shadow-xl border border-neutral-100/50 group-hover:border-[#C87137]/20
+                ${project.customCardStyle ? project.customCardStyle : 'bg-neutral-100'}
+              `}>
+                {project.image ? (
+                   <>
+                     <div className={`w-full h-full transition-transform duration-700 ${project.imageFit && project.imageFit.includes('object-contain') ? 'group-hover:scale-105' : 'absolute inset-0 group-hover:scale-105'}`}>
+                        <ImageWithFallback
+                          src={project.image}
+                          alt={project.title}
+                          className={`w-full h-full ${project.imageFit || 'object-cover'} ${project.imagePosition || 'object-center'}`}
+                        />
+                     </div>
+                     {/* Subtle overlay on hover (only for non-contained images to keep mockup clean) */}
+                     {(!project.imageFit || !project.imageFit.includes('object-contain')) && (
+                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/5 transition-colors duration-300" />
+                     )}
+                   </>
+                ) : (
+                  // Placeholder for projects without images
+                  <div className="flex items-center justify-center w-full h-full">
+                    <span className="text-5xl text-neutral-200 font-light group-hover:text-neutral-300 transition-colors">
+                      {String(index + 1).padStart(2, '0')}
+                    </span>
+                    <div className="absolute inset-0 bg-neutral-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 mix-blend-multiply" />
+                  </div>
+                )}
+              </div>
+
+              {/* Project Title — with growing underline */}
+              <h3 className="text-lg text-neutral-800 font-medium group-hover:text-black transition-colors inline-block relative">
+                {project.title}
+                <span className="absolute left-0 -bottom-0.5 w-full h-px bg-[#C87137] origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-out" />
+              </h3>
+              <p className="text-sm text-neutral-500 mt-1">{project.category}</p>
+
+              {/* CTA — reserved space; fades + slides in on hover (no layout shift) */}
+              <div className="mt-3 h-5 overflow-hidden">
+                <div className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#C87137] tracking-widest uppercase opacity-0 translate-y-2 transition-all duration-400 ease-out group-hover:opacity-100 group-hover:translate-y-0">
+                  <span>View Case Study</span>
+                  <svg className="w-3 h-3 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 12 12" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.75" d="M2 6h8m0 0L6 2m4 4L6 10" />
+                  </svg>
                 </div>
               </div>
-            );
-          })}
+            </div>
+          ))}
         </div>
-      </section>
+      </div>
 
+      {/* Footer */}
       <Footer />
     </div>
   );
