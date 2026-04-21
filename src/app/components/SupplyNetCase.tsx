@@ -234,6 +234,10 @@ export function SupplyNetCase({ onBack, onSelectProject }: SupplyNetCaseProps) {
               <p className="text-[13px] text-[rgba(19,19,19,0.6)] mt-3 leading-[1.5]">Of high-volume orders routed through joint-buying</p>
             </div>
           </div>
+
+          <p className="text-[11px] text-[rgba(19,19,19,0.4)] mt-4 leading-[1.5]">
+            Figures are estimated projections based on research assumptions, not measured results.
+          </p>
         </section>
 
         <div className="mx-6 md:mx-12 border-t border-neutral-200" />
