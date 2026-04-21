@@ -218,17 +218,17 @@ export function SupplyNetCase({ onBack, onSelectProject }: SupplyNetCaseProps) {
             Together, the three pillars replaced fragmented, opaque sourcing with a shared, data-backed layer — letting developers find qualified suppliers faster, pool demand to unlock bulk pricing, and track live material commitments in one workspace.
           </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-10">
-            <div className="rounded-xl bg-[#F2F0EC] p-6">
-              <p className="text-[40px] font-semibold tracking-[-1px] leading-none text-[#131313]">~40%</p>
+          <div className="mt-10 md:grid md:grid-cols-3">
+            <div className="py-6 border-b md:py-0 md:pr-8 md:border-b-0 md:border-r border-neutral-200">
+              <p className="text-[48px] font-semibold tracking-[-1.5px] leading-none text-[#1B6FDE]">~40%</p>
               <p className="text-[13px] text-[rgba(19,19,19,0.6)] mt-3 leading-[1.5]">Less time spent on sourcing rounds</p>
             </div>
-            <div className="rounded-xl bg-[#F2F0EC] p-6">
-              <p className="text-[40px] font-semibold tracking-[-1px] leading-none text-[#131313]">~3×</p>
+            <div className="py-6 border-b md:py-0 md:px-8 md:border-b-0 md:border-r border-neutral-200">
+              <p className="text-[48px] font-semibold tracking-[-1.5px] leading-none text-[#1B6FDE]">~3×</p>
               <p className="text-[13px] text-[rgba(19,19,19,0.6)] mt-3 leading-[1.5]">More competitive suppliers reached per project</p>
             </div>
-            <div className="rounded-xl bg-[#F2F0EC] p-6">
-              <p className="text-[40px] font-semibold tracking-[-1px] leading-none text-[#131313]">70%+</p>
+            <div className="py-6 md:py-0 md:pl-8">
+              <p className="text-[48px] font-semibold tracking-[-1.5px] leading-none text-[#1B6FDE]">70%+</p>
               <p className="text-[13px] text-[rgba(19,19,19,0.6)] mt-3 leading-[1.5]">Of high-volume orders routed through joint-buying</p>
             </div>
           </div>
