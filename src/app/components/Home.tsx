@@ -116,13 +116,32 @@ export function Home({ onProjectClick }: HomeProps) {
                   <span className="text-neutral-400"> {project.category}</span>
                 </p>
 
-                {/* Mockup on light background */}
-                <div className="aspect-[4/3] rounded-lg overflow-hidden bg-[#F2F0EC] flex items-center justify-center p-8">
+                {/* Mockup with animated hover frame */}
+                <div className="relative aspect-[4/3] rounded-lg bg-[#F2F0EC] flex items-center justify-center p-8 overflow-hidden">
                   <ImageWithFallback
                     src={project.image}
                     alt={project.title}
-                    className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-[1.02]"
+                    className="w-full h-full object-contain"
                   />
+                  <svg
+                    aria-hidden="true"
+                    className="pointer-events-none absolute inset-0 w-full h-full"
+                  >
+                    <rect
+                      x="0.5"
+                      y="0.5"
+                      width="calc(100% - 1px)"
+                      height="calc(100% - 1px)"
+                      rx="7.5"
+                      ry="7.5"
+                      fill="none"
+                      stroke="#0a0a0a"
+                      strokeWidth="1"
+                      pathLength="1"
+                      vectorEffect="non-scaling-stroke"
+                      className="[stroke-dasharray:1] [stroke-dashoffset:1] group-hover:[stroke-dashoffset:0] transition-[stroke-dashoffset] duration-[900ms] ease-out"
+                    />
+                  </svg>
                 </div>
               </div>
             ))}
