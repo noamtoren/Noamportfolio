@@ -21,16 +21,6 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
   );
 }
 
-function PlainImage({ src, alt }: { src: string; alt: string }) {
-  return (
-    <ImageWithFallback
-      src={src}
-      alt={alt}
-      className="w-full h-auto object-contain"
-    />
-  );
-}
-
 function PillarCanvas({ children }: { children: React.ReactNode }) {
   return (
     <div className="rounded-xl bg-[#F2F0EC] p-6 md:p-10">
@@ -39,16 +29,49 @@ function PillarCanvas({ children }: { children: React.ReactNode }) {
   );
 }
 
+type PillarImage = { src: string; alt: string };
+
+// Design-system rule: the more images in a row, the smaller each one is.
+const PILLAR_IMAGE_WIDTHS: Record<number, number> = {
+  1: 340,
+  2: 280,
+  3: 220,
+  4: 170,
+};
+
+const PILLAR_IMAGE_ROW_HEIGHT = 300;
+
+function PillarImages({ images }: { images: PillarImage[] }) {
+  const width = PILLAR_IMAGE_WIDTHS[images.length] ?? 220;
+  return (
+    <div className="flex flex-wrap items-center justify-center gap-4">
+      {images.map((img, i) => (
+        <div
+          key={i}
+          className="flex items-center justify-center"
+          style={{ width: `${width}px`, height: `${PILLAR_IMAGE_ROW_HEIGHT}px` }}
+        >
+          <ImageWithFallback
+            src={img.src}
+            alt={img.alt}
+            className="w-full h-full object-contain"
+          />
+        </div>
+      ))}
+    </div>
+  );
+}
+
 function Pillar({
   label,
   heading,
   body,
-  children,
+  images,
 }: {
   label: string;
   heading: string;
   body: string;
-  children: React.ReactNode;
+  images: PillarImage[];
 }) {
   return (
     <div>
@@ -59,7 +82,9 @@ function Pillar({
       <p className="text-[14px] font-normal leading-[1.6] tracking-[-0.2px] text-[#131313] max-w-2xl mb-8">
         {body}
       </p>
-      <PillarCanvas>{children}</PillarCanvas>
+      <PillarCanvas>
+        <PillarImages images={images} />
+      </PillarCanvas>
     </div>
   );
 }
@@ -138,41 +163,34 @@ export function SupplyNetCase({ onBack }: SupplyNetCaseProps) {
               label="Pillar 01 — Search"
               heading="Availability-first search engine."
               body="An advanced module that filters by quantities and delivery dates, providing real-time price comparison and joint-purchase proposals — so buyers find leverage, not just listings."
-            >
-              <div className="flex flex-wrap items-start justify-center gap-4 md:gap-6">
-                <div className="w-[180px] md:w-[200px]">
-                  <PlainImage src={searchEmptyState} alt="Search — empty state" />
-                </div>
-                <div className="w-[180px] md:w-[200px]">
-                  <PlainImage src={searchResultsState} alt="Search — results" />
-                </div>
-              </div>
-            </Pillar>
+              images={[
+                { src: searchEmptyState, alt: 'Search — empty state' },
+                { src: searchResultsState, alt: 'Search — results' },
+              ]}
+            />
 
             {/* Pillar 2 */}
             <Pillar
               label="Pillar 02 — Buying Groups"
               heading="Collective power through connectivity."
               body="Developers can initiate or join buying groups to secure bulk pricing and network with other industry professionals. The flow surfaces live groups relevant to the buyer's current material list."
-            >
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-3xl mx-auto">
-                <PlainImage src={buyingGroupState1} alt="Buying groups — search" />
-                <PlainImage src={buyingGroupState2} alt="Buying groups — results" />
-                <PlainImage src={buyingGroupState3} alt="Buying groups — details" />
-              </div>
-            </Pillar>
+              images={[
+                { src: buyingGroupState1, alt: 'Buying groups — search' },
+                { src: buyingGroupState2, alt: 'Buying groups — results' },
+                { src: buyingGroupState3, alt: 'Buying groups — details' },
+              ]}
+            />
 
             {/* Pillar 3 */}
             <Pillar
               label="Pillar 03 — Automation"
               heading="Automated material lifecycle."
               body="Static BOQ files become dynamic management tools with automated categorization and smart order reminders — turning a spreadsheet chore into a decision-making surface."
-            >
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mx-auto">
-                <PlainImage src={fileAnalysis1} alt="File analysis — project setup" />
-                <PlainImage src={fileAnalysis2} alt="File analysis — data entry" />
-              </div>
-            </Pillar>
+              images={[
+                { src: fileAnalysis1, alt: 'File analysis — project setup' },
+                { src: fileAnalysis2, alt: 'File analysis — data entry' },
+              ]}
+            />
           </div>
         </section>
 
