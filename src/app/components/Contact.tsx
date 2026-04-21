@@ -1,4 +1,4 @@
-import { Mail, Linkedin, Github, ArrowUpRight } from 'lucide-react';
+import { Mail, Linkedin, Instagram, ArrowUpRight } from 'lucide-react';
 import { Footer } from '@/app/components/Footer';
 
 export function Contact() {
@@ -41,8 +41,10 @@ export function Contact() {
                   </div>
                   <span className="text-lg">noam.toren12@gmail.com</span>
                 </a>
-                <a 
-                  href="#" 
+                <a
+                  href="https://www.linkedin.com/in/noam-toren/"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="group flex items-center gap-4 text-neutral-700 hover:text-neutral-900 transition-colors py-2"
                 >
                   <div className="w-10 h-10 border border-neutral-300 rounded-full flex items-center justify-center group-hover:border-neutral-900 transition-colors">
@@ -50,14 +52,16 @@ export function Contact() {
                   </div>
                   <span className="text-lg">LinkedIn</span>
                 </a>
-                <a 
-                  href="#" 
+                <a
+                  href="https://www.instagram.com/toren.design_/"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="group flex items-center gap-4 text-neutral-700 hover:text-neutral-900 transition-colors py-2"
                 >
                   <div className="w-10 h-10 border border-neutral-300 rounded-full flex items-center justify-center group-hover:border-neutral-900 transition-colors">
-                    <Github className="w-5 h-5" />
+                    <Instagram className="w-5 h-5" />
                   </div>
-                  <span className="text-lg">GitHub</span>
+                  <span className="text-lg">Instagram</span>
                 </a>
               </div>
             </div>
@@ -67,8 +71,8 @@ export function Contact() {
                 Availability
               </h2>
               <div className="space-y-3 text-lg text-neutral-600">
-                <p>Currently based in San Francisco, CA</p>
-                <p>Open to freelance projects and full-time opportunities</p>
+                <p>Currently based in Israel</p>
+                <p>Open to junior UX/UI roles, internships, and freelance projects</p>
                 <p>Available for remote collaboration worldwide</p>
               </div>
             </div>
