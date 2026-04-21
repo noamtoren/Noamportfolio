@@ -67,21 +67,22 @@ export default function App() {
         {renderContent()}
       </main>
 
-      {/* Floating Bottom Tab Navigation - Pill Shaped */}
-      <nav className="fixed bottom-10 left-1/2 -translate-x-1/2 z-50 w-full max-w-[fit-content] px-4">
-        <div className="bg-neutral-900/85 backdrop-blur-xl rounded-lg shadow-2xl px-1.5 py-1.5 border border-white/5 mx-auto">
+      {/* Floating Bottom Tab Navigation */}
+      <nav className="fixed bottom-10 left-1/2 -translate-x-1/2 z-50">
+        <div className="bg-neutral-900/90 backdrop-blur-xl rounded-lg px-1 py-1">
           <div className="flex items-center gap-0.5">
             {tabs.map((tab) => {
               const isActive = activeTab === tab.id && !selectedProject;
-              
+
               if (tab.id === 'contact') {
                 return (
                   <a
                     key={tab.id}
                     href="mailto:noam.toren12@gmail.com"
-                    className="relative flex items-center justify-center py-2.5 px-4 rounded-md bg-neutral-700/60 text-neutral-200 transition-colors duration-300 hover:bg-neutral-700/80 hover:text-white"
+                    className="relative flex items-center justify-center py-2 px-3.5 rounded-md overflow-hidden text-neutral-300 transition-colors duration-300 hover:text-white group/cm"
                   >
-                    <span className="text-sm whitespace-nowrap">
+                    <span className="absolute inset-0 bg-white/10 origin-left scale-x-0 transition-transform duration-[450ms] ease-out group-hover/cm:scale-x-100" />
+                    <span className="relative text-[13px] whitespace-nowrap">
                       {tab.label}
                     </span>
                   </a>
@@ -95,13 +96,13 @@ export default function App() {
                     setSelectedProject(null);
                     setActiveTab(tab.id);
                   }}
-                  className={`relative flex items-center justify-center py-2.5 px-4 rounded-md transition-colors duration-300 ${
+                  className={`relative flex items-center justify-center py-2 px-3.5 rounded-md transition-colors duration-300 ${
                     isActive
                       ? 'text-white'
                       : 'text-neutral-400 hover:text-neutral-200'
                   }`}
                 >
-                  <span className="text-sm whitespace-nowrap">
+                  <span className="text-[13px] whitespace-nowrap">
                     {tab.label}
                   </span>
                 </button>
