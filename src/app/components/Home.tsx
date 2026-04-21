@@ -60,17 +60,17 @@ export function Home({ onProjectClick }: HomeProps) {
       <div className="px-6 md:px-12 py-12 md:py-16 max-w-5xl mx-auto">
         <div className="mb-16">
           {/* Name - Primary Identifier */}
-          <h1 className="text-lg font-semibold text-black mb-1 tracking-tight animate-fade-up" style={{ animationDelay: '0ms' }}>
+          <h1 className="text-lg font-semibold text-black mb-1 tracking-tight">
             Noam Toren
           </h1>
 
           {/* Role */}
-          <p className="text-xs text-neutral-500 mb-8 tracking-normal font-normal animate-fade-up" style={{ animationDelay: '80ms' }}>
+          <p className="text-xs text-neutral-500 mb-8 tracking-normal font-normal">
             UX Designer
           </p>
 
           {/* Personal Image — with available-for-work status indicator */}
-          <div className="mb-8 relative inline-block group/avatar animate-fade-up" style={{ animationDelay: '160ms' }}>
+          <div className="mb-8 relative inline-block group/avatar">
             <div className="relative w-24 h-24">
               <div className="absolute inset-0 rounded-xl ring-0 ring-[#C87137]/0 transition-all duration-500 ease-out group-hover/avatar:ring-4 group-hover/avatar:ring-[#C87137]/20" />
               <img
@@ -91,15 +91,16 @@ export function Home({ onProjectClick }: HomeProps) {
           </div>
 
           {/* Personal Statement - Below Image */}
-          <p className="font-display text-xl md:text-2xl leading-relaxed mb-10 max-w-2xl font-normal animate-fade-up" style={{ animationDelay: '280ms' }}>
+          <p className="font-display text-xl md:text-2xl leading-relaxed mb-10 max-w-2xl font-normal">
             <span className="text-[#C87137]">Hey, I'm Noam!</span>
             <span className="text-neutral-800"> I design digital products that feel natural, clear, and thoughtfully crafted for the <span className="relative inline-block px-1">
-              <svg
-                className="absolute left-0 top-1/2 w-full h-full pointer-events-none animate-brush"
-                viewBox="0 0 100 40"
+              <svg 
+                className="absolute left-0 top-1/2 w-full h-full pointer-events-none" 
+                viewBox="0 0 100 40" 
                 preserveAspectRatio="none"
-                style={{
-                  filter: 'blur(0.3px)'
+                style={{ 
+                  filter: 'blur(0.3px)',
+                  transform: 'translateY(-50%) rotate(-2.5deg)'
                 }}
               >
                 {/* Simple, elegant brush stroke */}
@@ -114,7 +115,7 @@ export function Home({ onProjectClick }: HomeProps) {
           </p>
 
           {/* Social Links Row — each link gets an external-arrow that slides on hover */}
-          <div className="flex items-center gap-6 text-sm pb-8 animate-fade-up" style={{ animationDelay: '400ms' }}>
+          <div className="flex items-center gap-6 text-sm pb-8">
             <a
               href="https://www.instagram.com/toren.design_/"
               target="_blank"
