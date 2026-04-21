@@ -68,7 +68,7 @@ export function Home({ onProjectClick }: HomeProps) {
           {/* Intro paragraph — regular sans with bold emphasis, no serif */}
           <p className="text-lg md:text-[22px] leading-[1.45] text-neutral-900 max-w-3xl mb-10">
             Hey, I'm Noam! A UX Designer with a
-            {' '}<span className="font-semibold text-[#C87137]">love for thoughtful craft</span>.
+            {' '}<span className="font-semibold text-[#B8552E]">love for thoughtful craft</span>.
             {' '}I design digital products that feel natural, clear, and built for the people who use them.
           </p>
 
@@ -110,7 +110,7 @@ export function Home({ onProjectClick }: HomeProps) {
               >
                 {/* Inline title + category */}
                 <p className="text-sm md:text-[15px] mb-3">
-                  <span className="text-neutral-900 font-semibold group-hover:text-[#C87137] transition-colors duration-200">
+                  <span className="text-neutral-900 font-semibold group-hover:text-[#B8552E] transition-colors duration-200">
                     {project.title}
                   </span>
                   <span className="text-neutral-400"> {project.category}</span>

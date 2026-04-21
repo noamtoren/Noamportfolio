@@ -95,7 +95,7 @@ export function Sketches() {
         
         {/* Hero Text */}
         <div className="absolute left-1/2 -translate-x-1/2 top-[280px] md:top-[320px] max-w-2xl text-center px-4">
-          <h1 className="font-display text-xl md:text-2xl leading-relaxed font-normal mb-3 text-[#C87137]">
+          <h1 className="font-display text-xl md:text-2xl leading-relaxed font-normal mb-3 text-[#B8552E]">
             Welcome to my design sketches.
           </h1>
           <p className="font-['Inter'] text-sm text-neutral-500 leading-relaxed mb-2">
