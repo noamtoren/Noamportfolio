@@ -131,11 +131,14 @@ export function Home({ onProjectClick }: HomeProps) {
               >
                 {/* Inline title + category */}
                 <p className="text-sm md:text-[15px] mb-3">
-                  <span className="text-neutral-900 font-semibold group-hover:text-[#B8552E] transition-colors duration-200">
+                  <span className="text-neutral-900 font-semibold">
                     {project.title}
                   </span>
                   <span className="text-neutral-400"> {project.category}</span>
                 </p>
+
+                {/* Thin underline fills card width on hover */}
+                <div className="h-px w-full origin-left scale-x-0 bg-neutral-900 transition-transform duration-[500ms] ease-out group-hover:scale-x-100 mb-3" />
 
                 {/* Mockup — soft shadow + tiny lift on hover */}
                 <div className="aspect-[4/3] rounded-lg bg-[#F2F0EC] flex items-center justify-center p-8 overflow-hidden shadow-[0_0_0_rgba(0,0,0,0)] transition-all duration-[400ms] ease-out will-change-transform group-hover:-translate-y-1 group-hover:shadow-[0_12px_32px_-12px_rgba(0,0,0,0.12)]">
