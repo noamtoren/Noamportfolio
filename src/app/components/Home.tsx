@@ -40,7 +40,7 @@ export function Home({ onProjectClick }: HomeProps) {
 
   return (
     <div className="absolute inset-0 overflow-auto bg-white pb-32">
-      <div className="max-w-4xl mx-auto px-6 md:px-12 pt-14 md:pt-20">
+      <div className="max-w-6xl mx-auto px-6 md:px-12 pt-14 md:pt-20">
         {/* Hero — compact, left-aligned, all sans-serif */}
         <section className="mb-24 md:mb-32">
           {/* Line 1: role + name inline */}
@@ -66,7 +66,7 @@ export function Home({ onProjectClick }: HomeProps) {
           </div>
 
           {/* Intro paragraph — regular sans with bold emphasis, no serif */}
-          <p className="text-lg md:text-[22px] leading-[1.45] text-neutral-900 max-w-2xl mb-10">
+          <p className="text-lg md:text-[22px] leading-[1.45] text-neutral-900 max-w-3xl mb-10">
             Hey, I'm Noam! A UX Designer with a
             {' '}<span className="font-semibold text-[#C87137]">love for thoughtful craft</span>.
             {' '}I design digital products that feel natural, clear, and built for the people who use them.
