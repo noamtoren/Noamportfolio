@@ -79,7 +79,7 @@ export default function App() {
                   <a
                     key={tab.id}
                     href="mailto:noam.toren12@gmail.com"
-                    className="relative flex items-center justify-center py-2 px-6 rounded-md border border-neutral-500/60 text-neutral-300 transition-colors duration-300 hover:bg-white hover:text-neutral-900 hover:border-white"
+                    className="relative flex items-center justify-center py-2 px-6 rounded-md bg-neutral-700/40 border border-neutral-500/60 text-neutral-300 transition-colors duration-300 hover:bg-white hover:text-neutral-900 hover:border-white"
                   >
                     <span className="text-[13px] whitespace-nowrap">
                       {tab.label}
