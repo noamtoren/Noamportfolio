@@ -1,5 +1,6 @@
 import { ArrowLeft, Search, User, ShoppingBag } from 'lucide-react';
 import { Footer } from '@/app/components/Footer';
+import { CaseNavFooter } from '@/app/components/CaseNavFooter';
 import { ImageWithFallback } from '@/app/components/figma/ImageWithFallback';
 import heroImage from '../../assets/f4d14d9769234e371e3b2c43f272901073d360c7.png';
 import strategyFilterImage from '../../assets/3f24ea7874dd37ca8cda54ecaed3080b2a4d8c28.png';
@@ -16,6 +17,7 @@ import newInteractiveImage from '../../assets/fa4778ad5b7f683ff5d1d9f18574a3b7d9
 
 interface BellaCaseStudyProps {
   onBack: () => void;
+  onSelectProject?: (id: string) => void;
 }
 
 function StickyTitle({ children }: { children: React.ReactNode }) {
@@ -30,7 +32,7 @@ function StickyTitle({ children }: { children: React.ReactNode }) {
   );
 }
 
-export function BellaCaseStudy({ onBack }: BellaCaseStudyProps) {
+export function BellaCaseStudy({ onBack, onSelectProject }: BellaCaseStudyProps) {
   return (
     <div className="absolute inset-0 overflow-auto pb-0 bg-white text-neutral-600 font-sans">
       {/* Top Navigation */}
@@ -278,6 +280,11 @@ export function BellaCaseStudy({ onBack }: BellaCaseStudyProps) {
             </div>
         </div>
       </section>
+
+      <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
+        <div className="border-t border-neutral-200" />
+        <CaseNavFooter currentId="bella" onSelectProject={onSelectProject} />
+      </div>
 
       {/* Footer is already imported and used, likely needs no change or is global */}
       <Footer />

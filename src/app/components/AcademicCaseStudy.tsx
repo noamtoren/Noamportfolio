@@ -1,5 +1,6 @@
 import { ArrowLeft } from 'lucide-react';
 import { Footer } from '@/app/components/Footer';
+import { CaseNavFooter } from '@/app/components/CaseNavFooter';
 import { ImageWithFallback } from '@/app/components/figma/ImageWithFallback';
 import entryScenariosImage from '../../assets/8f3d0f7f00dfebcc8a19cae89b91bdfa32bafbeb.png';
 import expertGridImage from '../../assets/5aa8c2c4647d1233c789d8f38d54bd734f24d03c.png';
@@ -10,6 +11,7 @@ import desktopMockupImage from '../../assets/2ce63c0fab5bed905e4a9ef77a72b0e1c01
 
 interface AcademicCaseStudyProps {
   onBack: () => void;
+  onSelectProject?: (id: string) => void;
 }
 
 function StickyTitle({ children }: { children: React.ReactNode }) {
@@ -32,7 +34,7 @@ function Placeholder({ label, className = "aspect-video" }: { label: string, cla
   );
 }
 
-export function AcademicCaseStudy({ onBack }: AcademicCaseStudyProps) {
+export function AcademicCaseStudy({ onBack, onSelectProject }: AcademicCaseStudyProps) {
   return (
     <div className="absolute inset-0 overflow-auto pb-0 bg-white text-neutral-600 font-sans">
       
@@ -210,6 +212,11 @@ export function AcademicCaseStudy({ onBack }: AcademicCaseStudyProps) {
             </div>
         </div>
       </section>
+
+      <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
+        <div className="border-t border-neutral-200" />
+        <CaseNavFooter currentId="academic" onSelectProject={onSelectProject} />
+      </div>
 
       <Footer />
     </div>

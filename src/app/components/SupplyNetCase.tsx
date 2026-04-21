@@ -1,5 +1,6 @@
 import { ArrowLeft } from 'lucide-react';
 import { Footer } from '@/app/components/Footer';
+import { CaseNavFooter } from '@/app/components/CaseNavFooter';
 import { ImageWithFallback } from '@/app/components/figma/ImageWithFallback';
 import buyingGroupState1 from '../../assets/460e25cd141ca9b471384ce97a83560a20d2ad76.png';
 import buyingGroupState2 from '../../assets/9f500214e40b40199b69860288a6b22b6789eee3.png';
@@ -242,22 +243,7 @@ export function SupplyNetCase({ onBack, onSelectProject }: SupplyNetCaseProps) {
 
         <div className="mx-6 md:mx-12 border-t border-neutral-200" />
 
-        {/* Next Project */}
-        <section className="px-6 md:px-12 py-10 md:py-14">
-          <SectionLabel>Next Project</SectionLabel>
-          <button
-            onClick={() => onSelectProject?.('academic')}
-            className="group text-left"
-          >
-            <h3 className="text-[28px] font-semibold tracking-[-0.5px] text-[#131313] leading-[1.2]">
-              Deep Breath
-              <span className="inline-block ml-2 transition-transform duration-300 ease-out group-hover:translate-x-1">→</span>
-            </h3>
-            <p className="text-[14px] font-normal text-[rgba(19,19,19,0.44)] mt-2">
-              Smoking Cessation Platform
-            </p>
-          </button>
-        </section>
+        <CaseNavFooter currentId="supply-net" onSelectProject={onSelectProject} />
       </div>
 
       <Footer />

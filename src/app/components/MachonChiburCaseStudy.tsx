@@ -1,5 +1,6 @@
 import { ArrowLeft, Check, FileText, Shield, Scale } from 'lucide-react';
 import { Footer } from '@/app/components/Footer';
+import { CaseNavFooter } from '@/app/components/CaseNavFooter';
 import { ImageWithFallback } from '@/app/components/figma/ImageWithFallback';
 import intakeStartImg from '../../assets/4da5aa04250589ceabba90f46d9d5eb35823d09f.png';
 import intakeMiddleImg from '../../assets/6a70cc2ac4adf411579c789cc467ade4e7c03c01.png';
@@ -22,6 +23,7 @@ import { useEffect, useRef, useState } from 'react';
 
 interface MachonChiburCaseStudyProps {
   onBack: () => void;
+  onSelectProject?: (id: string) => void;
 }
 
 function StickyTitle({ children }: { children: React.ReactNode }) {
@@ -85,7 +87,7 @@ function AutoScaleWrapper({ children, originalWidth = 1280, originalHeight = 924
   );
 }
 
-export function MachonChiburCaseStudy({ onBack }: MachonChiburCaseStudyProps) {
+export function MachonChiburCaseStudy({ onBack, onSelectProject }: MachonChiburCaseStudyProps) {
   return (
     <div className="absolute inset-0 overflow-auto pb-0 bg-white text-neutral-600 font-sans">
       {/* Top Navigation */}
@@ -375,7 +377,10 @@ export function MachonChiburCaseStudy({ onBack }: MachonChiburCaseStudyProps) {
          </div>
       </section>
 
-
+      <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
+        <div className="border-t border-neutral-200" />
+        <CaseNavFooter currentId="machon-chibur" onSelectProject={onSelectProject} />
+      </div>
 
       <Footer />
     </div>

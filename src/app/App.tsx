@@ -32,13 +32,13 @@ export default function App() {
       return <SupplyNetCase onBack={handleBack} onSelectProject={setSelectedProject} />;
     }
     if (selectedProject === 'bella') {
-      return <BellaCaseStudy onBack={handleBack} />;
+      return <BellaCaseStudy onBack={handleBack} onSelectProject={setSelectedProject} />;
     }
     if (selectedProject === 'machon-chibur') {
-      return <MachonChiburCaseStudy onBack={handleBack} />;
+      return <MachonChiburCaseStudy onBack={handleBack} onSelectProject={setSelectedProject} />;
     }
     if (selectedProject === 'academic') {
-      return <AcademicCaseStudy onBack={handleBack} />;
+      return <AcademicCaseStudy onBack={handleBack} onSelectProject={setSelectedProject} />;
     }
 
     // Otherwise show the active tab
