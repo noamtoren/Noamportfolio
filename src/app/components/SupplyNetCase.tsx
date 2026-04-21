@@ -11,6 +11,7 @@ import fileAnalysis2 from '../../assets/48533b611e84bb2db1d4446e96e32e39a9f9253a
 
 interface SupplyNetCaseProps {
   onBack: () => void;
+  onSelectProject?: (id: string) => void;
 }
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
@@ -89,7 +90,7 @@ function Pillar({
   );
 }
 
-export function SupplyNetCase({ onBack }: SupplyNetCaseProps) {
+export function SupplyNetCase({ onBack, onSelectProject }: SupplyNetCaseProps) {
   return (
     <div className="absolute inset-0 overflow-auto bg-white">
       {/* Editorial framed container */}
@@ -233,6 +234,25 @@ export function SupplyNetCase({ onBack }: SupplyNetCaseProps) {
               <p className="text-[13px] text-[rgba(19,19,19,0.6)] mt-3 leading-[1.5]">Of high-volume orders routed through joint-buying</p>
             </div>
           </div>
+        </section>
+
+        <div className="mx-6 md:mx-12 border-t border-neutral-200" />
+
+        {/* Next Project */}
+        <section className="px-6 md:px-12 py-10 md:py-14">
+          <SectionLabel>Next Project</SectionLabel>
+          <button
+            onClick={() => onSelectProject?.('academic')}
+            className="group text-left"
+          >
+            <h3 className="text-[28px] font-semibold tracking-[-0.5px] text-[#131313] leading-[1.2]">
+              Deep Breath
+              <span className="inline-block ml-2 transition-transform duration-300 ease-out group-hover:translate-x-1">→</span>
+            </h3>
+            <p className="text-[14px] font-normal text-[rgba(19,19,19,0.44)] mt-2">
+              Smoking Cessation Platform
+            </p>
+          </button>
         </section>
       </div>
 

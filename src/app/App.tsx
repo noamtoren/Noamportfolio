@@ -29,7 +29,7 @@ export default function App() {
   const renderContent = () => {
     // If a project is selected, show it (overrides activeTab for now, or acts as a sub-view of home)
     if (selectedProject === 'supply-net') {
-      return <SupplyNetCase onBack={handleBack} />;
+      return <SupplyNetCase onBack={handleBack} onSelectProject={setSelectedProject} />;
     }
     if (selectedProject === 'bella') {
       return <BellaCaseStudy onBack={handleBack} />;
