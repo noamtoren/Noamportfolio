@@ -145,9 +145,13 @@ export function SupplyNetCase({ onBack }: SupplyNetCaseProps) {
               body="An advanced module that filters by quantities and delivery dates, providing real-time price comparison and joint-purchase proposals — so buyers find leverage, not just listings."
               closing="Framing discovery around live availability and joint-purchase potential collapsed the outreach rounds developers ran before confirming a material, and surfaced pricing leverage that used to require manual spreadsheet comparisons. Buyers reported reaching a confident decision in roughly half the time."
             >
-              <div className="space-y-6">
-                <PlainImage src={searchEmptyState} alt="Search — empty state" />
-                <PlainImage src={searchResultsState} alt="Search — results" />
+              <div className="flex flex-wrap items-start justify-center gap-4 md:gap-6">
+                <div className="w-[180px] md:w-[200px]">
+                  <PlainImage src={searchEmptyState} alt="Search — empty state" />
+                </div>
+                <div className="w-[180px] md:w-[200px]">
+                  <PlainImage src={searchResultsState} alt="Search — results" />
+                </div>
               </div>
             </Pillar>
 
