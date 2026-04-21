@@ -142,7 +142,7 @@ export function SupplyNetCase({ onBack, onSelectProject }: SupplyNetCaseProps) {
         {/* The Challenge */}
         <section className="px-6 md:px-12 py-10 md:py-14">
           <SectionLabel>The Challenge</SectionLabel>
-          <h2 className="text-[24px] font-semibold tracking-[-0.5px] text-[#131313] leading-[1.3] mb-4 max-w-2xl">
+          <h2 className="text-[22px] font-semibold tracking-[-0.5px] text-[#131313] leading-[1.3] mb-4 max-w-2xl">
             Dismantling procurement monopolies.
           </h2>
           <p className="text-[14px] font-normal leading-[1.6] tracking-[-0.2px] text-[#131313] max-w-2xl">
@@ -155,7 +155,7 @@ export function SupplyNetCase({ onBack, onSelectProject }: SupplyNetCaseProps) {
         {/* Approach */}
         <section className="px-6 md:px-12 py-10 md:py-14">
           <SectionLabel>Approach</SectionLabel>
-          <h2 className="text-[24px] font-semibold tracking-[-0.5px] text-[#131313] leading-[1.3] mb-4 max-w-2xl">
+          <h2 className="text-[22px] font-semibold tracking-[-0.5px] text-[#131313] leading-[1.3] mb-4 max-w-2xl">
             Grounding the product in buyer reality.
           </h2>
           <p className="text-[14px] font-normal leading-[1.6] tracking-[-0.2px] text-[#131313] max-w-2xl">
@@ -168,7 +168,7 @@ export function SupplyNetCase({ onBack, onSelectProject }: SupplyNetCaseProps) {
         {/* UX Strategy */}
         <section className="px-6 md:px-12 py-10 md:py-14">
           <SectionLabel>UX Strategy</SectionLabel>
-          <h2 className="text-[24px] font-semibold tracking-[-0.5px] text-[#131313] leading-[1.3] mb-10 max-w-2xl">
+          <h2 className="text-[22px] font-semibold tracking-[-0.5px] text-[#131313] leading-[1.3] mb-10 max-w-2xl">
             Three pillars that make the product work.
           </h2>
 
@@ -214,7 +214,7 @@ export function SupplyNetCase({ onBack, onSelectProject }: SupplyNetCaseProps) {
         {/* The Outcome */}
         <section className="px-6 md:px-12 py-10 md:py-14">
           <SectionLabel>The Outcome</SectionLabel>
-          <h2 className="text-[24px] font-semibold tracking-[-0.5px] text-[#131313] leading-[1.3] mb-4 max-w-2xl">
+          <h2 className="text-[22px] font-semibold tracking-[-0.5px] text-[#131313] leading-[1.3] mb-4 max-w-2xl">
             Solving the challenge.
           </h2>
           <p className="text-[14px] font-normal leading-[1.6] tracking-[-0.2px] text-[#131313] max-w-2xl">
