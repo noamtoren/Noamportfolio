@@ -25,7 +25,7 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
 
 function PillarCanvas({ children }: { children: React.ReactNode }) {
   return (
-    <div className="rounded-xl bg-[#ECEEF0] px-8 py-10 md:py-12">
+    <div className="rounded-xl bg-[#ECEEF0] p-6 md:p-8">
       {children}
     </div>
   );
@@ -35,31 +35,27 @@ type PillarImage = { src: string; alt: string; label: string };
 
 // Design-system rule: the more images in a row, the smaller each one is.
 const PILLAR_IMAGE_WIDTHS: Record<number, number> = {
-  1: 520,
-  2: 400,
-  3: 260,
-  4: 190,
+  1: 440,
+  2: 340,
+  3: 220,
+  4: 160,
 };
 
-const PILLAR_IMAGE_ROW_HEIGHT = 440;
-
 function PillarImages({ images }: { images: PillarImage[] }) {
-  const width = PILLAR_IMAGE_WIDTHS[images.length] ?? 220;
+  const width = PILLAR_IMAGE_WIDTHS[images.length] ?? 200;
   return (
-    <div className="flex flex-wrap items-start justify-center gap-4">
+    <div className="flex flex-wrap items-start justify-center gap-6">
       {images.map((img, i) => (
         <div key={i} style={{ width: `${width}px` }}>
-          <p className="text-[11px] text-[#1B6FDE] mb-2 leading-none">
+          <p className="text-[11px] text-[#1B6FDE] mb-1.5 leading-none">
             {img.label}
           </p>
-          <div
-            className="flex items-center justify-center"
-            style={{ height: `${PILLAR_IMAGE_ROW_HEIGHT}px` }}
-          >
+          <div className="overflow-hidden">
             <ImageWithFallback
               src={img.src}
               alt={img.alt}
-              className="w-full h-full object-contain"
+              className="block w-full h-auto"
+              style={{ marginBottom: '-24px' }}
             />
           </div>
         </div>
