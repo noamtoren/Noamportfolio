@@ -2,13 +2,13 @@ import { ArrowLeft } from 'lucide-react';
 import { Footer } from '@/app/components/Footer';
 import { CaseNavFooter } from '@/app/components/CaseNavFooter';
 import { ImageWithFallback } from '@/app/components/figma/ImageWithFallback';
-import buyingGroupState1 from '../../assets/460e25cd141ca9b471384ce97a83560a20d2ad76.png';
-import buyingGroupState2 from '../../assets/9f500214e40b40199b69860288a6b22b6789eee3.png';
-import buyingGroupState3 from '../../assets/18f2f4ae2ba02118fc5c433b02c9f15052f2419b.png';
-import searchEmptyState from '../../assets/8c284cec1d04817bb63383fd5c14a8807268d70f.png';
-import searchResultsState from '../../assets/336f0a82eac66094ade8528c0e3c91ee117d61cf.png';
-import fileAnalysis1 from '../../assets/46fcd16704d676e2383ea0f1866aca541c44edc3.png';
-import fileAnalysis2 from '../../assets/48533b611e84bb2db1d4446e96e32e39a9f9253a.png';
+import buyingGroupState1 from '../../assets/supplynet-buying-discover.png';
+import buyingGroupState2 from '../../assets/supplynet-buying-matching.png';
+import buyingGroupState3 from '../../assets/supplynet-buying-join.png';
+import searchEmptyState from '../../assets/supplynet-search-empty.png';
+import searchResultsState from '../../assets/supplynet-search-results.png';
+import fileAnalysis1 from '../../assets/supplynet-fileanalysis-setup.png';
+import fileAnalysis2 from '../../assets/supplynet-fileanalysis-data.png';
 
 interface SupplyNetCaseProps {
   onBack: () => void;
@@ -50,14 +50,11 @@ function PillarImages({ images }: { images: PillarImage[] }) {
           <p className="text-[11px] text-[#1B6FDE] mb-1.5 leading-none">
             {img.label}
           </p>
-          <div className="overflow-hidden">
-            <ImageWithFallback
-              src={img.src}
-              alt={img.alt}
-              className="block w-full h-auto"
-              style={{ marginBottom: '-24px' }}
-            />
-          </div>
+          <ImageWithFallback
+            src={img.src}
+            alt={img.alt}
+            className="block w-full h-auto"
+          />
         </div>
       ))}
     </div>
