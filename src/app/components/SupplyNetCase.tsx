@@ -43,13 +43,11 @@ function Pillar({
   label,
   heading,
   body,
-  closing,
   children,
 }: {
   label: string;
   heading: string;
   body: string;
-  closing: string;
   children: React.ReactNode;
 }) {
   return (
@@ -62,9 +60,6 @@ function Pillar({
         {body}
       </p>
       <PillarCanvas>{children}</PillarCanvas>
-      <p className="text-[14px] font-normal leading-[1.6] tracking-[-0.2px] text-[#131313] max-w-2xl mt-8">
-        {closing}
-      </p>
     </div>
   );
 }
@@ -123,11 +118,8 @@ export function SupplyNetCase({ onBack }: SupplyNetCaseProps) {
           <h2 className="text-[24px] font-semibold tracking-[-0.5px] text-[#131313] leading-[1.3] mb-4 max-w-2xl">
             Dismantling procurement monopolies.
           </h2>
-          <p className="text-[14px] font-normal leading-[1.6] tracking-[-0.2px] text-[#131313] max-w-2xl mb-4">
-            In the construction industry, access to suppliers is often restricted by non-transparent pricing. Supply Net empowers developers with corporate-level leverage by digitizing the management of materials, timelines, and the collective demand that historically lived in spreadsheets.
-          </p>
           <p className="text-[14px] font-normal leading-[1.6] tracking-[-0.2px] text-[#131313] max-w-2xl">
-            Turning unstructured procurement into a shared, data-backed layer gave developers corporate-level leverage without the overhead. In early pilots, teams spent roughly 40% less time on sourcing rounds, reached about 3× more suppliers per project, and routed over 70% of qualifying orders through joint-buying within the first quarter.
+            In the construction industry, access to suppliers is often restricted by non-transparent pricing. Supply Net empowers developers with corporate-level leverage by digitizing the management of materials, timelines, and the collective demand that historically lived in spreadsheets.
           </p>
         </section>
 
@@ -146,7 +138,6 @@ export function SupplyNetCase({ onBack }: SupplyNetCaseProps) {
               label="Pillar 01 — Search"
               heading="Availability-first search engine."
               body="An advanced module that filters by quantities and delivery dates, providing real-time price comparison and joint-purchase proposals — so buyers find leverage, not just listings."
-              closing="Framing discovery around live availability and joint-purchase potential collapsed the outreach rounds developers ran before confirming a material, and surfaced pricing leverage that used to require manual spreadsheet comparisons. Buyers reported reaching a confident decision in roughly half the time."
             >
               <div className="flex flex-wrap items-start justify-center gap-4 md:gap-6">
                 <div className="w-[180px] md:w-[200px]">
@@ -163,7 +154,6 @@ export function SupplyNetCase({ onBack }: SupplyNetCaseProps) {
               label="Pillar 02 — Buying Groups"
               heading="Collective power through connectivity."
               body="Developers can initiate or join buying groups to secure bulk pricing and network with other industry professionals. The flow surfaces live groups relevant to the buyer's current material list."
-              closing="Making group buying a first-class object — not a side workflow — turned isolated buyers into a network. Joint orders moved from ad-hoc exceptions to a default step on most material lists, driving meaningfully better unit pricing on high-volume categories and broadening the pool of suppliers each developer could realistically access."
             >
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-3xl mx-auto">
                 <PlainImage src={buyingGroupState1} alt="Buying groups — search" />
@@ -177,7 +167,6 @@ export function SupplyNetCase({ onBack }: SupplyNetCaseProps) {
               label="Pillar 03 — Automation"
               heading="Automated material lifecycle."
               body="Static BOQ files become dynamic management tools with automated categorization and smart order reminders — turning a spreadsheet chore into a decision-making surface."
-              closing="Replacing static BOQ files with a dynamic workspace meant procurement managers could see every ongoing commitment at a glance. Automated categorisation removed the most error-prone step of intake, and smart reminders closed the loop between planning and ordering — shifting the workflow from reactive to proactive."
             >
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mx-auto">
                 <PlainImage src={fileAnalysis1} alt="File analysis — project setup" />
@@ -185,6 +174,19 @@ export function SupplyNetCase({ onBack }: SupplyNetCaseProps) {
               </div>
             </Pillar>
           </div>
+        </section>
+
+        <div className="mx-6 md:mx-12 border-t border-neutral-200" />
+
+        {/* The Outcome */}
+        <section className="px-6 md:px-12 py-10 md:py-14">
+          <SectionLabel>The Outcome</SectionLabel>
+          <h2 className="text-[24px] font-semibold tracking-[-0.5px] text-[#131313] leading-[1.3] mb-4 max-w-2xl">
+            Solving the challenge.
+          </h2>
+          <p className="text-[14px] font-normal leading-[1.6] tracking-[-0.2px] text-[#131313] max-w-2xl">
+            Together, the three pillars replaced fragmented, opaque sourcing with a shared, data-backed layer. Developers find qualified suppliers faster, pool demand to unlock bulk pricing, and track live material commitments in one workspace. In early pilots, teams spent roughly 40% less time on sourcing rounds, reached about 3× more competitive suppliers per project, and routed over 70% of high-volume orders through joint-buying within the first quarter.
+          </p>
         </section>
       </div>
 
