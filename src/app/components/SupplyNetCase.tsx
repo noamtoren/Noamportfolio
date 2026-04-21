@@ -16,9 +16,27 @@ interface SupplyNetCaseProps {
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
-    <p className="text-xs md:text-sm text-neutral-400 tracking-wide mb-6">
+    <p className="text-[13px] font-normal text-[rgba(19,19,19,0.44)] mb-4">
       {children}
     </p>
+  );
+}
+
+function PlainImage({ src, alt }: { src: string; alt: string }) {
+  return (
+    <ImageWithFallback
+      src={src}
+      alt={alt}
+      className="w-full h-auto object-contain"
+    />
+  );
+}
+
+function PillarCanvas({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="rounded-xl bg-[#F2F0EC] p-6 md:p-10">
+      {children}
+    </div>
   );
 }
 
@@ -36,33 +54,13 @@ function Pillar({
   return (
     <div>
       <SectionLabel>{label}</SectionLabel>
-      <h3 className="text-2xl md:text-[28px] font-semibold tracking-tight text-neutral-900 mb-4 leading-[1.2]">
+      <h3 className="text-[20px] font-semibold tracking-[-0.5px] text-[#131313] mb-3 leading-[1.3]">
         {heading}
       </h3>
-      <p className="text-base md:text-[17px] leading-[1.7] text-neutral-700 max-w-2xl mb-10">
+      <p className="text-[14px] font-normal leading-[1.6] tracking-[-0.2px] text-[#131313] max-w-2xl mb-8">
         {body}
       </p>
-      {children}
-    </div>
-  );
-}
-
-function ImageFrame({
-  src,
-  alt,
-  className = '',
-}: {
-  src: string;
-  alt: string;
-  className?: string;
-}) {
-  return (
-    <div className={`rounded-xl bg-[#F2F0EC] p-6 md:p-10 flex items-center justify-center ${className}`}>
-      <ImageWithFallback
-        src={src}
-        alt={alt}
-        className="w-full h-auto object-contain rounded-md"
-      />
+      <PillarCanvas>{children}</PillarCanvas>
     </div>
   );
 }
@@ -73,10 +71,10 @@ export function SupplyNetCase({ onBack }: SupplyNetCaseProps) {
       {/* Editorial framed container */}
       <div className="max-w-5xl mx-auto border-x border-neutral-100">
         {/* Top bar */}
-        <div className="px-6 md:px-16 pt-8 md:pt-12">
+        <div className="px-6 md:px-12 pt-6 md:pt-10">
           <button
             onClick={onBack}
-            className="group inline-flex items-center gap-2 rounded-md border border-neutral-200 px-3 py-1.5 text-xs md:text-[13px] text-neutral-500 hover:text-neutral-900 hover:border-neutral-300 transition-colors"
+            className="group inline-flex items-center gap-2 rounded-md border border-neutral-200 px-3 py-1.5 text-[12px] text-neutral-500 hover:text-neutral-900 hover:border-neutral-300 transition-colors"
           >
             <ArrowLeft className="w-3.5 h-3.5 transition-transform group-hover:-translate-x-0.5" />
             <span>Back to home</span>
@@ -84,23 +82,23 @@ export function SupplyNetCase({ onBack }: SupplyNetCaseProps) {
         </div>
 
         {/* Hero block */}
-        <div className="px-6 md:px-16 pt-16 md:pt-24 pb-12 md:pb-16">
-          <h1 className="text-5xl md:text-[64px] font-semibold tracking-tight text-neutral-900 leading-[1.05] mb-5">
+        <div className="px-6 md:px-12 pt-10 md:pt-14 pb-8 md:pb-10">
+          <h1 className="text-[36px] font-semibold leading-[1.5] tracking-[-1.5px] text-[#131313] mb-2">
             Supply Net
           </h1>
-          <p className="text-base md:text-[17px] text-neutral-500">
+          <p className="text-[18px] font-normal text-[rgba(19,19,19,0.44)]">
             <span>Case Study</span>
-            <span className="mx-2 text-neutral-300">|</span>
+            <span className="mx-2 text-[rgba(19,19,19,0.24)]">|</span>
             <span>2025</span>
           </p>
         </div>
 
-        <div className="mx-6 md:mx-16 border-t border-neutral-200" />
+        <div className="mx-6 md:mx-12 border-t border-neutral-200" />
 
         {/* Overview */}
-        <section className="px-6 md:px-16 py-16 md:py-20">
+        <section className="px-6 md:px-12 py-10 md:py-14">
           <SectionLabel>Overview</SectionLabel>
-          <div className="space-y-5 text-base md:text-[17px] leading-[1.7] text-neutral-700 max-w-2xl">
+          <div className="space-y-4 text-[14px] font-normal leading-[1.6] tracking-[-0.2px] text-[#131313] max-w-2xl">
             <p>
               Supply Net is a strategic B2B marketplace bridging the gap between developers and suppliers in construction. We designed a transparent ecosystem where developers maximize buying power through collaboration, and suppliers gain equal access to new business opportunities.
             </p>
@@ -110,36 +108,38 @@ export function SupplyNetCase({ onBack }: SupplyNetCaseProps) {
           </div>
         </section>
 
-        <div className="mx-6 md:mx-16 border-t border-neutral-200" />
+        <div className="mx-6 md:mx-12 border-t border-neutral-200" />
 
         {/* Hero image */}
-        <section className="px-6 md:px-16 py-16 md:py-20">
-          <ImageFrame src={heroImage} alt="Supply Net Hero" />
+        <section className="px-6 md:px-12 py-10 md:py-14">
+          <div className="rounded-lg bg-[#F2F0EC] p-6 md:p-10">
+            <PlainImage src={heroImage} alt="Supply Net Hero" />
+          </div>
         </section>
 
-        <div className="mx-6 md:mx-16 border-t border-neutral-200" />
+        <div className="mx-6 md:mx-12 border-t border-neutral-200" />
 
         {/* The Challenge */}
-        <section className="px-6 md:px-16 py-16 md:py-20">
+        <section className="px-6 md:px-12 py-10 md:py-14">
           <SectionLabel>The Challenge</SectionLabel>
-          <h2 className="text-3xl md:text-[40px] font-semibold tracking-tight text-neutral-900 leading-[1.15] mb-6 max-w-2xl">
+          <h2 className="text-[24px] font-semibold tracking-[-0.5px] text-[#131313] leading-[1.3] mb-4 max-w-2xl">
             Dismantling procurement monopolies.
           </h2>
-          <p className="text-base md:text-[17px] leading-[1.7] text-neutral-700 max-w-2xl">
+          <p className="text-[14px] font-normal leading-[1.6] tracking-[-0.2px] text-[#131313] max-w-2xl">
             In the construction industry, access to suppliers is often restricted by non-transparent pricing. Supply Net empowers developers with corporate-level leverage by digitizing the management of materials, timelines, and the collective demand that historically lived in spreadsheets.
           </p>
         </section>
 
-        <div className="mx-6 md:mx-16 border-t border-neutral-200" />
+        <div className="mx-6 md:mx-12 border-t border-neutral-200" />
 
         {/* UX Strategy */}
-        <section className="px-6 md:px-16 py-16 md:py-20">
+        <section className="px-6 md:px-12 py-10 md:py-14">
           <SectionLabel>UX Strategy</SectionLabel>
-          <h2 className="text-3xl md:text-[40px] font-semibold tracking-tight text-neutral-900 leading-[1.15] mb-16 max-w-2xl">
+          <h2 className="text-[24px] font-semibold tracking-[-0.5px] text-[#131313] leading-[1.3] mb-10 max-w-2xl">
             Three pillars that make the product work.
           </h2>
 
-          <div className="space-y-24 md:space-y-28">
+          <div className="space-y-16 md:space-y-20">
             {/* Pillar 1 */}
             <Pillar
               label="Pillar 01 — Search"
@@ -147,8 +147,8 @@ export function SupplyNetCase({ onBack }: SupplyNetCaseProps) {
               body="An advanced module that filters by quantities and delivery dates, providing real-time price comparison and joint-purchase proposals — so buyers find leverage, not just listings."
             >
               <div className="space-y-6">
-                <ImageFrame src={searchEmptyState} alt="Search — empty state" />
-                <ImageFrame src={searchResultsState} alt="Search — results" />
+                <PlainImage src={searchEmptyState} alt="Search — empty state" />
+                <PlainImage src={searchResultsState} alt="Search — results" />
               </div>
             </Pillar>
 
@@ -159,9 +159,9 @@ export function SupplyNetCase({ onBack }: SupplyNetCaseProps) {
               body="Developers can initiate or join buying groups to secure bulk pricing and network with other industry professionals. The flow surfaces live groups relevant to the buyer's current material list."
             >
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <ImageFrame src={buyingGroupState1} alt="Buying groups — search" />
-                <ImageFrame src={buyingGroupState2} alt="Buying groups — results" />
-                <ImageFrame src={buyingGroupState3} alt="Buying groups — details" />
+                <PlainImage src={buyingGroupState1} alt="Buying groups — search" />
+                <PlainImage src={buyingGroupState2} alt="Buying groups — results" />
+                <PlainImage src={buyingGroupState3} alt="Buying groups — details" />
               </div>
             </Pillar>
 
@@ -172,8 +172,8 @@ export function SupplyNetCase({ onBack }: SupplyNetCaseProps) {
               body="Static BOQ files become dynamic management tools with automated categorization and smart order reminders — turning a spreadsheet chore into a decision-making surface."
             >
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <ImageFrame src={fileAnalysis1} alt="File analysis — project setup" />
-                <ImageFrame src={fileAnalysis2} alt="File analysis — data entry" />
+                <PlainImage src={fileAnalysis1} alt="File analysis — project setup" />
+                <PlainImage src={fileAnalysis2} alt="File analysis — data entry" />
               </div>
             </Pillar>
           </div>
