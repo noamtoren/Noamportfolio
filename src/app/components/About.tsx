@@ -58,12 +58,12 @@ export function About() {
           </h1>
 
           {/* Role */}
-          <p className="text-xs text-neutral-500 mb-8 tracking-normal font-normal">
-            UX designer
+          <p className="text-xs text-neutral-500 mb-6 tracking-normal font-normal">
+            UX Designer
           </p>
 
           {/* Headline - Editorial Serif Style */}
-          <h2 className="font-serif text-3xl md:text-4xl text-neutral-600 mb-8 tracking-tight leading-tight font-normal italic">
+          <h2 className="font-serif text-3xl md:text-4xl text-neutral-600 mb-4 tracking-tight leading-tight font-normal italic">
             Nice to meet you!
           </h2>
 
@@ -560,14 +560,14 @@ export function About() {
 
       {/* Section 3: Professional Background */}
       <section className="px-6 md:px-12 py-16 max-w-5xl mx-auto">
-        <h2 className="text-xs uppercase tracking-widest text-neutral-400 mb-16 font-medium">
+        <h2 className="text-xs uppercase tracking-widest text-neutral-400 mb-10 font-medium">
           Professional Background
         </h2>
 
         <div className="space-y-16">
           {/* Education */}
           <div>
-            <h3 className="text-xs uppercase tracking-widest text-neutral-400 mb-8 font-medium">
+            <h3 className="text-xs uppercase tracking-widest text-neutral-400 mb-5 font-medium">
               Education
             </h3>
             <div className="space-y-8">
@@ -644,7 +644,7 @@ export function About() {
 
           {/* Relevant Coursework */}
           <div>
-            <h3 className="text-xs uppercase tracking-widest text-neutral-400 mb-8 font-medium">
+            <h3 className="text-xs uppercase tracking-widest text-neutral-400 mb-5 font-medium">
               Relevant Coursework
             </h3>
             <ul className="space-y-3.5 text-base text-neutral-700 font-light">
@@ -659,7 +659,7 @@ export function About() {
 
           {/* Tools */}
           <div>
-            <h3 className="text-xs uppercase tracking-widest text-neutral-400 mb-8 font-medium">
+            <h3 className="text-xs uppercase tracking-widest text-neutral-400 mb-5 font-medium">
               Tools
             </h3>
             <ul className="space-y-3.5 text-base text-neutral-700 font-light">
