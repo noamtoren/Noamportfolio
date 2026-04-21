@@ -15,10 +15,10 @@ export default function App() {
   const [selectedProject, setSelectedProject] = useState<string | null>(null);
 
   const tabs = [
-    { id: 'home' as Tab, label: 'HOME' },
-    { id: 'about' as Tab, label: 'ABOUT' },
-    { id: 'sketches' as Tab, label: 'SKETCHES' },
-    { id: 'contact' as Tab, label: 'CONTACT' },
+    { id: 'home' as Tab, label: 'Home' },
+    { id: 'about' as Tab, label: 'About me' },
+    { id: 'sketches' as Tab, label: 'Sketches' },
+    { id: 'contact' as Tab, label: 'Contact me' },
   ];
 
   // Helper to close case study and return to home
@@ -81,7 +81,7 @@ export default function App() {
                     href="mailto:noam.toren12@gmail.com"
                     className="relative flex items-center justify-center py-2.5 px-4 rounded-md transition-all duration-300 text-neutral-400 hover:text-neutral-200 hover:bg-neutral-800/30"
                   >
-                    <span className="text-xs tracking-wide whitespace-nowrap">
+                    <span className="text-sm whitespace-nowrap">
                       {tab.label}
                     </span>
                   </a>
@@ -101,7 +101,7 @@ export default function App() {
                       : 'text-neutral-400 hover:text-neutral-200 hover:bg-neutral-800/30'
                   }`}
                 >
-                  <span className={`text-xs tracking-wide whitespace-nowrap ${isActive ? 'font-medium' : ''}`}>
+                  <span className={`text-sm whitespace-nowrap ${isActive ? 'font-medium' : ''}`}>
                     {tab.label}
                   </span>
                 </button>
