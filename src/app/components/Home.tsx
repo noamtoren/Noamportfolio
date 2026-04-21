@@ -117,7 +117,7 @@ export function Home({ onProjectClick }: HomeProps) {
               LinkedIn
             </a>
             <a 
-              href="mailto:noam.toren13@gmail.com" 
+              href="mailto:noam.toren12@gmail.com" 
               className="text-neutral-500 hover:text-neutral-900 transition-colors duration-300"
             >
               Email

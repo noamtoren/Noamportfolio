@@ -19,7 +19,7 @@ export function Contact() {
 
           {/* Primary CTA */}
           <div className="mb-20">
-            <a href="mailto:noam.toren13@gmail.com" className="group w-full md:w-auto border-2 border-neutral-900 bg-neutral-900 text-white py-5 px-12 hover:bg-transparent hover:text-neutral-900 transition-all duration-300 text-lg flex items-center justify-center gap-3 inline-flex">
+            <a href="mailto:noam.toren12@gmail.com" className="group w-full md:w-auto border-2 border-neutral-900 bg-neutral-900 text-white py-5 px-12 hover:bg-transparent hover:text-neutral-900 transition-all duration-300 text-lg flex items-center justify-center gap-3 inline-flex">
               <span>Send me an email</span>
               <ArrowUpRight className="w-5 h-5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
             </a>
@@ -33,13 +33,13 @@ export function Contact() {
               </h2>
               <div className="space-y-6">
                 <a 
-                  href="mailto:noam.toren13@gmail.com" 
+                  href="mailto:noam.toren12@gmail.com" 
                   className="group flex items-center gap-4 text-neutral-700 hover:text-neutral-900 transition-colors py-2"
                 >
                   <div className="w-10 h-10 border border-neutral-300 rounded-full flex items-center justify-center group-hover:border-neutral-900 transition-colors">
                     <Mail className="w-5 h-5" />
                   </div>
-                  <span className="text-lg">noam.toren13@gmail.com</span>
+                  <span className="text-lg">noam.toren12@gmail.com</span>
                 </a>
                 <a 
                   href="#" 

@@ -18,9 +18,9 @@ export function ContactModal({ isOpen, onClose, mode }: ContactModalProps) {
       icon: <Mail className="w-6 h-6" />,
       title: "Let's start a conversation",
       description: "Whether you have a project in mind or just want to say hello, I'm always open to new connections.",
-      value: "noam.toren13@gmail.com",
+      value: "noam.toren12@gmail.com",
       actionLabel: "Open Mail App",
-      actionUrl: "mailto:noam.toren13@gmail.com",
+      actionUrl: "mailto:noam.toren12@gmail.com",
       copyLabel: "Copy Email"
     },
     instagram: {

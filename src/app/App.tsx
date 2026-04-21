@@ -78,7 +78,7 @@ export default function App() {
                 return (
                   <a
                     key={tab.id}
-                    href="mailto:noam.toren13@gmail.com"
+                    href="mailto:noam.toren12@gmail.com"
                     className="relative flex items-center justify-center py-2.5 px-4 rounded-md transition-all duration-300 text-neutral-400 hover:text-neutral-200 hover:bg-neutral-800/30"
                   >
                     <span className="text-xs tracking-wide whitespace-nowrap">
