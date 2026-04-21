@@ -25,7 +25,7 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
 
 function PillarCanvas({ children }: { children: React.ReactNode }) {
   return (
-    <div className="rounded-xl bg-[#ECEEF0] p-6 md:p-8">
+    <div className="rounded-xl bg-[#ECEEF0] p-6 md:p-8 min-h-[300px] md:min-h-[360px] flex items-center justify-center">
       {children}
     </div>
   );
