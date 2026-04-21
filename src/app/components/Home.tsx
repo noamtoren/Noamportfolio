@@ -76,9 +76,9 @@ export function Home({ onProjectClick }: HomeProps) {
             className="rise-in text-lg md:text-[22px] leading-[1.45] text-neutral-900 max-w-3xl mb-10"
             style={{ animationDelay: '300ms' }}
           >
-            Hey, I'm Noam! A UX Designer with a
-            {' '}<span className="text-[#B8552E]">love for thoughtful craft</span>.
-            {' '}I design digital products that feel natural, clear, and built for the people who use them.
+            Hey, I'm Noam! A UI/UX designer drawn to products with
+            {' '}<span className="text-[#B8552E]">real human impact</span>
+            {' '}— healthcare, well-being, meaningful tools. I design with a love for thoughtful craft: interfaces that feel natural, clear, and made for the people who use them.
           </p>
 
           {/* Social links — quiet grey text row, inside hero block */}
