@@ -44,19 +44,25 @@ export function Home({ onProjectClick }: HomeProps) {
         {/* Hero — compact, left-aligned, all sans-serif */}
         <section className="mb-24 md:mb-32">
           {/* Line 1: role + name inline */}
-          <p className="text-sm md:text-[15px] leading-relaxed">
+          <p
+            className="rise-in text-sm md:text-[15px] leading-relaxed"
+            style={{ animationDelay: '0ms' }}
+          >
             <span className="text-neutral-400">UX Designer </span>
             <span className="text-neutral-900">Noam Toren</span>
           </p>
 
           {/* Line 2: currently at / location */}
-          <p className="text-sm md:text-[15px] leading-relaxed mb-10">
+          <p
+            className="rise-in text-sm md:text-[15px] leading-relaxed mb-10"
+            style={{ animationDelay: '100ms' }}
+          >
             <span className="text-neutral-400">Based in </span>
             <span className="text-neutral-900">Israel</span>
           </p>
 
           {/* Profile image — square with slightly rounded corners */}
-          <div className="mb-8">
+          <div className="rise-in mb-8" style={{ animationDelay: '200ms' }}>
             <img
               src={profileImage}
               alt="Noam Toren"
@@ -66,14 +72,20 @@ export function Home({ onProjectClick }: HomeProps) {
           </div>
 
           {/* Intro paragraph — regular sans with bold emphasis, no serif */}
-          <p className="text-lg md:text-[22px] leading-[1.45] text-neutral-900 max-w-3xl mb-10">
+          <p
+            className="rise-in text-lg md:text-[22px] leading-[1.45] text-neutral-900 max-w-3xl mb-10"
+            style={{ animationDelay: '300ms' }}
+          >
             Hey, I'm Noam! A UX Designer with a
             {' '}<span className="text-[#B8552E]">love for thoughtful craft</span>.
             {' '}I design digital products that feel natural, clear, and built for the people who use them.
           </p>
 
           {/* Social links — quiet grey text row, inside hero block */}
-          <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm">
+          <div
+            className="rise-in flex flex-wrap items-center gap-x-6 gap-y-2 text-sm"
+            style={{ animationDelay: '450ms' }}
+          >
             <a
               href="https://www.instagram.com/toren.design_/"
               target="_blank"
@@ -102,11 +114,12 @@ export function Home({ onProjectClick }: HomeProps) {
         {/* Projects — 2-col grid, inline title/subtitle, light-grey image background */}
         <section className="pb-16">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-12 md:gap-y-16">
-            {projects.map((project) => (
+            {projects.map((project, index) => (
               <div
                 key={project.id}
                 onClick={() => onProjectClick?.(project.id)}
-                className="group cursor-pointer"
+                className="rise-in group cursor-pointer"
+                style={{ animationDelay: `${600 + index * 100}ms` }}
               >
                 {/* Inline title + category */}
                 <p className="text-sm md:text-[15px] mb-3">
