@@ -97,9 +97,9 @@ export function SupplyNetCase({ onBack, onSelectProject }: SupplyNetCaseProps) {
         <div className="px-6 md:px-12 pt-6 md:pt-10">
           <button
             onClick={onBack}
-            className="group inline-flex items-center gap-2 rounded-md border border-neutral-200 px-3 py-1.5 text-[12px] text-neutral-500 hover:text-neutral-900 hover:border-neutral-300 transition-colors"
+            className="group inline-flex items-center gap-2 rounded-md bg-[#ECEEF0] hover:bg-neutral-200 px-4 py-2 text-[13px] text-[#131313] transition-colors"
           >
-            <ArrowLeft className="w-3.5 h-3.5 transition-transform group-hover:-translate-x-0.5" />
+            <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-0.5" />
             <span>Back to home</span>
           </button>
         </div>
