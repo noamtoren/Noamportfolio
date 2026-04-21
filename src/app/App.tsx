@@ -79,7 +79,7 @@ export default function App() {
                   <a
                     key={tab.id}
                     href="mailto:noam.toren12@gmail.com"
-                    className="relative flex items-center justify-center py-2 px-3.5 rounded-md overflow-hidden text-neutral-300 transition-colors duration-300 hover:text-white group/cm"
+                    className="relative flex items-center justify-center py-2 px-5 rounded-md overflow-hidden text-neutral-300 transition-colors duration-300 hover:text-white group/cm"
                   >
                     <span className="absolute inset-0 bg-white/10 origin-left scale-x-0 transition-transform duration-[450ms] ease-out group-hover/cm:scale-x-100" />
                     <span className="relative text-[13px] whitespace-nowrap">
@@ -96,7 +96,7 @@ export default function App() {
                     setSelectedProject(null);
                     setActiveTab(tab.id);
                   }}
-                  className={`relative flex items-center justify-center py-2 px-3.5 rounded-md transition-colors duration-300 ${
+                  className={`relative flex items-center justify-center py-2 px-5 rounded-md transition-colors duration-300 ${
                     isActive
                       ? 'text-white'
                       : 'text-neutral-400 hover:text-neutral-200'
