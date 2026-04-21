@@ -69,25 +69,14 @@ export function Home({ onProjectClick }: HomeProps) {
             UX Designer
           </p>
 
-          {/* Personal Image — with available-for-work status indicator */}
-          <div className="mb-8 relative inline-block group/avatar">
-            <div className="relative w-24 h-24">
-              <div className="absolute inset-0 rounded-xl ring-0 ring-[#C87137]/0 transition-all duration-500 ease-out group-hover/avatar:ring-4 group-hover/avatar:ring-[#C87137]/20" />
-              <img
-                src={profileImage}
-                alt="Noam"
-                className="w-24 h-24 rounded-xl object-cover transition-transform duration-500 ease-out group-hover/avatar:scale-[1.02]"
-                style={{ objectPosition: 'center 35%' }}
-              />
-              {/* Status dot — pulsing green ring */}
-              <span className="absolute -bottom-0.5 -right-0.5 flex h-3.5 w-3.5">
-                <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75 animate-ping" />
-                <span className="relative inline-flex h-3.5 w-3.5 rounded-full bg-emerald-500 ring-2 ring-white" />
-              </span>
-            </div>
-            <p className="absolute left-[108px] top-1/2 -translate-y-1/2 whitespace-nowrap text-xs text-neutral-500 tracking-wide font-normal hidden md:block">
-              <span className="text-emerald-600 font-medium">Available</span> for new projects
-            </p>
+          {/* Personal Image */}
+          <div className="mb-8">
+            <img 
+              src={profileImage} 
+              alt="Noam" 
+              className="w-24 h-24 rounded-xl object-cover" 
+              style={{ objectPosition: 'center 35%' }}
+            />
           </div>
 
           {/* Personal Statement - Below Image */}
@@ -114,38 +103,24 @@ export function Home({ onProjectClick }: HomeProps) {
             </span> who use them.</span>
           </p>
 
-          {/* Social Links Row — each link gets an external-arrow that slides on hover */}
+          {/* Social Links Row */}
           <div className="flex items-center gap-6 text-sm pb-8">
-            <a
-              href="https://www.instagram.com/toren.design_/"
+            <a 
+              href="https://www.instagram.com/toren.design_/" 
               target="_blank"
               rel="noopener noreferrer"
-              className="group/link inline-flex items-center gap-1 text-neutral-500 hover:text-neutral-900 transition-colors duration-300"
+              className="text-neutral-500 hover:text-neutral-900 transition-colors duration-300"
             >
-              <span>Instagram</span>
-              <svg className="w-3 h-3 opacity-0 -translate-x-1 transition-all duration-300 ease-out group-hover/link:opacity-100 group-hover/link:translate-x-0" fill="none" viewBox="0 0 12 12" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.75" d="M3 9L9 3M9 3H4M9 3V8" />
-              </svg>
+              Instagram
             </a>
-            <a
-              href="https://www.linkedin.com/in/noam-toren/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group/link inline-flex items-center gap-1 text-neutral-500 hover:text-neutral-900 transition-colors duration-300"
-            >
-              <span>LinkedIn</span>
-              <svg className="w-3 h-3 opacity-0 -translate-x-1 transition-all duration-300 ease-out group-hover/link:opacity-100 group-hover/link:translate-x-0" fill="none" viewBox="0 0 12 12" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.75" d="M3 9L9 3M9 3H4M9 3V8" />
-              </svg>
+            <a href="https://www.linkedin.com/in/noam-toren/" target="_blank" rel="noopener noreferrer" className="text-neutral-500 hover:text-neutral-900 transition-colors duration-300">
+              LinkedIn
             </a>
-            <a
-              href="mailto:noam.toren12@gmail.com"
-              className="group/link inline-flex items-center gap-1 text-neutral-500 hover:text-neutral-900 transition-colors duration-300"
+            <a 
+              href="mailto:noam.toren12@gmail.com" 
+              className="text-neutral-500 hover:text-neutral-900 transition-colors duration-300"
             >
-              <span>Email</span>
-              <svg className="w-3 h-3 opacity-0 -translate-x-1 transition-all duration-300 ease-out group-hover/link:opacity-100 group-hover/link:translate-x-0" fill="none" viewBox="0 0 12 12" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.75" d="M3 9L9 3M9 3H4M9 3V8" />
-              </svg>
+              Email
             </a>
           </div>
 
