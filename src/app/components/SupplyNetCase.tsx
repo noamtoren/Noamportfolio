@@ -216,8 +216,23 @@ export function SupplyNetCase({ onBack }: SupplyNetCaseProps) {
             Solving the challenge.
           </h2>
           <p className="text-[14px] font-normal leading-[1.6] tracking-[-0.2px] text-[#131313] max-w-2xl">
-            Together, the three pillars replaced fragmented, opaque sourcing with a shared, data-backed layer. Developers find qualified suppliers faster, pool demand to unlock bulk pricing, and track live material commitments in one workspace. In early pilots, teams spent roughly 40% less time on sourcing rounds, reached about 3× more competitive suppliers per project, and routed over 70% of high-volume orders through joint-buying within the first quarter.
+            Together, the three pillars replaced fragmented, opaque sourcing with a shared, data-backed layer — letting developers find qualified suppliers faster, pool demand to unlock bulk pricing, and track live material commitments in one workspace.
           </p>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-10">
+            <div className="rounded-xl bg-[#F2F0EC] p-6">
+              <p className="text-[40px] font-semibold tracking-[-1px] leading-none text-[#131313]">~40%</p>
+              <p className="text-[13px] text-[rgba(19,19,19,0.6)] mt-3 leading-[1.5]">Less time spent on sourcing rounds</p>
+            </div>
+            <div className="rounded-xl bg-[#F2F0EC] p-6">
+              <p className="text-[40px] font-semibold tracking-[-1px] leading-none text-[#131313]">~3×</p>
+              <p className="text-[13px] text-[rgba(19,19,19,0.6)] mt-3 leading-[1.5]">More competitive suppliers reached per project</p>
+            </div>
+            <div className="rounded-xl bg-[#F2F0EC] p-6">
+              <p className="text-[40px] font-semibold tracking-[-1px] leading-none text-[#131313]">70%+</p>
+              <p className="text-[13px] text-[rgba(19,19,19,0.6)] mt-3 leading-[1.5]">Of high-volume orders routed through joint-buying</p>
+            </div>
+          </div>
         </section>
       </div>
 
