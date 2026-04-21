@@ -74,30 +74,28 @@ export function CaseNavFooter({ currentId, onSelectProject }: CaseNavFooterProps
 
   if (!prev && !next) return null;
 
-  const isBoth = Boolean(prev && next);
-
   return (
     <section className="px-6 md:px-12 py-10 md:py-14">
-      <div
-        className={`flex gap-6 ${
-          isBoth ? 'justify-between' : 'justify-center'
-        }`}
-      >
-        {prev && (
+      <div className="flex gap-6 justify-between">
+        {prev ? (
           <NavLink
             direction="prev"
             project={prev}
             onClick={() => onSelectProject(prev.id)}
             align="left"
           />
+        ) : (
+          <div />
         )}
-        {next && (
+        {next ? (
           <NavLink
             direction="next"
             project={next}
             onClick={() => onSelectProject(next.id)}
             align="right"
           />
+        ) : (
+          <div />
         )}
       </div>
     </section>
