@@ -133,22 +133,7 @@ export function Home({ onProjectClick }: HomeProps) {
       <div className="px-6 md:px-12 pb-16 max-w-5xl mx-auto pt-0 relative">
         {/* Subtle orange-tinted background layer */}
         <div className="absolute inset-0 -mx-[100vw] bg-gradient-to-b from-[#FFF5F0]/30 via-[#FFEEE5]/20 to-[#FFF5F0]/10 -z-10" />
-
-        {/* Section Header — anchors the grid, sets expectation */}
-        <div className="flex items-end justify-between mb-10 pt-2">
-          <div>
-            <p className="text-xs text-neutral-400 tracking-widest uppercase mb-2 font-medium">
-              Selected Work
-            </p>
-            <h2 className="font-display text-2xl md:text-3xl text-neutral-900 font-normal tracking-tight">
-              Recent projects
-            </h2>
-          </div>
-          <p className="text-xs text-neutral-400 tracking-wide hidden md:block">
-            {projects.length.toString().padStart(2, '0')} / 2023 — 2025
-          </p>
-        </div>
-
+        
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
           {projects.map((project, index) => (
             <div
@@ -188,18 +173,6 @@ export function Home({ onProjectClick }: HomeProps) {
                     <div className="absolute inset-0 bg-neutral-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 mix-blend-multiply" />
                   </div>
                 )}
-
-                {/* Floating CTA pill — resting: compact arrow circle; hover: expands with label */}
-                <div className="absolute bottom-3 right-3 flex items-center bg-white/95 backdrop-blur-sm rounded-full shadow-md border border-neutral-200/70 overflow-hidden transition-all duration-500 ease-out group-hover:bg-[#C87137] group-hover:border-[#C87137] group-hover:shadow-lg group-hover:pl-4">
-                  <span className="max-w-0 opacity-0 whitespace-nowrap text-[11px] font-semibold tracking-widest uppercase text-white transition-all duration-500 ease-out group-hover:max-w-[140px] group-hover:opacity-100 group-hover:pr-2">
-                    View Case Study
-                  </span>
-                  <span className="flex items-center justify-center w-9 h-9 flex-shrink-0">
-                    <svg className="w-3.5 h-3.5 text-[#C87137] group-hover:text-white transition-all duration-300 group-hover:translate-x-0.5" fill="none" viewBox="0 0 12 12" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.75" d="M2 6h8m0 0L6 2m4 4L6 10" />
-                    </svg>
-                  </span>
-                </div>
               </div>
 
               {/* Project Title — with growing underline */}
@@ -208,6 +181,16 @@ export function Home({ onProjectClick }: HomeProps) {
                 <span className="absolute left-0 -bottom-0.5 w-full h-px bg-[#C87137] origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-out" />
               </h3>
               <p className="text-sm text-neutral-500 mt-1">{project.category}</p>
+
+              {/* CTA — reserved space; fades + slides in on hover (no layout shift) */}
+              <div className="mt-3 h-5 overflow-hidden">
+                <div className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#C87137] tracking-widest uppercase opacity-0 translate-y-2 transition-all duration-400 ease-out group-hover:opacity-100 group-hover:translate-y-0">
+                  <span>View Case Study</span>
+                  <svg className="w-3 h-3 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 12 12" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.75" d="M2 6h8m0 0L6 2m4 4L6 10" />
+                  </svg>
+                </div>
+              </div>
             </div>
           ))}
         </div>
