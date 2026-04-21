@@ -25,13 +25,13 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
 
 function PillarCanvas({ children }: { children: React.ReactNode }) {
   return (
-    <div className="rounded-xl bg-[#F2F0EC] p-6 md:p-10">
+    <div className="rounded-xl bg-[#ECEEF0] px-8 py-10 md:py-12">
       {children}
     </div>
   );
 }
 
-type PillarImage = { src: string; alt: string };
+type PillarImage = { src: string; alt: string; label: string };
 
 // Design-system rule: the more images in a row, the smaller each one is.
 const PILLAR_IMAGE_WIDTHS: Record<number, number> = {
@@ -46,18 +46,22 @@ const PILLAR_IMAGE_ROW_HEIGHT = 440;
 function PillarImages({ images }: { images: PillarImage[] }) {
   const width = PILLAR_IMAGE_WIDTHS[images.length] ?? 220;
   return (
-    <div className="flex flex-wrap items-center justify-center gap-4">
+    <div className="flex flex-wrap items-start justify-center gap-4">
       {images.map((img, i) => (
-        <div
-          key={i}
-          className="flex items-center justify-center"
-          style={{ width: `${width}px`, height: `${PILLAR_IMAGE_ROW_HEIGHT}px` }}
-        >
-          <ImageWithFallback
-            src={img.src}
-            alt={img.alt}
-            className="w-full h-full object-contain"
-          />
+        <div key={i} style={{ width: `${width}px` }}>
+          <p className="text-[11px] text-[#1B6FDE] mb-2 leading-none">
+            {img.label}
+          </p>
+          <div
+            className="flex items-center justify-center"
+            style={{ height: `${PILLAR_IMAGE_ROW_HEIGHT}px` }}
+          >
+            <ImageWithFallback
+              src={img.src}
+              alt={img.alt}
+              className="w-full h-full object-contain"
+            />
+          </div>
         </div>
       ))}
     </div>
@@ -179,8 +183,8 @@ export function SupplyNetCase({ onBack, onSelectProject }: SupplyNetCaseProps) {
               heading="Availability-first search engine."
               body="An advanced module that filters by quantities and delivery dates, providing real-time price comparison and joint-purchase proposals — so buyers find leverage, not just listings."
               images={[
-                { src: searchEmptyState, alt: 'Search — empty state' },
-                { src: searchResultsState, alt: 'Search — results' },
+                { src: searchEmptyState, alt: 'Search — empty state', label: 'Search — Empty State' },
+                { src: searchResultsState, alt: 'Search — results', label: 'Search — Results View' },
               ]}
             />
 
@@ -190,9 +194,9 @@ export function SupplyNetCase({ onBack, onSelectProject }: SupplyNetCaseProps) {
               heading="Collective power through connectivity."
               body="Developers can initiate or join buying groups to secure bulk pricing and network with other industry professionals. The flow surfaces live groups relevant to the buyer's current material list."
               images={[
-                { src: buyingGroupState1, alt: 'Buying groups — search' },
-                { src: buyingGroupState2, alt: 'Buying groups — results' },
-                { src: buyingGroupState3, alt: 'Buying groups — details' },
+                { src: buyingGroupState1, alt: 'Buying groups — search', label: 'Buying Group — Discover' },
+                { src: buyingGroupState2, alt: 'Buying groups — results', label: 'Buying Group — Matching Groups' },
+                { src: buyingGroupState3, alt: 'Buying groups — details', label: 'Buying Group — Join Flow' },
               ]}
             />
 
@@ -202,8 +206,8 @@ export function SupplyNetCase({ onBack, onSelectProject }: SupplyNetCaseProps) {
               heading="Automated material lifecycle."
               body="Static BOQ files become dynamic management tools with automated categorization and smart order reminders — turning a spreadsheet chore into a decision-making surface."
               images={[
-                { src: fileAnalysis1, alt: 'File analysis — project setup' },
-                { src: fileAnalysis2, alt: 'File analysis — data entry' },
+                { src: fileAnalysis1, alt: 'File analysis — project setup', label: 'File Analysis — Project Setup' },
+                { src: fileAnalysis2, alt: 'File analysis — data entry', label: 'File Analysis — Data Entry' },
               ]}
             />
           </div>
