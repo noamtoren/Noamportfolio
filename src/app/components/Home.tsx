@@ -103,7 +103,7 @@ export function Home({ onProjectClick }: HomeProps) {
               LinkedIn
             </a>
             <a
-              href="#"
+              href="/Noam-Toren-Resume.pdf"
               target="_blank"
               rel="noopener noreferrer"
               className="text-neutral-400 hover:text-neutral-900 transition-colors duration-200"
