@@ -69,7 +69,7 @@ export default function App() {
 
       {/* Floating Bottom Tab Navigation */}
       <nav className="fixed bottom-10 left-1/2 -translate-x-1/2 z-50">
-        <div className="bg-neutral-900/90 backdrop-blur-xl rounded-lg px-1 py-1">
+        <div className="bg-neutral-900/95 backdrop-blur-xl rounded-lg px-1 py-1 shadow-[0_14px_40px_-8px_rgba(0,0,0,0.25)] ring-1 ring-black/5">
           <div className="flex items-center gap-0.5">
             {tabs.map((tab) => {
               const isActive = activeTab === tab.id && !selectedProject;
