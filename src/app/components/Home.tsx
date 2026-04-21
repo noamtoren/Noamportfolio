@@ -48,8 +48,8 @@ export function Home({ onProjectClick }: HomeProps) {
             className="rise-in text-sm md:text-[15px] leading-relaxed"
             style={{ animationDelay: '0ms' }}
           >
-            <span className="text-neutral-500">UI/UX Designer </span>
-            <span className="text-neutral-900">Noam Toren</span>
+            <span className="text-neutral-400">UI/UX Designer </span>
+            <span className="text-neutral-900 font-semibold">Noam Toren</span>
           </p>
 
           {/* Line 2: availability */}
@@ -57,8 +57,8 @@ export function Home({ onProjectClick }: HomeProps) {
             className="rise-in text-sm md:text-[15px] leading-relaxed mb-10"
             style={{ animationDelay: '100ms' }}
           >
-            <span className="text-neutral-500">Open for </span>
-            <span className="text-neutral-900">full-time &amp; freelance</span>
+            <span className="text-neutral-400">Open for </span>
+            <span className="text-neutral-900 font-semibold">full-time &amp; freelance</span>
           </p>
 
           {/* Profile image — square with slightly rounded corners */}
@@ -90,7 +90,7 @@ export function Home({ onProjectClick }: HomeProps) {
               href="https://www.instagram.com/toren.design_/"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-neutral-500 hover:text-neutral-900 transition-colors duration-200"
+              className="text-neutral-400 hover:text-neutral-900 transition-colors duration-200"
             >
               Instagram
             </a>
@@ -98,7 +98,7 @@ export function Home({ onProjectClick }: HomeProps) {
               href="https://www.linkedin.com/in/noam-toren/"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-neutral-500 hover:text-neutral-900 transition-colors duration-200"
+              className="text-neutral-400 hover:text-neutral-900 transition-colors duration-200"
             >
               LinkedIn
             </a>
@@ -106,13 +106,13 @@ export function Home({ onProjectClick }: HomeProps) {
               href="#"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-neutral-500 hover:text-neutral-900 transition-colors duration-200"
+              className="text-neutral-400 hover:text-neutral-900 transition-colors duration-200"
             >
               Resume
             </a>
             <a
               href="mailto:noam.toren12@gmail.com"
-              className="text-neutral-500 hover:text-neutral-900 transition-colors duration-200"
+              className="text-neutral-400 hover:text-neutral-900 transition-colors duration-200"
             >
               Email
             </a>
@@ -131,10 +131,10 @@ export function Home({ onProjectClick }: HomeProps) {
               >
                 {/* Inline title + category */}
                 <p className="text-sm md:text-[15px] mb-3">
-                  <span className="text-neutral-900 group-hover:text-[#B8552E] transition-colors duration-200">
+                  <span className="text-neutral-900 font-semibold group-hover:text-[#B8552E] transition-colors duration-200">
                     {project.title}
                   </span>
-                  <span className="text-neutral-500"> {project.category}</span>
+                  <span className="text-neutral-400"> {project.category}</span>
                 </p>
 
                 {/* Mockup — soft shadow + tiny lift on hover */}
