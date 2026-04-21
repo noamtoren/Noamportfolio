@@ -101,7 +101,7 @@ export default function App() {
                       : 'text-neutral-400 hover:text-neutral-200'
                   }`}
                 >
-                  <span className={`text-sm whitespace-nowrap ${isActive ? 'font-medium' : ''}`}>
+                  <span className="text-sm whitespace-nowrap">
                     {tab.label}
                   </span>
                 </button>
