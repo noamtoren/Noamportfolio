@@ -136,26 +136,26 @@ export function Home({ onProjectClick }: HomeProps) {
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
           {projects.map((project, index) => (
-            <div 
+            <div
               key={project.id}
-              className="group cursor-pointer block"
+              className="group cursor-pointer block transition-transform duration-500 ease-out hover:-translate-y-1.5"
               onClick={() => onProjectClick && onProjectClick(project.id)}
             >
-              {/* Context Label */}
-              <p className="text-xs text-neutral-400 mb-3 tracking-wide uppercase">
+              {/* Context Label — shifts to brand orange on hover */}
+              <p className="text-xs text-neutral-400 mb-3 tracking-wide uppercase transition-colors duration-300 group-hover:text-[#C87137]">
                 {project.context}
               </p>
-              
+
               {/* Project Image / Preview */}
-              <div className={`aspect-[4/3] rounded-lg mb-4 relative overflow-hidden shadow-sm transition-all duration-300 group-hover:shadow-md border border-neutral-100/50 
+              <div className={`aspect-[4/3] rounded-lg mb-4 relative overflow-hidden shadow-sm transition-all duration-500 group-hover:shadow-xl border border-neutral-100/50 group-hover:border-[#C87137]/20
                 ${project.customCardStyle ? project.customCardStyle : 'bg-neutral-100'}
               `}>
                 {project.image ? (
                    <>
                      <div className={`w-full h-full transition-transform duration-700 ${project.imageFit && project.imageFit.includes('object-contain') ? 'group-hover:scale-105' : 'absolute inset-0 group-hover:scale-105'}`}>
-                        <ImageWithFallback 
-                          src={project.image} 
-                          alt={project.title} 
+                        <ImageWithFallback
+                          src={project.image}
+                          alt={project.title}
                           className={`w-full h-full ${project.imageFit || 'object-cover'} ${project.imagePosition || 'object-center'}`}
                         />
                      </div>
@@ -174,12 +174,23 @@ export function Home({ onProjectClick }: HomeProps) {
                   </div>
                 )}
               </div>
-              
-              {/* Project Title */}
-              <h3 className="text-lg text-neutral-800 font-medium group-hover:text-black transition-colors">
+
+              {/* Project Title — with growing underline */}
+              <h3 className="text-lg text-neutral-800 font-medium group-hover:text-black transition-colors inline-block relative">
                 {project.title}
+                <span className="absolute left-0 -bottom-0.5 w-full h-px bg-[#C87137] origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-out" />
               </h3>
               <p className="text-sm text-neutral-500 mt-1">{project.category}</p>
+
+              {/* CTA — reserved space; fades + slides in on hover (no layout shift) */}
+              <div className="mt-3 h-5 overflow-hidden">
+                <div className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#C87137] tracking-widest uppercase opacity-0 translate-y-2 transition-all duration-400 ease-out group-hover:opacity-100 group-hover:translate-y-0">
+                  <span>View Case Study</span>
+                  <svg className="w-3 h-3 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 12 12" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.75" d="M2 6h8m0 0L6 2m4 4L6 10" />
+                  </svg>
+                </div>
+              </div>
             </div>
           ))}
         </div>
