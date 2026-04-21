@@ -31,7 +31,13 @@ function PillarCanvas({ children }: { children: React.ReactNode }) {
   );
 }
 
-type PillarImage = { src: string; alt: string; label: string };
+type PillarImage = { src: string; alt: string; label: string; kind: 'frame' | 'component' };
+
+// Match Figma's editor convention: frame labels are near-black, component labels are purple.
+const LABEL_COLOR: Record<PillarImage['kind'], string> = {
+  frame: '#1E1E1E',
+  component: '#9747FF',
+};
 
 // Design-system rule: the more images in a row, the smaller each one is.
 const PILLAR_IMAGE_WIDTHS: Record<number, number> = {
@@ -47,7 +53,10 @@ function PillarImages({ images }: { images: PillarImage[] }) {
     <div className="flex flex-wrap items-start justify-center gap-6">
       {images.map((img, i) => (
         <div key={i} style={{ width: `${width}px` }}>
-          <p className="text-[11px] text-[#1B6FDE] mb-1.5 leading-none">
+          <p
+            className="text-[11px] mb-1.5 leading-none"
+            style={{ color: LABEL_COLOR[img.kind] }}
+          >
             {img.label}
           </p>
           <ImageWithFallback
@@ -176,8 +185,8 @@ export function SupplyNetCase({ onBack, onSelectProject }: SupplyNetCaseProps) {
               heading="Availability-first search engine."
               body="An advanced module that filters by quantities and delivery dates, providing real-time price comparison and joint-purchase proposals — so buyers find leverage, not just listings."
               images={[
-                { src: searchEmptyState, alt: 'Search — empty state', label: 'Search — Empty State' },
-                { src: searchResultsState, alt: 'Search — results', label: 'Search — Results View' },
+                { src: searchEmptyState, alt: 'Search — empty state', label: 'Search — Empty State', kind: 'frame' },
+                { src: searchResultsState, alt: 'Search — results', label: 'Search — Results View', kind: 'frame' },
               ]}
             />
 
@@ -187,9 +196,9 @@ export function SupplyNetCase({ onBack, onSelectProject }: SupplyNetCaseProps) {
               heading="Collective power through connectivity."
               body="Developers can initiate or join buying groups to secure bulk pricing and network with other industry professionals. The flow surfaces live groups relevant to the buyer's current material list."
               images={[
-                { src: buyingGroupState1, alt: 'Buying groups — search', label: 'Buying Group — Discover' },
-                { src: buyingGroupState2, alt: 'Buying groups — results', label: 'Buying Group — Matching Groups' },
-                { src: buyingGroupState3, alt: 'Buying groups — details', label: 'Buying Group — Join Flow' },
+                { src: buyingGroupState1, alt: 'Buying groups — search', label: 'Buying Group — Discover', kind: 'component' },
+                { src: buyingGroupState2, alt: 'Buying groups — results', label: 'Buying Group — Matching Groups', kind: 'component' },
+                { src: buyingGroupState3, alt: 'Buying groups — details', label: 'Buying Group — Join Flow', kind: 'component' },
               ]}
             />
 
@@ -199,8 +208,8 @@ export function SupplyNetCase({ onBack, onSelectProject }: SupplyNetCaseProps) {
               heading="Automated material lifecycle."
               body="Static BOQ files become dynamic management tools with automated categorization and smart order reminders — turning a spreadsheet chore into a decision-making surface."
               images={[
-                { src: fileAnalysis1, alt: 'File analysis — project setup', label: 'File Analysis — Project Setup' },
-                { src: fileAnalysis2, alt: 'File analysis — data entry', label: 'File Analysis — Data Entry' },
+                { src: fileAnalysis1, alt: 'File analysis — project setup', label: 'File Analysis — Project Setup', kind: 'component' },
+                { src: fileAnalysis2, alt: 'File analysis — data entry', label: 'File Analysis — Data Entry', kind: 'component' },
               ]}
             />
           </div>
