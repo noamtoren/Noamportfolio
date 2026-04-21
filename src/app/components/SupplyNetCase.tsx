@@ -1,7 +1,6 @@
 import { ArrowLeft } from 'lucide-react';
 import { Footer } from '@/app/components/Footer';
 import { ImageWithFallback } from '@/app/components/figma/ImageWithFallback';
-import heroImage from '../../assets/57b61d37a32011c4d800094d142fc794b97687b4.png';
 import buyingGroupState1 from '../../assets/460e25cd141ca9b471384ce97a83560a20d2ad76.png';
 import buyingGroupState2 from '../../assets/9f500214e40b40199b69860288a6b22b6789eee3.png';
 import buyingGroupState3 from '../../assets/18f2f4ae2ba02118fc5c433b02c9f15052f2419b.png';
@@ -110,15 +109,6 @@ export function SupplyNetCase({ onBack }: SupplyNetCaseProps) {
             <p>
               My role spanned UX/UI design and product strategy — shaping the core flows, visual system, and the collaborative buying mechanics that sit at the heart of the product.
             </p>
-          </div>
-        </section>
-
-        <div className="mx-6 md:mx-12 border-t border-neutral-200" />
-
-        {/* Hero image */}
-        <section className="px-6 md:px-12 py-10 md:py-14">
-          <div className="rounded-lg bg-[#F2F0EC] p-6 md:p-10">
-            <PlainImage src={heroImage} alt="Supply Net Hero" />
           </div>
         </section>
 
