@@ -2,14 +2,14 @@ import { ArrowLeft } from 'lucide-react';
 import { Footer } from '@/app/components/Footer';
 import { CaseNavFooter } from '@/app/components/CaseNavFooter';
 import { ImageWithFallback } from '@/app/components/figma/ImageWithFallback';
-import intakeStartImg from '../../assets/4da5aa04250589ceabba90f46d9d5eb35823d09f.png';
-import intakeMiddleImg from '../../assets/6a70cc2ac4adf411579c789cc467ade4e7c03c01.png';
-import mainDashboardImg from '../../assets/555012e72bdc0e1c9e229b999b8d53902c28ca93.png';
-import knowYourRightsImg from '../../assets/4ded4f6621f3769bf84821201029aba0cbba4079.png';
-import resultsImg from '../../assets/f15bf7ba406af1bdb77ebb7675191e3fc71005ee.png';
-import emotionalToolsImg from '../../assets/7d284a43775e44a2d5cb51e19a8cf579e67c34fa.png';
-import expertSelectionImg from '../../assets/b8f082375407022bd94b7f0a8dbddb6952af62f5.png';
-import expertChatImg from '../../assets/63a1e0bc44b3cfb11631655d7fd5e9cd120ed9eb.png';
+import intakeStartImg from '../../assets/machon-intake-start.png';
+import intakeMiddleImg from '../../assets/machon-intake-mid.png';
+import mainDashboardImg from '../../assets/machon-knowledge-home.png';
+import knowYourRightsImg from '../../assets/machon-know-rights.png';
+import resultsImg from '../../assets/machon-rights-map.png';
+import emotionalToolsImg from '../../assets/machon-emotional-toolbox.png';
+import expertSelectionImg from '../../assets/machon-therapist-selection.png';
+import expertChatImg from '../../assets/machon-therapist-chat.png';
 
 interface MachonChiburCaseStudyProps {
   onBack: () => void;
