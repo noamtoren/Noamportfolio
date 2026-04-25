@@ -248,8 +248,11 @@ export function MachonChiburCaseStudy({ onBack, onSelectProject }: MachonChiburC
           <h2 className="text-[22px] font-semibold tracking-[-0.5px] text-[#131313] leading-[1.3] mb-4 max-w-2xl">
             A documented system, not a moodboard.
           </h2>
-          <p className="text-[14px] font-normal leading-[1.6] tracking-[-0.2px] text-[#131313] max-w-2xl mb-12">
+          <p className="text-[14px] font-normal leading-[1.6] tracking-[-0.2px] text-[#131313] max-w-2xl mb-3">
             Foundations and components were built once, then mirrored on every screen — variables for color and spacing, text styles for the Hebrew type scale, and a Component Library where every recurring element ships with its variants and states. Nothing on a screen is a one-off.
+          </p>
+          <p className="text-[12px] font-normal leading-[1.6] tracking-[-0.2px] text-[rgba(19,19,19,0.5)] max-w-2xl mb-12">
+            Scope note: this section documents only what lives inside the system — UI surfaces, components, type, semantic states. It is not a brand-imagery palette and does not cover photography or hero illustrations.
           </p>
 
           {/* FOUNDATIONS — Color, Typography, Spacing, Elevation */}
@@ -259,10 +262,10 @@ export function MachonChiburCaseStudy({ onBack, onSelectProject }: MachonChiburC
           <div className="rounded-xl border border-neutral-200 bg-white p-6 mb-6">
             <div className="flex items-baseline justify-between mb-4">
               <h3 className="text-[16px] font-semibold text-[#131313]">Color · 25 paint styles</h3>
-              <span className="text-[11px] uppercase tracking-[1.2px] text-[rgba(19,19,19,0.5)]">Bound to variables</span>
+              <span className="text-[11px] uppercase tracking-[1.2px] text-[rgba(19,19,19,0.5)]">UI tokens · bound to variables</span>
             </div>
             <p className="text-[13px] leading-[1.6] text-[rgba(19,19,19,0.7)] mb-5 max-w-3xl">
-              Backgrounds, ink, lines, and primary/amber semantic ramps — each token bound to a Figma variable so swapping themes is a one-click change. Primary green for action; amber (not red) for emergency to inform without alarming.
+              The system tokens that drive UI surfaces, text, lines, and semantic states — backgrounds, ink, primary/amber ramps. Each token is a Figma variable, so a theme swap is a one-click change. Primary green carries action; amber (not red) carries emergency, to inform without alarming.
             </p>
             <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-3">
               {[
@@ -456,7 +459,7 @@ export function MachonChiburCaseStudy({ onBack, onSelectProject }: MachonChiburC
           </div>
 
           <p className="text-[11px] text-[rgba(19,19,19,0.4)] mt-6 leading-[1.5]">
-            Hebrew RTL, accessibility (WCAG AA+), and motion (Smart Animate · 400ms) are documented inside the Figma file's Design System page — they live as guidelines next to the components that follow them.
+            Hebrew RTL, accessibility (WCAG AA+), and motion (Smart Animate · 400ms) are documented inside the Figma file's Design System page — guidelines that live next to the components they govern, kept out of this overview to preserve focus on what's part of the system itself.
           </p>
         </section>
 
