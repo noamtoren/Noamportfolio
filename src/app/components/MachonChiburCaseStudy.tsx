@@ -246,111 +246,206 @@ export function MachonChiburCaseStudy({ onBack, onSelectProject }: MachonChiburC
         <section className="px-6 md:px-12 py-10 md:py-14">
           <SectionLabel>Design System</SectionLabel>
           <h2 className="text-[22px] font-semibold tracking-[-0.5px] text-[#131313] leading-[1.3] mb-4 max-w-2xl">
-            A calm, RTL-native system for sensitive content.
+            A documented system, not a moodboard.
           </h2>
           <p className="text-[14px] font-normal leading-[1.6] tracking-[-0.2px] text-[#131313] max-w-2xl mb-12">
-            Every visual decision is anchored in one rule: nothing on screen should raise the user's heart rate. Colors stay warm and matte, typography prioritises Hebrew readability, motion is restrained, and component behaviour preserves the user's sense of control at every step.
+            Foundations and components were built once, then mirrored on every screen — variables for color and spacing, text styles for the Hebrew type scale, and a Component Library where every recurring element ships with its variants and states. Nothing on a screen is a one-off.
           </p>
 
-          {/* Foundations grid */}
+          {/* FOUNDATIONS — Color, Typography, Spacing, Elevation */}
+          <p className="text-[11px] font-medium text-[rgba(19,19,19,0.5)] tracking-[1.4px] mb-4">FOUNDATIONS</p>
+
+          {/* Color */}
+          <div className="rounded-xl border border-neutral-200 bg-white p-6 mb-6">
+            <div className="flex items-baseline justify-between mb-4">
+              <h3 className="text-[16px] font-semibold text-[#131313]">Color · 25 paint styles</h3>
+              <span className="text-[11px] uppercase tracking-[1.2px] text-[rgba(19,19,19,0.5)]">Bound to variables</span>
+            </div>
+            <p className="text-[13px] leading-[1.6] text-[rgba(19,19,19,0.7)] mb-5 max-w-3xl">
+              Backgrounds, ink, lines, and primary/amber semantic ramps — each token bound to a Figma variable so swapping themes is a one-click change. Primary green for action; amber (not red) for emergency to inform without alarming.
+            </p>
+            <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-3">
+              {[
+                { hex: '#F9F7F3', label: 'bg / ivory', code: 'bg.ivory' },
+                { hex: '#FFFFFF', label: 'bg / paper', code: 'bg.paper' },
+                { hex: '#EEEFE8', label: 'sage / 050', code: 'sage.050' },
+                { hex: '#5E8A6A', label: 'sage / 500', code: 'sage.500' },
+                { hex: '#3F6B4A', label: 'primary / 700', code: 'primary.700' },
+                { hex: '#B88A4E', label: 'amber / muted', code: 'amber.muted' },
+                { hex: '#23201D', label: 'ink / primary', code: 'ink.primary' },
+              ].map((s) => (
+                <div key={s.hex} className="flex flex-col gap-2">
+                  <div className="rounded-lg aspect-square border border-neutral-200" style={{ backgroundColor: s.hex }} />
+                  <div>
+                    <p className="text-[11px] font-medium text-[#131313] leading-tight">{s.label}</p>
+                    <p className="text-[10px] text-[rgba(19,19,19,0.5)] font-mono leading-tight">{s.hex}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Typography */}
+          <div className="rounded-xl border border-neutral-200 bg-white p-6 mb-6">
+            <div className="flex items-baseline justify-between mb-4">
+              <h3 className="text-[16px] font-semibold text-[#131313]">Typography · 13 text styles</h3>
+              <span className="text-[11px] uppercase tracking-[1.2px] text-[rgba(19,19,19,0.5)]">Frank Ruhl Libre · Heebo</span>
+            </div>
+            <p className="text-[13px] leading-[1.6] text-[rgba(19,19,19,0.7)] mb-6 max-w-3xl">
+              Frank Ruhl Libre carries display moments — its serif details give weight to the most personal copy. Heebo handles UI and body text: a humanist sans tuned for long-form Hebrew at small sizes. All text styles are documented and reused.
+            </p>
+            <div className="space-y-4 text-right" dir="rtl">
+              <div className="flex items-baseline gap-6 border-b border-neutral-100 pb-3">
+                <span className="text-[10px] uppercase tracking-[1.4px] text-[rgba(19,19,19,0.4)] font-mono w-24 flex-shrink-0 text-left">display / xl · 56</span>
+                <span className="text-[40px] leading-none text-[#23201D]" style={{ fontFamily: 'serif' }}>זה רגיל?</span>
+              </div>
+              <div className="flex items-baseline gap-6 border-b border-neutral-100 pb-3">
+                <span className="text-[10px] uppercase tracking-[1.4px] text-[rgba(19,19,19,0.4)] font-mono w-24 flex-shrink-0 text-left">heading / lg · 32</span>
+                <span className="text-[24px] leading-tight text-[#23201D]" style={{ fontFamily: 'serif' }}>בקצב שלך, בלי גיליון רשמי</span>
+              </div>
+              <div className="flex items-baseline gap-6 border-b border-neutral-100 pb-3">
+                <span className="text-[10px] uppercase tracking-[1.4px] text-[rgba(19,19,19,0.4)] font-mono w-24 flex-shrink-0 text-left">body / lg · 16</span>
+                <span className="text-[16px] leading-[1.6] text-[#23201D]">שאלון קצר ואנונימי שנפתח בקצב שלך — בלי שם, בלי שמירת נתונים עד שאתה בוחר.</span>
+              </div>
+              <div className="flex items-baseline gap-6">
+                <span className="text-[10px] uppercase tracking-[1.4px] text-[rgba(19,19,19,0.4)] font-mono w-24 flex-shrink-0 text-left">label / md · 13</span>
+                <span className="text-[13px] leading-[1.5] text-[rgba(35,32,29,0.6)]">המשך · אפשר לדלג · חזור</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Spacing + Elevation row */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
-            {/* Color */}
             <div className="rounded-xl border border-neutral-200 bg-white p-6">
-              <p className="text-[11px] font-medium text-[rgba(19,19,19,0.5)] tracking-[1.4px] mb-3">FOUNDATION · COLOR</p>
-              <h3 className="text-[16px] font-semibold text-[#131313] mb-2">Warm sage, never clinical.</h3>
+              <div className="flex items-baseline justify-between mb-4">
+                <h3 className="text-[16px] font-semibold text-[#131313]">Spacing · 8pt grid</h3>
+                <span className="text-[11px] uppercase tracking-[1.2px] text-[rgba(19,19,19,0.5)]">10 tokens</span>
+              </div>
               <p className="text-[13px] leading-[1.6] text-[rgba(19,19,19,0.7)] mb-5">
-                A sage-and-cream palette replaces the clinical white-and-blue of typical health products. Primary actions use a deep, matte green; emergency lives in a soft amber, not red — to inform without alarming.
+                One spacing scale powers padding, gaps, and component widths. Same number means same breathing room across screens.
               </p>
-              <div className="grid grid-cols-5 gap-2">
-                {[
-                  { hex: '#F9F7F3', label: 'ivory' },
-                  { hex: '#FFFFFF', label: 'paper' },
-                  { hex: '#3F6B4A', label: 'primary 700' },
-                  { hex: '#B88A4E', label: 'amber' },
-                  { hex: '#23201D', label: 'ink' },
-                ].map((s) => (
-                  <div key={s.hex} className="flex flex-col gap-1">
-                    <div className="rounded-lg aspect-square border border-neutral-200" style={{ backgroundColor: s.hex }} />
-                    <p className="text-[10px] text-[rgba(19,19,19,0.6)] leading-tight">{s.label}</p>
+              <div className="space-y-2">
+                {[4, 8, 12, 16, 24, 32, 48, 64].map((s) => (
+                  <div key={s} className="flex items-center gap-3">
+                    <span className="text-[11px] font-mono text-[rgba(19,19,19,0.5)] w-10 text-right">{s}px</span>
+                    <div className="h-3 bg-[#3F6B4A] rounded-sm" style={{ width: `${s * 1.5}px` }} />
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* Typography */}
             <div className="rounded-xl border border-neutral-200 bg-white p-6">
-              <p className="text-[11px] font-medium text-[rgba(19,19,19,0.5)] tracking-[1.4px] mb-3">FOUNDATION · TYPOGRAPHY</p>
-              <h3 className="text-[16px] font-semibold text-[#131313] mb-2">Two Hebrew families, one voice.</h3>
+              <div className="flex items-baseline justify-between mb-4">
+                <h3 className="text-[16px] font-semibold text-[#131313]">Elevation · 4 levels</h3>
+                <span className="text-[11px] uppercase tracking-[1.2px] text-[rgba(19,19,19,0.5)]">Effect styles</span>
+              </div>
               <p className="text-[13px] leading-[1.6] text-[rgba(19,19,19,0.7)] mb-5">
-                Frank Ruhl Libre carries display headings — its serif details give weight to the most personal moments. Heebo handles body text and UI: a humanist sans-serif tuned for long-form Hebrew at small sizes, AA+ contrast guaranteed.
+                Soft, warm shadows tinted toward ink — not pure black. Elevation maps to interaction state, not to visual hierarchy alone.
               </p>
-              <div className="space-y-2 text-right" dir="rtl">
-                <p className="text-[28px] leading-none text-[#23201D]" style={{ fontFamily: 'serif' }}>זה רגיל?</p>
-                <p className="text-[14px] leading-[1.6] text-[rgba(35,32,29,0.7)]">בוא נבדוק ביחד — בלי שם, בלי גיליון רשמי, בלי לחץ.</p>
-                <p className="text-[11px] uppercase tracking-[1.4px] text-[rgba(35,32,29,0.5)] pt-1">Frank Ruhl Libre · Heebo</p>
+              <div className="grid grid-cols-2 gap-4">
+                {[
+                  { name: 'xs', use: 'Cards at rest', shadow: '0 1px 2px rgba(35,32,29,0.04)' },
+                  { name: 'sm', use: 'Hover, popovers', shadow: '0 2px 6px rgba(35,32,29,0.06), 0 1px 2px rgba(35,32,29,0.03)' },
+                  { name: 'md', use: 'Floating cards', shadow: '0 8px 24px -2px rgba(35,32,29,0.08), 0 2px 4px rgba(35,32,29,0.04)' },
+                  { name: 'lg', use: 'Modals, dialogs', shadow: '0 16px 40px -4px rgba(35,32,29,0.10), 0 4px 8px rgba(35,32,29,0.05)' },
+                ].map((e) => (
+                  <div key={e.name} className="flex flex-col items-center gap-2 py-2">
+                    <div className="w-full h-14 rounded-lg bg-white" style={{ boxShadow: e.shadow }} />
+                    <p className="text-[11px] font-medium text-[#131313]">elevation / {e.name}</p>
+                    <p className="text-[10px] text-[rgba(19,19,19,0.5)]">{e.use}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* COMPONENTS */}
+          <p className="text-[11px] font-medium text-[rgba(19,19,19,0.5)] tracking-[1.4px] mb-4">COMPONENTS · 28 total · 13 component sets</p>
+
+          <div className="rounded-xl border border-neutral-200 bg-white p-6 mb-12">
+            <h3 className="text-[16px] font-semibold text-[#131313] mb-4">Built once, reused everywhere.</h3>
+
+            {/* Buttons row */}
+            <div className="border-b border-neutral-100 py-5">
+              <div className="grid grid-cols-12 gap-4 items-center">
+                <p className="text-[11px] font-medium uppercase tracking-[1.2px] text-[rgba(19,19,19,0.5)] col-span-12 sm:col-span-3">Button · 3 × 4 states</p>
+                <div className="col-span-12 sm:col-span-9 flex flex-wrap items-center gap-3">
+                  <button className="px-4 h-9 rounded-full bg-[#3F6B4A] text-white text-[13px] font-medium">Primary</button>
+                  <button className="px-4 h-9 rounded-full bg-white border border-[#3F6B4A] text-[#3F6B4A] text-[13px] font-medium">Secondary</button>
+                  <button className="px-4 h-9 rounded-full text-[#3F6B4A] text-[13px] font-medium">Ghost</button>
+                  <span className="text-[11px] text-[rgba(19,19,19,0.4)] mr-2">+ Hover · Focus · Disabled</span>
+                </div>
               </div>
             </div>
 
-            {/* RTL */}
-            <div className="rounded-xl border border-neutral-200 bg-white p-6">
-              <p className="text-[11px] font-medium text-[rgba(19,19,19,0.5)] tracking-[1.4px] mb-3">FOUNDATION · RTL</p>
-              <h3 className="text-[16px] font-semibold text-[#131313] mb-2">Hebrew-first, not translated.</h3>
-              <p className="text-[13px] leading-[1.6] text-[rgba(19,19,19,0.7)] mb-5">
-                Layouts flow right-to-left at the structural level: navigation, bullet indicators, progress bars, callouts. Numbers and Latin tokens stay LTR inside their Hebrew context — never letting a translation shortcut break the reading rhythm.
-              </p>
-              <div className="rounded-lg bg-[#F9F7F3] border border-[#E8E2D8] p-4 flex items-center justify-end gap-3" dir="rtl">
-                <p className="text-[13px] text-[#3F6B4A] font-medium">בקצב שלך · אנונימי · ללא הרשמה</p>
-                <span className="w-2.5 h-2.5 rounded-full bg-[#5E8A6A] block flex-shrink-0" />
+            {/* Inputs row */}
+            <div className="border-b border-neutral-100 py-5">
+              <div className="grid grid-cols-12 gap-4 items-center">
+                <p className="text-[11px] font-medium uppercase tracking-[1.2px] text-[rgba(19,19,19,0.5)] col-span-12 sm:col-span-3">Input · 5 states</p>
+                <div className="col-span-12 sm:col-span-9 flex flex-wrap items-center gap-3">
+                  {['Default', 'Focus', 'Filled', 'Error', 'Disabled'].map((s) => (
+                    <span key={s} className="text-[11px] px-3 py-1 rounded-full bg-[#F9F7F3] border border-neutral-200 text-[#131313]">{s}</span>
+                  ))}
+                </div>
               </div>
             </div>
 
-            {/* Motion */}
-            <div className="rounded-xl border border-neutral-200 bg-white p-6">
-              <p className="text-[11px] font-medium text-[rgba(19,19,19,0.5)] tracking-[1.4px] mb-3">FOUNDATION · MOTION</p>
-              <h3 className="text-[16px] font-semibold text-[#131313] mb-2">Slow enough to feel safe.</h3>
-              <p className="text-[13px] leading-[1.6] text-[rgba(19,19,19,0.7)] mb-5">
-                Smart Animate at 400ms with ease-in-and-out for the main flow. Dissolve at 300ms for system states. No bounce, no flourish — transitions exist to confirm direction, not to perform.
-              </p>
-              <div className="flex flex-col gap-2">
-                <div className="flex items-center justify-between text-[12px]">
-                  <span className="text-[rgba(19,19,19,0.5)] font-mono">400ms</span>
-                  <span className="text-[#131313]">Smart Animate · main flow</span>
+            {/* Callouts row */}
+            <div className="border-b border-neutral-100 py-5">
+              <div className="grid grid-cols-12 gap-4 items-center">
+                <p className="text-[11px] font-medium uppercase tracking-[1.2px] text-[rgba(19,19,19,0.5)] col-span-12 sm:col-span-3">Callout · 4 tones</p>
+                <div className="col-span-12 sm:col-span-9 flex flex-wrap items-center gap-2">
+                  <span className="text-[11px] px-3 py-1.5 rounded-md bg-[#EEEFE8] text-[#3F6B4A]">Info</span>
+                  <span className="text-[11px] px-3 py-1.5 rounded-md bg-[#E5F1E8] text-[#3F6B4A]">Reassure</span>
+                  <span className="text-[11px] px-3 py-1.5 rounded-md bg-[#FCEFD9] text-[#8A6535]">Warning</span>
+                  <span className="text-[11px] px-3 py-1.5 rounded-md bg-[#F4DCC4] text-[#8A4F1F]">Emergency</span>
                 </div>
-                <div className="flex items-center justify-between text-[12px]">
-                  <span className="text-[rgba(19,19,19,0.5)] font-mono">300ms</span>
-                  <span className="text-[#131313]">Dissolve · system states</span>
+              </div>
+            </div>
+
+            {/* Cards row */}
+            <div className="border-b border-neutral-100 py-5">
+              <div className="grid grid-cols-12 gap-4 items-center">
+                <p className="text-[11px] font-medium uppercase tracking-[1.2px] text-[rgba(19,19,19,0.5)] col-span-12 sm:col-span-3">Cards · with hover variants</p>
+                <div className="col-span-12 sm:col-span-9 flex flex-wrap items-center gap-3 text-[11px] text-[#131313]">
+                  <span className="px-3 py-2 rounded-lg bg-white border border-neutral-200">Surface</span>
+                  <span className="px-3 py-2 rounded-lg bg-white border border-neutral-200">Tool</span>
+                  <span className="px-3 py-2 rounded-lg bg-white border border-neutral-200">Therapist</span>
+                  <span className="px-3 py-2 rounded-lg bg-white border border-neutral-200">Service</span>
+                  <span className="px-3 py-2 rounded-lg bg-white border border-neutral-200">Rights Item</span>
+                  <span className="px-3 py-2 rounded-lg bg-white border border-neutral-200">FAQ Item</span>
                 </div>
-                <div className="flex items-center justify-between text-[12px]">
-                  <span className="text-[rgba(19,19,19,0.5)] font-mono">ease-in-and-out</span>
-                  <span className="text-[#131313]">Easing · everywhere</span>
+              </div>
+            </div>
+
+            {/* Specialty row */}
+            <div className="py-5">
+              <div className="grid grid-cols-12 gap-4 items-center">
+                <p className="text-[11px] font-medium uppercase tracking-[1.2px] text-[rgba(19,19,19,0.5)] col-span-12 sm:col-span-3">Purpose-built</p>
+                <div className="col-span-12 sm:col-span-9 flex flex-wrap items-center gap-3 text-[11px] text-[#131313]">
+                  <span className="px-3 py-2 rounded-lg bg-[#FCEFD9] border border-[#E8C896] text-[#8A6535]">Emergency Support Card</span>
+                  <span className="px-3 py-2 rounded-lg bg-[#E5F1E8] border border-[#C5DCC9] text-[#3F6B4A]">Reassure Callout</span>
+                  <span className="px-3 py-2 rounded-lg bg-white border border-neutral-200">Chat Bubble · 2 sides</span>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Component philosophy */}
-          <div className="rounded-xl bg-[#F9F7F3] p-6 md:p-8 mb-8">
-            <p className="text-[11px] font-medium text-[#3F6B4A] tracking-[1.4px] mb-3">COMPONENT PHILOSOPHY</p>
-            <h3 className="text-[18px] font-semibold text-[#131313] mb-3 max-w-2xl">28 components, 13 component sets — every recurring element documented.</h3>
-            <p className="text-[14px] leading-[1.65] text-[rgba(19,19,19,0.7)] max-w-2xl">
-              Buttons (3 types × 4 states), inputs (5 states), choice buttons, callouts (4 tones including a purpose-built <em>reassure</em> for trauma-informed messaging), progress, chat bubbles, therapist cards with hover variants, and a dedicated <em>Emergency Support Card</em>. Component Library and Design System pages in the Figma file mirror what ships in screens — never theory, always sourced from real use.
-            </p>
-          </div>
-
-          {/* Trauma-informed principles */}
+          {/* PRINCIPLES */}
+          <p className="text-[11px] font-medium text-[rgba(19,19,19,0.5)] tracking-[1.4px] mb-4">PRINCIPLES</p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {[
               {
                 title: 'Voice without verdict',
-                body: 'No "you have", no "you are diagnosed". Microcopy uses "what you marked may suggest" instead of "the system found".',
+                body: 'No "you have", no "you are diagnosed". Microcopy uses "what you marked may suggest" instead of "the system found". Empathy is enforced at the component level, not left to the writer.',
               },
               {
                 title: 'Reversible by default',
-                body: 'Every flow has an "exit fast" affordance. Modals offer "save and exit", "keep going", "change my answers" — not "cancel" / "OK".',
+                body: 'Every flow has an "exit fast" affordance. Modals offer "save and exit", "keep going", "change my answers" — never "cancel" / "OK". The user is never one click from losing their place.',
               },
               {
                 title: 'Earned trust, never assumed',
-                body: 'No phone, no email, no account at intake. Anonymity stated three times in the first 30 seconds; data persistence is opt-in only.',
+                body: 'No phone, no email, no account at intake. Anonymity stated three times in the first 30 seconds; data persistence is opt-in only. The system asks for trust the way a person would, not the way a form would.',
               },
             ].map((p) => (
               <div key={p.title} className="rounded-xl border border-neutral-200 bg-white p-5">
@@ -359,6 +454,10 @@ export function MachonChiburCaseStudy({ onBack, onSelectProject }: MachonChiburC
               </div>
             ))}
           </div>
+
+          <p className="text-[11px] text-[rgba(19,19,19,0.4)] mt-6 leading-[1.5]">
+            Hebrew RTL, accessibility (WCAG AA+), and motion (Smart Animate · 400ms) are documented inside the Figma file's Design System page — they live as guidelines next to the components that follow them.
+          </p>
         </section>
 
         <div className="mx-6 md:mx-12 border-t border-neutral-200" />
