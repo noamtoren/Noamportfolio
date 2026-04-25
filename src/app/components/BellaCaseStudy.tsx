@@ -195,89 +195,203 @@ export function BellaCaseStudy({ onBack, onSelectProject }: BellaCaseStudyProps)
       {/* Design System - With Sticky Title */}
       <section className="px-6 md:px-12 lg:px-24 max-w-7xl mx-auto relative pb-32 border-t border-neutral-100">
         <StickyTitle>Design System</StickyTitle>
-        
-        <div className="bg-neutral-50 p-12 md:p-20 rounded-xl mt-12 border border-neutral-100">
-            <div className="mb-20">
-                <h2 className="font-display text-2xl md:text-3xl font-normal text-neutral-900 mb-6 leading-tight">
-                Visual Language & Interface
-                </h2>
-                <p className="text-base md:text-lg text-neutral-600 font-light leading-relaxed max-w-3xl">
-                   A warm earth-tone palette (#FAF7F3, #F1EAE2) paired with typography that balances editorial luxury (Playfair Display) with human softness (Varela Round).
-                </p>
+
+        <div className="mt-12 mb-12 max-w-3xl">
+          <h2 className="font-display text-2xl md:text-3xl font-normal text-neutral-900 mb-4 leading-tight">
+            Visual Language & Interface
+          </h2>
+          <p className="text-base md:text-lg text-neutral-600 font-light leading-relaxed">
+            BELLA's system documents only what ships in the product — UI surfaces, typography, components and semantic states. A warm cream palette anchors the brand; deep ink carries every action; gold appears only as a rating or detail accent.
+          </p>
+          <p className="text-xs text-neutral-400 mt-3 leading-relaxed">
+            Scope note: this section covers system tokens used in interface, not photography or campaign imagery.
+          </p>
+        </div>
+
+        {/* FOUNDATIONS */}
+        <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-neutral-400 mb-4">Foundations</p>
+
+        {/* Color */}
+        <div className="rounded-xl border border-neutral-200 bg-white p-6 md:p-8 mb-6">
+          <div className="flex items-baseline justify-between mb-4">
+            <h3 className="text-base font-semibold text-neutral-900">Color · 8 system tokens</h3>
+            <span className="text-[11px] uppercase tracking-[0.2em] text-neutral-400">UI tokens</span>
+          </div>
+          <p className="text-sm text-neutral-600 leading-relaxed mb-6 max-w-3xl">
+            Backgrounds in cream and warm beige set the editorial tone. A deep ink (#2B2A28) carries every CTA — there is no second action color. Gold (#C9A24D) appears only as a star rating or premium accent.
+          </p>
+          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3">
+            {[
+              { hex: '#FAF7F3', label: 'bg / cream', token: 'primary-light-bg' },
+              { hex: '#F1EAE2', label: 'bg / beige', token: 'secondary-section-bg' },
+              { hex: '#FFFFFF', label: 'bg / paper', token: 'paper' },
+              { hex: '#2B2A28', label: 'ink / primary', token: 'text-primary' },
+              { hex: '#6F6B66', label: 'ink / secondary', token: 'text-secondary' },
+              { hex: '#9C968E', label: 'ink / muted', token: 'text-muted' },
+              { hex: '#C9A24D', label: 'accent / gold', token: 'rating-gold' },
+              { hex: '#C97964', label: 'destructive', token: 'destructive' },
+            ].map((s) => (
+              <div key={s.hex} className="flex flex-col gap-2">
+                <div className="rounded-lg aspect-square border border-neutral-200" style={{ backgroundColor: s.hex }} />
+                <div>
+                  <p className="text-[11px] font-medium text-neutral-900 leading-tight">{s.label}</p>
+                  <p className="text-[10px] text-neutral-400 font-mono leading-tight">{s.hex}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Typography */}
+        <div className="rounded-xl border border-neutral-200 bg-white p-6 md:p-8 mb-6">
+          <div className="flex items-baseline justify-between mb-4">
+            <h3 className="text-base font-semibold text-neutral-900">Typography · 4-font hierarchy</h3>
+            <span className="text-[11px] uppercase tracking-[0.2em] text-neutral-400">Editorial × Hebrew</span>
+          </div>
+          <p className="text-sm text-neutral-600 leading-relaxed mb-6 max-w-3xl">
+            Every text role is matched to a font with a specific job. Playfair Display for editorial moments, Heebo for clear UI in Hebrew, Assistant for long-form body, Varela Round for warm reviews.
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-2 border border-neutral-100 rounded-lg p-5 bg-neutral-50/50">
+              <p className="text-[10px] uppercase tracking-[0.2em] text-neutral-400 font-medium">DISPLAY</p>
+              <p className="text-3xl text-neutral-900" style={{ fontFamily: '"Playfair Display", serif', fontWeight: 400 }}>נוחות לאורך ההריון</p>
+              <p className="text-[11px] text-neutral-500">Playfair Display · Editorial headings</p>
             </div>
-
-            <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-24 pt-8">
-                {/* Color Palette */}
-                <div className="space-y-8">
-                    <h3 className="text-xs font-bold text-neutral-400 uppercase tracking-[0.2em] mb-6">Color Palette</h3>
-                    <div className="space-y-6">
-                        <div className="">
-                            <div className="h-28 w-full bg-[#FAF7F3] rounded-lg border border-neutral-200 mb-3"></div>
-                            <div>
-                                <p className="font-mono text-xs text-neutral-400 mb-1">#FAF7F3</p>
-                                <p className="font-semibold text-neutral-900 text-sm">Off-White Cream</p>
-                            </div>
-                        </div>
-                        <div className="">
-                            <div className="h-28 w-full bg-[#F1EAE2] rounded-lg mb-3"></div>
-                            <div>
-                                <p className="font-mono text-xs text-neutral-400 mb-1">#F1EAE2</p>
-                                <p className="font-semibold text-neutral-900 text-sm">Warm Beige</p>
-                            </div>
-                        </div>
-                        <div className="">
-                            <div className="h-28 w-full bg-[#2B2A28] rounded-lg mb-3"></div>
-                            <div>
-                                <p className="font-mono text-xs text-neutral-400 mb-1">#2B2A28</p>
-                                <p className="font-semibold text-neutral-900 text-sm">Deep Charcoal</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                {/* Typography */}
-                <div className="space-y-8">
-                    <h3 className="text-xs font-bold text-neutral-400 uppercase tracking-[0.2em] mb-6">Typography</h3>
-                    <div className="space-y-16">
-                        <div>
-                            <p className="text-6xl font-display text-neutral-900 mb-4">Aa</p>
-                            <p className="text-xs text-neutral-400 uppercase tracking-wider font-medium">Playfair Display — Headers</p>
-                        </div>
-                        <div>
-                            <p className="text-xl font-sans text-neutral-900 mb-4 leading-relaxed">The quick brown fox jumps over the lazy dog.</p>
-                            <p className="text-xs text-neutral-400 uppercase tracking-wider font-medium">Assistant — Body Text</p>
-                        </div>
-                        <div>
-                            <p className="text-2xl font-['Varela_Round'] text-neutral-900 mb-4">"Comfort is distinct."</p>
-                            <p className="text-xs text-neutral-400 uppercase tracking-wider font-medium">Varela Round — Quotes</p>
-                        </div>
-                    </div>
-                </div>
-
-                {/* Components & Interface */}
-                <div className="space-y-8">
-                    <h3 className="text-xs font-bold text-neutral-400 uppercase tracking-[0.2em] mb-6">Interface Components</h3>
-                    <div className="flex flex-col items-start gap-12">
-                        {/* Primary Button */}
-                        <div>
-                            <button className="bg-[#2B2A28] text-white text-base px-8 py-3 rounded-lg shadow-sm mb-4">
-                                Shop Now
-                            </button>
-                            <p className="text-xs text-neutral-400 uppercase tracking-wider font-medium">Primary CTA</p>
-                        </div>
-                        
-                        {/* Floating Navigation */}
-                        <div className="w-full">
-                             <div className="bg-white/80 backdrop-blur-md px-8 py-4 rounded-lg shadow-sm border border-white/50 flex w-fit gap-8 items-center mb-4">
-                                <Search className="w-4 h-4 text-neutral-900" />
-                                <ShoppingBag className="w-4 h-4 text-neutral-400" />
-                                <User className="w-4 h-4 text-neutral-400" />
-                             </div>
-                             <p className="text-xs text-neutral-400 uppercase tracking-wider font-medium">Navigation System</p>
-                        </div>
-                    </div>
-                </div>
+            <div className="space-y-2 border border-neutral-100 rounded-lg p-5 bg-neutral-50/50">
+              <p className="text-[10px] uppercase tracking-[0.2em] text-neutral-400 font-medium">UI</p>
+              <p className="text-base text-neutral-900" style={{ fontFamily: 'Heebo, sans-serif', fontWeight: 500 }}>הוסף לסל · חזרה · המשך</p>
+              <p className="text-[11px] text-neutral-500">Heebo · Buttons, navigation, labels</p>
             </div>
+            <div className="space-y-2 border border-neutral-100 rounded-lg p-5 bg-neutral-50/50">
+              <p className="text-[10px] uppercase tracking-[0.2em] text-neutral-400 font-medium">BODY</p>
+              <p className="text-sm leading-relaxed text-neutral-700" style={{ fontFamily: 'Assistant, sans-serif', fontWeight: 400 }}>שאלון קצר ואנונימי שיעזור לנו להמליץ לך את המוצר הנכון לטרימסטר ולגוף שלך.</p>
+              <p className="text-[11px] text-neutral-500">Assistant · Long-form body in Hebrew</p>
+            </div>
+            <div className="space-y-2 border border-neutral-100 rounded-lg p-5 bg-neutral-50/50">
+              <p className="text-[10px] uppercase tracking-[0.2em] text-neutral-400 font-medium">REVIEWS</p>
+              <p className="text-base text-neutral-900" style={{ fontFamily: '"Varela Round", sans-serif' }}>"הכרית הכי טובה שקניתי בהריון."</p>
+              <p className="text-[11px] text-neutral-500">Varela Round · Personal, warm tone</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Spacing & Elevation row */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+          <div className="rounded-xl border border-neutral-200 bg-white p-6">
+            <h3 className="text-base font-semibold text-neutral-900 mb-2">Radius · 12px default</h3>
+            <p className="text-sm text-neutral-600 leading-relaxed mb-5">A single softness language: 12px on cards, 16px on hero blocks, full pill on buttons.</p>
+            <div className="flex items-end gap-4">
+              {[
+                { r: '8px', size: 56 },
+                { r: '12px', size: 72 },
+                { r: '16px', size: 88 },
+                { r: 'pill', size: 56, pill: true },
+              ].map((s, i) => (
+                <div key={i} className="flex flex-col items-center gap-2">
+                  <div className="bg-[#F1EAE2] border border-neutral-200" style={{ width: s.pill ? 96 : s.size, height: s.size, borderRadius: s.pill ? 999 : parseInt(s.r) }} />
+                  <p className="text-[11px] text-neutral-500 font-mono">{s.r}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="rounded-xl border border-neutral-200 bg-white p-6">
+            <h3 className="text-base font-semibold text-neutral-900 mb-2">Elevation · 3 levels</h3>
+            <p className="text-sm text-neutral-600 leading-relaxed mb-5">Soft, ink-tinted shadows. No pure black. Maps to interaction state, not visual hierarchy.</p>
+            <div className="flex items-center gap-4">
+              {[
+                { name: 'sm', shadow: '0 1px 3px rgba(43,42,40,0.08)' },
+                { name: 'md', shadow: '0 4px 12px rgba(43,42,40,0.12)' },
+                { name: 'lg', shadow: '0 8px 24px rgba(43,42,40,0.15)' },
+              ].map((e) => (
+                <div key={e.name} className="flex flex-col items-center gap-2">
+                  <div className="w-16 h-16 rounded-lg bg-white border border-neutral-100" style={{ boxShadow: e.shadow }} />
+                  <p className="text-[11px] text-neutral-500 font-mono">{e.name}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* COMPONENTS */}
+        <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-neutral-400 mb-4">Components</p>
+        <div className="rounded-xl border border-neutral-200 bg-white p-6 md:p-8 mb-12">
+          <h3 className="text-base font-semibold text-neutral-900 mb-5">Built once, reused across all 10 screens.</h3>
+
+          {/* Buttons */}
+          <div className="border-b border-neutral-100 py-5">
+            <div className="grid grid-cols-12 gap-4 items-center">
+              <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-neutral-400 col-span-12 sm:col-span-3">CTA · Primary only</p>
+              <div className="col-span-12 sm:col-span-9 flex flex-wrap items-center gap-3">
+                <button className="bg-[#2B2A28] text-white text-sm px-7 py-3 rounded-full">הוסף לסל</button>
+                <button className="bg-white border border-[#2B2A28] text-[#2B2A28] text-sm px-7 py-3 rounded-full">לקריאה נוספת</button>
+                <span className="text-[11px] text-neutral-400">+ Hover · Focus · Disabled</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Header */}
+          <div className="border-b border-neutral-100 py-5">
+            <div className="grid grid-cols-12 gap-4 items-center">
+              <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-neutral-400 col-span-12 sm:col-span-3">Header · Pill nav</p>
+              <div className="col-span-12 sm:col-span-9">
+                <div className="bg-[#FAF7F3]/95 border border-neutral-100 rounded-full px-6 py-3 inline-flex items-center gap-6 shadow-sm">
+                  <div className="flex items-center gap-1.5">
+                    <Search className="w-4 h-4 text-neutral-500" />
+                    <User className="w-4 h-4 text-neutral-500" />
+                    <ShoppingBag className="w-4 h-4 text-neutral-500" />
+                  </div>
+                  <span className="text-xs text-neutral-700 px-3 py-1 bg-[#F1EAE2] rounded-full">בית</span>
+                  <span className="text-xs text-neutral-500">חנות</span>
+                  <span className="text-xs text-neutral-500">תוכן והדרכה</span>
+                  <span className="text-base text-neutral-900" style={{ fontFamily: '"Playfair Display", serif' }}>BELLA</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Cards */}
+          <div className="border-b border-neutral-100 py-5">
+            <div className="grid grid-cols-12 gap-4 items-center">
+              <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-neutral-400 col-span-12 sm:col-span-3">Cards</p>
+              <div className="col-span-12 sm:col-span-9 flex flex-wrap gap-3 text-[11px] text-neutral-700">
+                <span className="px-3 py-2 rounded-lg bg-white border border-neutral-200">Product</span>
+                <span className="px-3 py-2 rounded-lg bg-white border border-neutral-200">Solution by Need</span>
+                <span className="px-3 py-2 rounded-lg bg-white border border-neutral-200">Article</span>
+                <span className="px-3 py-2 rounded-lg bg-white border border-neutral-200">Story</span>
+                <span className="px-3 py-2 rounded-lg bg-white border border-neutral-200">Review</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Forms */}
+          <div className="py-5">
+            <div className="grid grid-cols-12 gap-4 items-center">
+              <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-neutral-400 col-span-12 sm:col-span-3">Forms · Quiz · Cart</p>
+              <div className="col-span-12 sm:col-span-9 flex flex-wrap gap-3 text-[11px] text-neutral-700">
+                <span className="px-3 py-2 rounded-lg bg-white border border-neutral-200">Input · 4 states</span>
+                <span className="px-3 py-2 rounded-lg bg-white border border-neutral-200">Radio · Checkbox</span>
+                <span className="px-3 py-2 rounded-lg bg-white border border-neutral-200">Quantity stepper</span>
+                <span className="px-3 py-2 rounded-lg bg-white border border-neutral-200">Cart line item</span>
+                <span className="px-3 py-2 rounded-lg bg-white border border-neutral-200">Search overlay</span>
+                <span className="px-3 py-2 rounded-lg bg-white border border-neutral-200">Newsletter modal</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* PRINCIPLES */}
+        <p className="text-[11px] font-medium uppercase tracking-[0.2em] text-neutral-400 mb-4">Principles</p>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {[
+            { title: 'Hebrew-first, not translated', body: 'Layouts flow right-to-left at the structural level: nav, breadcrumbs, hero text, product info. Numbers and Latin tokens stay LTR inside their Hebrew context — never letting a translation shortcut break the reading rhythm.' },
+            { title: 'Editorial calm over conversion noise', body: 'No countdown timers, no flash-sale banners, no urgency manipulation. The system is built for trust before it is built for trigger — because the audience is already taking on enough.' },
+            { title: 'One action color, always', body: 'Every CTA uses the same deep ink (#2B2A28). No competing reds, oranges, or greens. The hierarchy is built into the layout, not into competing colors.' },
+          ].map((p) => (
+            <div key={p.title} className="rounded-xl border border-neutral-200 bg-white p-5">
+              <h4 className="text-sm font-semibold text-neutral-900 mb-2">{p.title}</h4>
+              <p className="text-[13px] leading-relaxed text-neutral-600">{p.body}</p>
+            </div>
+          ))}
         </div>
       </section>
 
