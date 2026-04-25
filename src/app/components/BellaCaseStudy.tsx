@@ -3,17 +3,19 @@ import { Footer } from '@/app/components/Footer';
 import { CaseNavFooter } from '@/app/components/CaseNavFooter';
 import { ImageWithFallback } from '@/app/components/figma/ImageWithFallback';
 import heroImage from '../../assets/f4d14d9769234e371e3b2c43f272901073d360c7.png';
-import strategyFilterImage from '../../assets/3f24ea7874dd37ca8cda54ecaed3080b2a4d8c28.png';
-import strategyNeedsCardsImage from '../../assets/2dfd007ccff4a3ab5905a1bc67d5535205ea07e2.png';
-import quizStartImage from '../../assets/ef4cb93d4bdaa208f60882e23720c518b7904228.png';
-import quizQuestionImage from '../../assets/1458d6abffcc02c19fe235eabf0be0bd373ab73b.png';
-import quizResultImage from '../../assets/67a1633c68713005694129658cd90189f7e8a3e9.png';
+import solutionsImage from '../../assets/2dfd007ccff4a3ab5905a1bc67d5535205ea07e2.png';
+import shopImage from '../../assets/3f24ea7874dd37ca8cda54ecaed3080b2a4d8c28.png';
+import pregnancyPillowsImage from '../../assets/bella-pillows.png';
+import quizImage from '../../assets/ef4cb93d4bdaa208f60882e23720c518b7904228.png';
+import userStoriesImage from '../../assets/1458d6abffcc02c19fe235eabf0be0bd373ab73b.png';
+import mothersReviewsImage from '../../assets/67a1633c68713005694129658cd90189f7e8a3e9.png';
 import productDetailImage from '../../assets/645f031c54e6fcf7dd2fecb04e889118fac43f5c.png';
-import hubMainImage from '../../assets/2b35accf6040327f1a4293aad8b40fdd0928d71c.png';
-import hubGuideImage from '../../assets/70a34bb10e1f97f29587650c22e9351af6a312ea.png';
-import hubMobileImage from '../../assets/6b4d03b54622b096008e4efc8b3e88afcc6eb605.png';
+import contentHubImage from '../../assets/2b35accf6040327f1a4293aad8b40fdd0928d71c.png';
+import sleepTipsImage from '../../assets/70a34bb10e1f97f29587650c22e9351af6a312ea.png';
+import pregnancyNormalImage from '../../assets/6b4d03b54622b096008e4efc8b3e88afcc6eb605.png';
 import checkoutImage from '../../assets/c0c0facfa6f14e57ca71a7e8222654a5a77a734e.png';
-import aboutImage from '../../assets/fa4778ad5b7f683ff5d1d9f18574a3b7d95c4c92.png';
+import interactiveProductImage from '../../assets/fa4778ad5b7f683ff5d1d9f18574a3b7d95c4c92.png';
+import aboutImage from '../../assets/bella-about.png';
 
 interface BellaCaseStudyProps {
   onBack: () => void;
@@ -30,7 +32,7 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
 
 function PillarCanvas({ children }: { children: React.ReactNode }) {
   return (
-    <div className="rounded-xl bg-[#F1EAE2] p-6 md:p-8 min-h-[300px] md:min-h-[360px] flex items-center justify-center">
+    <div className="rounded-xl bg-[#ECEEF0] p-6 md:p-8 min-h-[300px] md:min-h-[360px] flex items-center justify-center">
       {children}
     </div>
   );
@@ -169,43 +171,63 @@ export function BellaCaseStudy({ onBack, onSelectProject }: BellaCaseStudyProps)
         <section className="px-6 md:px-12 py-10 md:py-14">
           <SectionLabel>UX Strategy</SectionLabel>
           <h2 className="text-[22px] font-semibold tracking-[-0.5px] text-[#131313] leading-[1.3] mb-10 max-w-2xl">
-            Three pillars that make BELLA work.
+            Five pillars that make BELLA work.
           </h2>
 
           <div className="space-y-16 md:space-y-20">
-            {/* Pillar 1 */}
+            {/* Pillar 1 — Solution-first Browsing */}
             <Pillar
               label="Pillar 01 — Solution-first Browsing"
-              heading="Architecture organised around the body, not around the SKU."
+              heading="Architecture organised around the body, not the SKU."
               body="The homepage opens with the four physical states a pregnant body actually moves through — sleep, sitting, pain, postpartum — and routes each one into a curated shop. The catalogue still exists, but it's the second layer, not the front door. The Pregnancy Pillows hub demonstrates the same principle inside a single product family."
               images={[
-                { src: heroImage, alt: 'BELLA homepage with hero, solutions, stories', label: 'Home — Solutions Above the Fold' },
-                { src: strategyNeedsCardsImage, alt: 'Pregnancy pillows category page', label: 'Pillows — Curated Hub' },
-                { src: strategyFilterImage, alt: 'Shop page with filters', label: 'Shop — Filtered Catalogue' },
+                { src: solutionsImage, alt: 'Solutions by Need section', label: 'Home — Solutions by Need' },
+                { src: pregnancyPillowsImage, alt: 'Pregnancy pillows hub', label: 'Pillows — Curated Hub' },
+                { src: shopImage, alt: 'Shop with filters', label: 'Shop — Filtered Catalogue' },
               ]}
             />
 
-            {/* Pillar 2 */}
+            {/* Pillar 2 — Personalised Quiz */}
             <Pillar
               label="Pillar 02 — Personalised Quiz Path"
               heading="A 5-question conversation that ends in one matched product."
               body="Instead of forcing the user to compare specs across 24 SKUs, a short anonymous quiz translates how she feels (trimester, pain points, sleep position) into a single concrete recommendation. The quiz is calm, paced, and reversible — it never feels like a sales funnel."
               images={[
-                { src: quizStartImage, alt: 'Quiz — start screen', label: 'Quiz — Start' },
-                { src: quizQuestionImage, alt: 'Quiz — question', label: 'Quiz — Question' },
-                { src: quizResultImage, alt: 'Quiz — personalised result', label: 'Quiz — Personal Match' },
+                { src: quizImage, alt: 'Questionnaire flow', label: 'Quiz — Full Flow' },
               ]}
             />
 
-            {/* Pillar 3 */}
+            {/* Pillar 3 — Editorial Trust */}
             <Pillar
               label="Pillar 03 — Editorial Trust Layer"
               heading="Content earns the right to sell."
-              body="A real Knowledge Hub with sleep tips, pregnancy-norm guides and FAQ — not buried in a footer, but offered alongside the product browse as a peer surface. The editorial layer is what builds trust before any product is added to the cart, and it's what brings users back between purchases."
+              body="A real Knowledge Hub with sleep tips, pregnancy-norm guides and FAQ — promoted on the homepage as a peer surface to the shop, not buried in a footer. The editorial layer is what builds trust before any product is added to the cart, and it's what brings users back between purchases."
               images={[
-                { src: hubMainImage, alt: 'Knowledge hub home', label: 'Knowledge Hub' },
-                { src: hubGuideImage, alt: 'Sleep tips article', label: 'Sleep Tips Article' },
-                { src: hubMobileImage, alt: 'Pregnancy normal article', label: 'What’s Normal Article' },
+                { src: contentHubImage, alt: 'Content guidance section on home', label: 'Home — Content Promoted as Peer' },
+                { src: sleepTipsImage, alt: 'Sleep tips article', label: 'Sleep Tips Article' },
+                { src: pregnancyNormalImage, alt: 'Pregnancy normal article', label: 'What’s Normal Article' },
+              ]}
+            />
+
+            {/* Pillar 4 — Real Voices */}
+            <Pillar
+              label="Pillar 04 — Real Voices, Not Marketing"
+              heading="Stories from actual mothers — not stock testimonials."
+              body="Two surfaces, both above the fold on Home: an Instagram-style story carousel that runs real customer videos, and a verified review slider with names, weeks of pregnancy, and dates. There are no fake stars and no suspiciously generic copy. Trust is earned through specificity."
+              images={[
+                { src: userStoriesImage, alt: 'User stories carousel', label: 'Stories — Real Customers' },
+                { src: mothersReviewsImage, alt: 'Mothers reviews slider', label: 'Reviews — Verified Buyers' },
+              ]}
+            />
+
+            {/* Pillar 5 — Product Discovery */}
+            <Pillar
+              label="Pillar 05 — Product Discovery That Speaks to the Body"
+              heading="Show the product against the problem, not the spec sheet."
+              body="The homepage's interactive product zone uses a body-map composition to tell the user where the product touches and supports her — instead of leading with materials and dimensions. The PDP carries the same logic: feature first, fabric specs second, and customer reviews tightly integrated with the buy flow."
+              images={[
+                { src: interactiveProductImage, alt: 'Interactive product body-map section', label: 'Home — Body-Map Product View' },
+                { src: productDetailImage, alt: 'Product detail page', label: 'Product Detail Page' },
               ]}
             />
           </div>
@@ -220,7 +242,7 @@ export function BellaCaseStudy({ onBack, onSelectProject }: BellaCaseStudyProps)
             A store that reads like an editorial.
           </h2>
           <p className="text-[14px] font-normal leading-[1.6] tracking-[-0.2px] text-[#131313] max-w-2xl">
-            The three pillars turn a typical maternity catalogue into a paced, calm, Hebrew-native journey. Product, content, and personal recommendation share the same surface, so trust is built before conversion is asked for.
+            The five pillars turn a typical maternity catalogue into a paced, calm, Hebrew-native journey. Product, content, real voices, and personalised recommendation share the same surface, so trust is built before conversion is asked for.
           </p>
 
           <div className="mt-10 md:grid md:grid-cols-3">
@@ -245,19 +267,19 @@ export function BellaCaseStudy({ onBack, onSelectProject }: BellaCaseStudyProps)
 
         <div className="mx-6 md:mx-12 border-t border-neutral-200" />
 
-        {/* Selected Screens — Product, Checkout, About */}
+        {/* Selected Screens — Home, Checkout, About full pages */}
         <section className="px-6 md:px-12 py-10 md:py-14">
           <SectionLabel>Selected Screens</SectionLabel>
           <h2 className="text-[22px] font-semibold tracking-[-0.5px] text-[#131313] leading-[1.3] mb-8 max-w-2xl">
-            The rest of the system.
+            The full-page tour.
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {[
-              { src: productDetailImage, label: 'Product Detail' },
+              { src: heroImage, label: 'Home' },
               { src: checkoutImage, label: 'Checkout' },
               { src: aboutImage, label: 'About' },
             ].map((s) => (
-              <div key={s.label} className="rounded-xl bg-[#F1EAE2] p-4 flex flex-col gap-3">
+              <div key={s.label} className="rounded-xl bg-[#ECEEF0] p-4 flex flex-col gap-3">
                 <p className="text-[11px] leading-none text-[#1E1E1E]">{s.label}</p>
                 <ImageWithFallback src={s.src} alt={s.label} className="block w-full h-auto rounded-md" />
               </div>
