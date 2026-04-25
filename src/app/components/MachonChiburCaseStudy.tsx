@@ -10,6 +10,8 @@ import resultsImg from '../../assets/machon-rights-map.png';
 import emotionalToolsImg from '../../assets/machon-emotional-toolbox.png';
 import expertSelectionImg from '../../assets/machon-therapist-selection.png';
 import expertChatImg from '../../assets/machon-therapist-chat.png';
+import landingImg from '../../assets/machon-landing.png';
+import recommendationImg from '../../assets/machon-recommendation.png';
 
 interface MachonChiburCaseStudyProps {
   onBack: () => void;
@@ -115,6 +117,17 @@ export function MachonChiburCaseStudy({ onBack, onSelectProject }: MachonChiburC
           </p>
         </div>
 
+        {/* Cover image */}
+        <div className="px-6 md:px-12 pb-10 md:pb-14">
+          <div className="rounded-xl overflow-hidden bg-[#ECEEF0]">
+            <ImageWithFallback
+              src={landingImg}
+              alt="Machon Chibur — landing page hero"
+              className="w-full h-auto block"
+            />
+          </div>
+        </div>
+
         <div className="mx-6 md:mx-12 border-t border-neutral-200" />
 
         {/* Overview */}
@@ -177,6 +190,7 @@ export function MachonChiburCaseStudy({ onBack, onSelectProject }: MachonChiburC
               images={[
                 { src: intakeStartImg, alt: 'Intake — welcome', label: 'Intake — Welcome' },
                 { src: intakeMiddleImg, alt: 'Intake — in progress', label: 'Intake — Mid-Flow' },
+                { src: recommendationImg, alt: 'Personalized recommendation after intake', label: 'Personalized Recommendation' },
               ]}
             />
 
