@@ -1,24 +1,23 @@
-import { ArrowLeft, Search, User, ShoppingBag } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { ArrowLeft, Search, User, ShoppingBag, Star, CheckCircle2, Play, Heart } from 'lucide-react';
 import { Footer } from '@/app/components/Footer';
 import { CaseNavFooter } from '@/app/components/CaseNavFooter';
 import { ImageWithFallback } from '@/app/components/figma/ImageWithFallback';
-import heroImage from '../../assets/f4d14d9769234e371e3b2c43f272901073d360c7.png';
+import heroImage from '../../assets/bella-home-hires.png';
 import solutionsImage from '../../assets/2dfd007ccff4a3ab5905a1bc67d5535205ea07e2.png';
 import pregnancyPillowsImage from '../../assets/bella-pillows.png';
-import shopTabsImage from '../../assets/bella-shop-tabs.png';
 import quizStartImage from '../../assets/bella-quiz-start.png';
 import quizMiddleImage from '../../assets/bella-quiz-middle.png';
 import quizResultImage from '../../assets/bella-quiz-result.png';
-import storiesImage from '../../assets/bella-stories.png';
-import reviewsImage from '../../assets/bella-reviews.png';
 import contentHubImage from '../../assets/2b35accf6040327f1a4293aad8b40fdd0928d71c.png';
-import sleepHeroImage from '../../assets/bella-sleep-hero.jpg';
-import normalHeroImage from '../../assets/bella-normal-hero.jpg';
-import bodyMapDefault from '../../assets/bella-bodymap-default.png';
-import bodyMapBack from '../../assets/bella-bodymap-back.png';
-import bodyMapKnees from '../../assets/bella-bodymap-knees.png';
-import bodyMapAnkles from '../../assets/bella-bodymap-ankles.png';
-import cartModalImage from '../../assets/bella-cart-modal.png';
+import articleSleepImage from '../../assets/bella-article-sleep.png';
+import articleNormalImage from '../../assets/bella-article-normal.png';
+import bodyMapBg from '../../assets/bella-bodymap-bg.jpg';
+import cartModalImage from '../../assets/bella-cart-hires.png';
+import story1 from '../../assets/bella-story-1.png';
+import story2 from '../../assets/bella-story-2.png';
+import story3 from '../../assets/bella-story-3.png';
+import story4 from '../../assets/bella-story-4.png';
 
 interface BellaCaseStudyProps {
   onBack: () => void;
@@ -33,12 +32,20 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
   );
 }
 
-function PillarCanvas({ children, tall = false }: { children: React.ReactNode; tall?: boolean }) {
+function PillarCanvas({
+  children,
+  tall = false,
+  pad = true,
+}: {
+  children: React.ReactNode;
+  tall?: boolean;
+  pad?: boolean;
+}) {
   return (
     <div
-      className={`rounded-xl bg-[#ECEEF0] p-6 md:p-8 flex items-center justify-center ${
-        tall ? 'min-h-[440px] md:min-h-[520px]' : 'min-h-[300px] md:min-h-[360px]'
-      }`}
+      className={`rounded-xl bg-[#ECEEF0] flex items-center justify-center overflow-hidden ${
+        pad ? 'p-6 md:p-8' : ''
+      } ${tall ? 'min-h-[440px] md:min-h-[560px]' : 'min-h-[300px] md:min-h-[360px]'}`}
     >
       {children}
     </div>
@@ -47,27 +54,14 @@ function PillarCanvas({ children, tall = false }: { children: React.ReactNode; t
 
 type PillarImage = { src: string; alt: string; label: string };
 
-const PILLAR_IMAGE_WIDTHS: Record<number, number> = {
-  1: 520,
-  2: 380,
-  3: 240,
-  4: 180,
-};
-
 function PillarImages({ images }: { images: PillarImage[] }) {
-  const width = PILLAR_IMAGE_WIDTHS[images.length] ?? 220;
+  const width = images.length === 2 ? 460 : 280;
   return (
     <div className="flex flex-wrap items-start justify-center gap-6">
       {images.map((img, i) => (
         <div key={i} style={{ width: `${width}px` }}>
-          <p className="text-[11px] mb-1.5 leading-none text-[#1E1E1E]">
-            {img.label}
-          </p>
-          <ImageWithFallback
-            src={img.src}
-            alt={img.alt}
-            className="block w-full h-auto"
-          />
+          <p className="text-[11px] mb-1.5 leading-none text-[#1E1E1E]">{img.label}</p>
+          <ImageWithFallback src={img.src} alt={img.alt} className="block w-full h-auto" />
         </div>
       ))}
     </div>
@@ -80,6 +74,7 @@ function Pillar({
   body,
   images,
   tall,
+  pad = true,
   custom,
 }: {
   label: string;
@@ -87,6 +82,7 @@ function Pillar({
   body: string;
   images?: PillarImage[];
   tall?: boolean;
+  pad?: boolean;
   custom?: React.ReactNode;
 }) {
   return (
@@ -98,9 +94,255 @@ function Pillar({
       <p className="text-[14px] font-normal leading-[1.6] tracking-[-0.2px] text-[#131313] max-w-2xl mb-8">
         {body}
       </p>
-      <PillarCanvas tall={tall}>
+      <PillarCanvas tall={tall} pad={pad}>
         {custom ?? (images && <PillarImages images={images} />)}
       </PillarCanvas>
+    </div>
+  );
+}
+
+// ─────────────────── Pillar 2 — Auto-cycling Quiz Carousel ──────────────────
+function QuizCarousel() {
+  const slides = [
+    { src: quizStartImage, label: 'Step 01 · Start', step: 1 },
+    { src: quizMiddleImage, label: 'Step 03 · Middle', step: 3 },
+    { src: quizResultImage, label: 'Step 06 · Recommendation', step: 6 },
+  ];
+  const [active, setActive] = useState(0);
+  const [paused, setPaused] = useState(false);
+  useEffect(() => {
+    if (paused) return;
+    const t = setInterval(() => setActive((i) => (i + 1) % slides.length), 2800);
+    return () => clearInterval(t);
+  }, [paused, slides.length]);
+  return (
+    <div
+      className="w-full max-w-3xl flex flex-col items-center gap-4"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+    >
+      <div className="relative w-full aspect-[16/14] rounded-lg overflow-hidden bg-white border border-neutral-200">
+        {slides.map((s, i) => (
+          <ImageWithFallback
+            key={i}
+            src={s.src}
+            alt={s.label}
+            className={`absolute inset-0 w-full h-full object-cover object-top transition-opacity duration-700 ${
+              i === active ? 'opacity-100' : 'opacity-0'
+            }`}
+          />
+        ))}
+      </div>
+      <div className="flex items-center gap-3">
+        {slides.map((s, i) => (
+          <button
+            key={i}
+            onClick={() => {
+              setActive(i);
+              setPaused(true);
+            }}
+            className={`text-[11px] px-3 py-1.5 rounded-full transition-colors border ${
+              i === active
+                ? 'bg-[#131313] text-white border-[#131313]'
+                : 'bg-white text-[#131313] border-neutral-300 hover:border-neutral-500'
+            }`}
+          >
+            {s.label}
+          </button>
+        ))}
+      </div>
+      <p className="text-[10px] text-[rgba(19,19,19,0.4)]">
+        Auto-advances every 2.8s · hover to pause · click to jump
+      </p>
+    </div>
+  );
+}
+
+// ─────────────────── Pillar 4 — Reviews + Stories Feature Cards ──────────────────
+const REVIEWS = [
+  {
+    name: 'מיכל לוי',
+    week: 'שבוע 27',
+    text: 'איכות מעולה ושירות מהיר. הכרית עזרה לי מאוד עם כאבי הגב בחודשים האחרונים להריון.',
+    date: '8 בינואר 2026',
+  },
+  {
+    name: 'שרה כהן',
+    week: 'שבוע 33',
+    text: 'שינה נוחה יותר, תמיכה מושלמת לגב ולבטן. הכרית הזו ליוותה אותי לאורך כל ההריון.',
+    date: '14 בינואר 2026',
+  },
+  {
+    name: 'יעל',
+    week: 'שבוע 27',
+    text: 'לא האמנתי שכרית יכולה לשנות ככה את השינה. סוף סוף אני קמה בלי כאבי גב.',
+    date: '3 בינואר 2026',
+  },
+];
+
+function ReviewCard({ name, week, text, date }: typeof REVIEWS[number]) {
+  return (
+    <div className="bg-white rounded-2xl border border-neutral-200 p-5 flex flex-col gap-3 shadow-sm">
+      <div className="flex items-center gap-1">
+        {Array.from({ length: 5 }).map((_, i) => (
+          <Star key={i} className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+        ))}
+      </div>
+      <p className="text-[12px] leading-[1.6] text-[#131313]" dir="rtl">
+        {text}
+      </p>
+      <p className="text-[10px] text-[rgba(19,19,19,0.5)] mt-auto" dir="rtl">{date}</p>
+      <div className="border-t border-neutral-100 pt-3" dir="rtl">
+        <p className="text-[12px] font-medium text-[#131313]">{name}</p>
+        <div className="flex items-center gap-1 mt-1">
+          <CheckCircle2 className="w-3 h-3 text-emerald-600" />
+          <span className="text-[10px] text-emerald-700">קונה מאומתת</span>
+          <span className="text-[10px] text-[rgba(19,19,19,0.4)] mx-1">·</span>
+          <span className="text-[10px] text-[rgba(19,19,19,0.5)]">{week}</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+const STORY_CARDS = [
+  { src: story1, handle: 'noya.raz', label: 'Sleep Story' },
+  { src: story2, handle: 'mayan.k', label: 'Back Pain Tip' },
+  { src: story3, handle: 'roni.sh', label: 'Nursery Setup' },
+  { src: story4, handle: 'tal.b', label: 'Recovery Routine' },
+];
+
+function StoryCard({ src, handle, label }: typeof STORY_CARDS[number]) {
+  return (
+    <div className="relative rounded-2xl overflow-hidden bg-neutral-200" style={{ aspectRatio: '9 / 14' }}>
+      <ImageWithFallback src={src} alt={handle} className="w-full h-full object-cover" />
+      <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/40" />
+      <div className="absolute top-2 left-2 flex items-center gap-1.5">
+        <div className="w-6 h-6 rounded-full bg-white/30 backdrop-blur-sm border border-white/60" />
+        <span className="text-[10px] font-medium text-white drop-shadow-sm">{handle}</span>
+      </div>
+      <div className="absolute inset-0 flex items-center justify-center">
+        <div className="w-10 h-10 rounded-full bg-white/85 flex items-center justify-center backdrop-blur-sm">
+          <Play className="w-4 h-4 text-[#131313] fill-[#131313] ml-0.5" />
+        </div>
+      </div>
+      <div className="absolute bottom-2 left-2 right-2 flex items-end justify-between">
+        <span className="text-[10px] text-white drop-shadow-sm">{label}</span>
+        <Heart className="w-3.5 h-3.5 text-white drop-shadow-sm" />
+      </div>
+    </div>
+  );
+}
+
+function VoicesShowcase() {
+  return (
+    <div className="w-full max-w-4xl flex flex-col gap-8">
+      <div>
+        <p className="text-[11px] font-medium tracking-[1.2px] text-[rgba(19,19,19,0.5)] uppercase mb-3 text-center">
+          Mothers’ Stories — interactive carousel
+        </p>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          {STORY_CARDS.map((s) => (
+            <StoryCard key={s.handle} {...s} />
+          ))}
+        </div>
+      </div>
+      <div>
+        <p className="text-[11px] font-medium tracking-[1.2px] text-[rgba(19,19,19,0.5)] uppercase mb-3 text-center">
+          Verified Reviews — slider
+        </p>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+          {REVIEWS.map((r) => (
+            <ReviewCard key={r.name} {...r} />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─────────────────── Pillar 5 — Live Interactive Body Map ──────────────────
+type Hotspot = {
+  id: string;
+  title: string;
+  description: string;
+  position: { top: string; right: string };
+  tooltipDirection: 'left' | 'right';
+};
+
+const HOTSPOTS: Hotspot[] = [
+  { id: 'back', title: 'תמיכה בגב', description: 'הכרית תומכת בעמוד השדרה ומפחיתה לחץ על אזור הגב התחתון', position: { top: '22%', right: '41.2%' }, tooltipDirection: 'left' },
+  { id: 'belly', title: 'תמיכה בבטן', description: 'תומכת בבטן בעדינות ומקלה על תחושת המשקל', position: { top: '52%', right: '42.5%' }, tooltipDirection: 'right' },
+  { id: 'hips', title: 'תמיכה באגן ובירכיים', description: 'יישור נכון של האגן מפחית כאבים ומשפר את איכות השינה', position: { top: '25%', right: '51.9%' }, tooltipDirection: 'left' },
+  { id: 'knees', title: 'תמיכה בין הברכיים', description: 'שומרת על יישור נכון של הרגליים ומפחיתה לחץ על הברכיים', position: { top: '62%', right: '68.4%' }, tooltipDirection: 'right' },
+  { id: 'ankles', title: 'תמיכה בקרסוליים', description: 'מרימה את הרגליים במעט ועוזרת להפחית נפיחות', position: { top: '31%', right: '85.2%' }, tooltipDirection: 'right' },
+];
+
+function InteractiveBodyMap() {
+  const [active, setActive] = useState<string | null>('back');
+  return (
+    <div className="w-full max-w-3xl flex flex-col items-center gap-4">
+      <div className="relative w-full aspect-[16/9] rounded-2xl overflow-hidden bg-neutral-200" dir="rtl">
+        <img src={bodyMapBg} alt="Pregnancy pillow body map" className="absolute inset-0 w-full h-full object-cover" />
+        <div className="absolute inset-0 bg-black/15" />
+        {HOTSPOTS.map((h) => {
+          const isActive = active === h.id;
+          return (
+            <div
+              key={h.id}
+              style={{ position: 'absolute', top: h.position.top, right: h.position.right, zIndex: isActive ? 30 : 20 }}
+            >
+              <button
+                onClick={() => setActive(isActive ? null : h.id)}
+                className={`relative w-3.5 h-3.5 md:w-4 md:h-4 rounded-full border-2 border-white shadow-md transition-all duration-200 ${
+                  isActive ? 'bg-[#131313] scale-125' : 'bg-white/95 hover:scale-110'
+                }`}
+                aria-label={h.title}
+              >
+                <span
+                  className={`absolute inset-0 rounded-full ${
+                    isActive ? '' : 'animate-ping bg-white/60'
+                  }`}
+                />
+              </button>
+              {isActive && (
+                <div
+                  className={`absolute top-1/2 -translate-y-1/2 ${
+                    h.tooltipDirection === 'right' ? 'right-6' : 'left-6'
+                  } bg-white rounded-xl shadow-xl px-3 py-2 w-48 z-40`}
+                  style={{ direction: 'rtl' }}
+                >
+                  <p className="text-[11px] font-semibold text-[#131313] mb-0.5 leading-tight">
+                    {h.title}
+                  </p>
+                  <p className="text-[10px] text-[rgba(19,19,19,0.65)] leading-snug">
+                    {h.description}
+                  </p>
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+      <div className="flex flex-wrap items-center justify-center gap-2">
+        {HOTSPOTS.map((h) => (
+          <button
+            key={h.id}
+            onClick={() => setActive(h.id)}
+            className={`text-[11px] px-3 py-1.5 rounded-full transition-colors border ${
+              active === h.id
+                ? 'bg-[#131313] text-white border-[#131313]'
+                : 'bg-white text-[#131313] border-neutral-300 hover:border-neutral-500'
+            }`}
+            dir="rtl"
+          >
+            {h.title}
+          </button>
+        ))}
+      </div>
+      <p className="text-[10px] text-[rgba(19,19,19,0.4)]">
+        Click any hotspot to read what the pillow does at that point in the body
+      </p>
     </div>
   );
 }
@@ -172,7 +414,7 @@ export function BellaCaseStudy({ onBack, onSelectProject }: BellaCaseStudyProps)
             Reframe the architecture from "what we sell" to "what hurts".
           </h2>
           <p className="text-[14px] font-normal leading-[1.6] tracking-[-0.2px] text-[#131313] max-w-2xl">
-            Instead of opening with categories ("Pillows", "Belts", "Apparel"), the homepage opens with situations: <em>better sleep, sitting comfort, pain relief, postpartum care</em>. A 5-question quiz translates how the user feels into a single product recommendation. Editorial content (sleep tips, "what's normal in pregnancy") sits at the same depth as the catalogue, not buried in a footer. Hebrew typography is treated as a first-class system — not an afterthought translation.
+            Instead of opening with categories ("Pillows", "Belts", "Apparel"), the homepage opens with situations: <em>better sleep, sitting comfort, pain relief, postpartum care</em>. A 6-step quiz translates how the user feels into a single product recommendation. Editorial content (sleep tips, "what's normal in pregnancy") sits at the same depth as the catalogue, not buried in a footer. Hebrew typography is treated as a first-class system — not an afterthought translation.
           </p>
         </section>
 
@@ -190,77 +432,50 @@ export function BellaCaseStudy({ onBack, onSelectProject }: BellaCaseStudyProps)
             <Pillar
               label="Pillar 01 — Solution-first Browsing"
               heading="Architecture organised around the body, not the SKU."
-              body="The homepage opens with the four physical states a pregnant body actually moves through — sleep, sitting, pain, postpartum — and routes each one into a curated shop. The Pregnancy Pillows hub demonstrates the same principle inside a single product family, and the Shop itself opens with category tabs that mirror the four states rather than starting from a generic SKU grid."
+              body="The homepage opens with the four physical states a pregnant body actually moves through — sleep, sitting, pain, postpartum — and routes each one into a curated shop. The Pregnancy Pillows hub demonstrates the same principle inside a single product family: every entry point is a state of being, not a SKU."
               images={[
                 { src: solutionsImage, alt: 'Solutions by Need section', label: 'Home — Solutions by Need' },
                 { src: pregnancyPillowsImage, alt: 'Pregnancy pillows hub', label: 'Pillows — Curated Hub' },
-                { src: shopTabsImage, alt: 'Shop with category tabs', label: 'Shop — Category Tabs' },
               ]}
             />
 
-            {/* Pillar 2 — Personalised Quiz with 3 stages */}
+            {/* Pillar 2 — Personalised Quiz: interactive auto-cycling carousel */}
             <Pillar
               label="Pillar 02 — Personalised Quiz Path"
               heading="A 6-step conversation that ends in one matched product."
               body="The quiz has a clear arc: a calm landing, six paced questions with a progress bar, and a single matched recommendation at the end. The user always knows where she is in the flow — questions are reversible, answers are anonymous, and the result is concrete (one product, with reasoning) rather than a list of upsells."
-              images={[
-                { src: quizStartImage, alt: 'Quiz first question', label: 'Step 01 — Start' },
-                { src: quizMiddleImage, alt: 'Quiz mid-flow', label: 'Step 03 — Middle' },
-                { src: quizResultImage, alt: 'Quiz recommendation', label: 'Step 06 — Recommendation' },
-              ]}
+              tall
+              custom={<QuizCarousel />}
             />
 
-            {/* Pillar 3 — Editorial Trust */}
+            {/* Pillar 3 — Editorial Trust: full article hero captures with new images */}
             <Pillar
               label="Pillar 03 — Editorial Trust Layer"
               heading="Content earns the right to sell."
               body="A real Knowledge Hub with sleep tips, pregnancy-norm guides and FAQ — promoted on the homepage as a peer surface to the shop, not buried in a footer. Each article opens with an editorial hero that sets a calm, trustworthy tone before any product is mentioned."
               images={[
                 { src: contentHubImage, alt: 'Content guidance section on home', label: 'Home — Content as Peer' },
-                { src: sleepHeroImage, alt: 'Sleep tips article hero', label: 'Article — Sleep Tips Hero' },
-                { src: normalHeroImage, alt: 'What is normal article hero', label: 'Article — What’s Normal Hero' },
+                { src: articleSleepImage, alt: 'Sleep tips article', label: 'Article — Sleep Tips' },
+                { src: articleNormalImage, alt: 'What is normal article', label: 'Article — What’s Normal' },
               ]}
             />
 
-            {/* Pillar 4 — Real Voices */}
+            {/* Pillar 4 — Real Voices: live React feature cards */}
             <Pillar
               label="Pillar 04 — Trust Through Real Stories"
               heading="Trust is built when other women tell the story — not the brand."
-              body="Two surfaces, both above the fold on Home, run on real customers. An Instagram-style story carousel scrolls horizontally through video moments from actual mothers. A verified-buyer review slider rotates through five-star reviews with names, weeks of pregnancy and dates. Both are interactive — users scrub the stories, swipe through the reviews — so the social proof feels live, not pre-rendered marketing."
-              images={[
-                { src: storiesImage, alt: 'Mothers stories carousel', label: 'Home — Mothers’ Stories Carousel (interactive)' },
-                { src: reviewsImage, alt: 'Verified mothers reviews', label: 'Home — Verified Reviews Slider (interactive)' },
-              ]}
+              body="Two surfaces, both above the fold on Home, run on real customers. An Instagram-style story carousel scrolls horizontally through video moments from actual mothers. A verified-buyer review slider rotates through five-star reviews with names, weeks of pregnancy and dates. Both are rebuilt here as live components — not screenshot crops — to show the actual building blocks of the trust layer."
+              tall
+              custom={<VoicesShowcase />}
             />
 
-            {/* Pillar 5 — Body Map (only the body map, multiple states) */}
+            {/* Pillar 5 — Live interactive body map */}
             <Pillar
               label="Pillar 05 — Product Discovery Through the Body"
-              heading="One interactive image. Five hotspots. The product is explained by the body, not the spec sheet."
-              body="The homepage's product zone is a single editorial photograph with five clickable hotspots — back, belly, hips, knees, ankles. On hover the dot lifts; on click a small annotation opens that names exactly what the pillow does at that point in the body. There is no separate diagram, no comparison chart — the product is explained by the body it touches."
+              heading="One image. Five hotspots. The product is explained by the body, not the spec sheet."
+              body="The homepage's product zone is a single editorial photograph with five clickable hotspots — back, belly, hips, knees, ankles. On hover the dot pulses; on click a small annotation opens that names exactly what the pillow does at that point in the body. Try it: the version below is the live interaction, not a screenshot."
               tall
-              custom={
-                <div className="flex flex-col gap-4 w-full">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <p className="text-[11px] mb-1.5 leading-none text-[#1E1E1E]">Default — 5 hotspots visible</p>
-                      <ImageWithFallback src={bodyMapDefault} alt="Body map default state" className="block w-full h-auto rounded-md" />
-                    </div>
-                    <div>
-                      <p className="text-[11px] mb-1.5 leading-none text-[#1E1E1E]">Hotspot — Back support</p>
-                      <ImageWithFallback src={bodyMapBack} alt="Back hotspot active" className="block w-full h-auto rounded-md" />
-                    </div>
-                    <div>
-                      <p className="text-[11px] mb-1.5 leading-none text-[#1E1E1E]">Hotspot — Between knees</p>
-                      <ImageWithFallback src={bodyMapKnees} alt="Knees hotspot active" className="block w-full h-auto rounded-md" />
-                    </div>
-                    <div>
-                      <p className="text-[11px] mb-1.5 leading-none text-[#1E1E1E]">Hotspot — Ankle relief</p>
-                      <ImageWithFallback src={bodyMapAnkles} alt="Ankles hotspot active" className="block w-full h-auto rounded-md" />
-                    </div>
-                  </div>
-                </div>
-              }
+              custom={<InteractiveBodyMap />}
             />
           </div>
         </section>
@@ -299,7 +514,7 @@ export function BellaCaseStudy({ onBack, onSelectProject }: BellaCaseStudyProps)
 
         <div className="mx-6 md:mx-12 border-t border-neutral-200" />
 
-        {/* Selected Screens — Home + Cart with product */}
+        {/* Selected Screens — Home + Cart with product, hi-res */}
         <section className="px-6 md:px-12 py-10 md:py-14">
           <SectionLabel>Selected Screens</SectionLabel>
           <h2 className="text-[22px] font-semibold tracking-[-0.5px] text-[#131313] leading-[1.3] mb-8 max-w-2xl">
