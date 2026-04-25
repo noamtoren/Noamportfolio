@@ -242,6 +242,127 @@ export function MachonChiburCaseStudy({ onBack, onSelectProject }: MachonChiburC
 
         <div className="mx-6 md:mx-12 border-t border-neutral-200" />
 
+        {/* Design System */}
+        <section className="px-6 md:px-12 py-10 md:py-14">
+          <SectionLabel>Design System</SectionLabel>
+          <h2 className="text-[22px] font-semibold tracking-[-0.5px] text-[#131313] leading-[1.3] mb-4 max-w-2xl">
+            A calm, RTL-native system for sensitive content.
+          </h2>
+          <p className="text-[14px] font-normal leading-[1.6] tracking-[-0.2px] text-[#131313] max-w-2xl mb-12">
+            Every visual decision is anchored in one rule: nothing on screen should raise the user's heart rate. Colors stay warm and matte, typography prioritises Hebrew readability, motion is restrained, and component behaviour preserves the user's sense of control at every step.
+          </p>
+
+          {/* Foundations grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+            {/* Color */}
+            <div className="rounded-xl border border-neutral-200 bg-white p-6">
+              <p className="text-[11px] font-medium text-[rgba(19,19,19,0.5)] tracking-[1.4px] mb-3">FOUNDATION · COLOR</p>
+              <h3 className="text-[16px] font-semibold text-[#131313] mb-2">Warm sage, never clinical.</h3>
+              <p className="text-[13px] leading-[1.6] text-[rgba(19,19,19,0.7)] mb-5">
+                A sage-and-cream palette replaces the clinical white-and-blue of typical health products. Primary actions use a deep, matte green; emergency lives in a soft amber, not red — to inform without alarming.
+              </p>
+              <div className="grid grid-cols-5 gap-2">
+                {[
+                  { hex: '#F9F7F3', label: 'ivory' },
+                  { hex: '#FFFFFF', label: 'paper' },
+                  { hex: '#3F6B4A', label: 'primary 700' },
+                  { hex: '#B88A4E', label: 'amber' },
+                  { hex: '#23201D', label: 'ink' },
+                ].map((s) => (
+                  <div key={s.hex} className="flex flex-col gap-1">
+                    <div className="rounded-lg aspect-square border border-neutral-200" style={{ backgroundColor: s.hex }} />
+                    <p className="text-[10px] text-[rgba(19,19,19,0.6)] leading-tight">{s.label}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Typography */}
+            <div className="rounded-xl border border-neutral-200 bg-white p-6">
+              <p className="text-[11px] font-medium text-[rgba(19,19,19,0.5)] tracking-[1.4px] mb-3">FOUNDATION · TYPOGRAPHY</p>
+              <h3 className="text-[16px] font-semibold text-[#131313] mb-2">Two Hebrew families, one voice.</h3>
+              <p className="text-[13px] leading-[1.6] text-[rgba(19,19,19,0.7)] mb-5">
+                Frank Ruhl Libre carries display headings — its serif details give weight to the most personal moments. Heebo handles body text and UI: a humanist sans-serif tuned for long-form Hebrew at small sizes, AA+ contrast guaranteed.
+              </p>
+              <div className="space-y-2 text-right" dir="rtl">
+                <p className="text-[28px] leading-none text-[#23201D]" style={{ fontFamily: 'serif' }}>זה רגיל?</p>
+                <p className="text-[14px] leading-[1.6] text-[rgba(35,32,29,0.7)]">בוא נבדוק ביחד — בלי שם, בלי גיליון רשמי, בלי לחץ.</p>
+                <p className="text-[11px] uppercase tracking-[1.4px] text-[rgba(35,32,29,0.5)] pt-1">Frank Ruhl Libre · Heebo</p>
+              </div>
+            </div>
+
+            {/* RTL */}
+            <div className="rounded-xl border border-neutral-200 bg-white p-6">
+              <p className="text-[11px] font-medium text-[rgba(19,19,19,0.5)] tracking-[1.4px] mb-3">FOUNDATION · RTL</p>
+              <h3 className="text-[16px] font-semibold text-[#131313] mb-2">Hebrew-first, not translated.</h3>
+              <p className="text-[13px] leading-[1.6] text-[rgba(19,19,19,0.7)] mb-5">
+                Layouts flow right-to-left at the structural level: navigation, bullet indicators, progress bars, callouts. Numbers and Latin tokens stay LTR inside their Hebrew context — never letting a translation shortcut break the reading rhythm.
+              </p>
+              <div className="rounded-lg bg-[#F9F7F3] border border-[#E8E2D8] p-4 flex items-center justify-end gap-3" dir="rtl">
+                <p className="text-[13px] text-[#3F6B4A] font-medium">בקצב שלך · אנונימי · ללא הרשמה</p>
+                <span className="w-2.5 h-2.5 rounded-full bg-[#5E8A6A] block flex-shrink-0" />
+              </div>
+            </div>
+
+            {/* Motion */}
+            <div className="rounded-xl border border-neutral-200 bg-white p-6">
+              <p className="text-[11px] font-medium text-[rgba(19,19,19,0.5)] tracking-[1.4px] mb-3">FOUNDATION · MOTION</p>
+              <h3 className="text-[16px] font-semibold text-[#131313] mb-2">Slow enough to feel safe.</h3>
+              <p className="text-[13px] leading-[1.6] text-[rgba(19,19,19,0.7)] mb-5">
+                Smart Animate at 400ms with ease-in-and-out for the main flow. Dissolve at 300ms for system states. No bounce, no flourish — transitions exist to confirm direction, not to perform.
+              </p>
+              <div className="flex flex-col gap-2">
+                <div className="flex items-center justify-between text-[12px]">
+                  <span className="text-[rgba(19,19,19,0.5)] font-mono">400ms</span>
+                  <span className="text-[#131313]">Smart Animate · main flow</span>
+                </div>
+                <div className="flex items-center justify-between text-[12px]">
+                  <span className="text-[rgba(19,19,19,0.5)] font-mono">300ms</span>
+                  <span className="text-[#131313]">Dissolve · system states</span>
+                </div>
+                <div className="flex items-center justify-between text-[12px]">
+                  <span className="text-[rgba(19,19,19,0.5)] font-mono">ease-in-and-out</span>
+                  <span className="text-[#131313]">Easing · everywhere</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Component philosophy */}
+          <div className="rounded-xl bg-[#F9F7F3] p-6 md:p-8 mb-8">
+            <p className="text-[11px] font-medium text-[#3F6B4A] tracking-[1.4px] mb-3">COMPONENT PHILOSOPHY</p>
+            <h3 className="text-[18px] font-semibold text-[#131313] mb-3 max-w-2xl">28 components, 13 component sets — every recurring element documented.</h3>
+            <p className="text-[14px] leading-[1.65] text-[rgba(19,19,19,0.7)] max-w-2xl">
+              Buttons (3 types × 4 states), inputs (5 states), choice buttons, callouts (4 tones including a purpose-built <em>reassure</em> for trauma-informed messaging), progress, chat bubbles, therapist cards with hover variants, and a dedicated <em>Emergency Support Card</em>. Component Library and Design System pages in the Figma file mirror what ships in screens — never theory, always sourced from real use.
+            </p>
+          </div>
+
+          {/* Trauma-informed principles */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {[
+              {
+                title: 'Voice without verdict',
+                body: 'No "you have", no "you are diagnosed". Microcopy uses "what you marked may suggest" instead of "the system found".',
+              },
+              {
+                title: 'Reversible by default',
+                body: 'Every flow has an "exit fast" affordance. Modals offer "save and exit", "keep going", "change my answers" — not "cancel" / "OK".',
+              },
+              {
+                title: 'Earned trust, never assumed',
+                body: 'No phone, no email, no account at intake. Anonymity stated three times in the first 30 seconds; data persistence is opt-in only.',
+              },
+            ].map((p) => (
+              <div key={p.title} className="rounded-xl border border-neutral-200 bg-white p-5">
+                <h4 className="text-[14px] font-semibold text-[#131313] mb-2">{p.title}</h4>
+                <p className="text-[13px] leading-[1.6] text-[rgba(19,19,19,0.7)]">{p.body}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <div className="mx-6 md:mx-12 border-t border-neutral-200" />
+
         <CaseNavFooter currentId="machon-chibur" onSelectProject={onSelectProject} />
       </div>
 
