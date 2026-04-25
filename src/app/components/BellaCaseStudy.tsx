@@ -4,18 +4,21 @@ import { CaseNavFooter } from '@/app/components/CaseNavFooter';
 import { ImageWithFallback } from '@/app/components/figma/ImageWithFallback';
 import heroImage from '../../assets/f4d14d9769234e371e3b2c43f272901073d360c7.png';
 import solutionsImage from '../../assets/2dfd007ccff4a3ab5905a1bc67d5535205ea07e2.png';
-import shopImage from '../../assets/3f24ea7874dd37ca8cda54ecaed3080b2a4d8c28.png';
 import pregnancyPillowsImage from '../../assets/bella-pillows.png';
-import quizImage from '../../assets/ef4cb93d4bdaa208f60882e23720c518b7904228.png';
-import userStoriesImage from '../../assets/1458d6abffcc02c19fe235eabf0be0bd373ab73b.png';
-import mothersReviewsImage from '../../assets/67a1633c68713005694129658cd90189f7e8a3e9.png';
-import productDetailImage from '../../assets/645f031c54e6fcf7dd2fecb04e889118fac43f5c.png';
+import shopTabsImage from '../../assets/bella-shop-tabs.png';
+import quizStartImage from '../../assets/bella-quiz-start.png';
+import quizMiddleImage from '../../assets/bella-quiz-middle.png';
+import quizResultImage from '../../assets/bella-quiz-result.png';
+import storiesImage from '../../assets/bella-stories.png';
+import reviewsImage from '../../assets/bella-reviews.png';
 import contentHubImage from '../../assets/2b35accf6040327f1a4293aad8b40fdd0928d71c.png';
-import sleepTipsImage from '../../assets/70a34bb10e1f97f29587650c22e9351af6a312ea.png';
-import pregnancyNormalImage from '../../assets/6b4d03b54622b096008e4efc8b3e88afcc6eb605.png';
-import checkoutImage from '../../assets/c0c0facfa6f14e57ca71a7e8222654a5a77a734e.png';
-import interactiveProductImage from '../../assets/fa4778ad5b7f683ff5d1d9f18574a3b7d95c4c92.png';
-import aboutImage from '../../assets/bella-about.png';
+import sleepHeroImage from '../../assets/bella-sleep-hero.jpg';
+import normalHeroImage from '../../assets/bella-normal-hero.jpg';
+import bodyMapDefault from '../../assets/bella-bodymap-default.png';
+import bodyMapBack from '../../assets/bella-bodymap-back.png';
+import bodyMapKnees from '../../assets/bella-bodymap-knees.png';
+import bodyMapAnkles from '../../assets/bella-bodymap-ankles.png';
+import cartModalImage from '../../assets/bella-cart-modal.png';
 
 interface BellaCaseStudyProps {
   onBack: () => void;
@@ -30,9 +33,13 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
   );
 }
 
-function PillarCanvas({ children }: { children: React.ReactNode }) {
+function PillarCanvas({ children, tall = false }: { children: React.ReactNode; tall?: boolean }) {
   return (
-    <div className="rounded-xl bg-[#ECEEF0] p-6 md:p-8 min-h-[300px] md:min-h-[360px] flex items-center justify-center">
+    <div
+      className={`rounded-xl bg-[#ECEEF0] p-6 md:p-8 flex items-center justify-center ${
+        tall ? 'min-h-[440px] md:min-h-[520px]' : 'min-h-[300px] md:min-h-[360px]'
+      }`}
+    >
       {children}
     </div>
   );
@@ -41,14 +48,14 @@ function PillarCanvas({ children }: { children: React.ReactNode }) {
 type PillarImage = { src: string; alt: string; label: string };
 
 const PILLAR_IMAGE_WIDTHS: Record<number, number> = {
-  1: 440,
-  2: 340,
-  3: 220,
-  4: 160,
+  1: 520,
+  2: 380,
+  3: 240,
+  4: 180,
 };
 
 function PillarImages({ images }: { images: PillarImage[] }) {
-  const width = PILLAR_IMAGE_WIDTHS[images.length] ?? 200;
+  const width = PILLAR_IMAGE_WIDTHS[images.length] ?? 220;
   return (
     <div className="flex flex-wrap items-start justify-center gap-6">
       {images.map((img, i) => (
@@ -72,11 +79,15 @@ function Pillar({
   heading,
   body,
   images,
+  tall,
+  custom,
 }: {
   label: string;
   heading: string;
   body: string;
-  images: PillarImage[];
+  images?: PillarImage[];
+  tall?: boolean;
+  custom?: React.ReactNode;
 }) {
   return (
     <div>
@@ -87,8 +98,8 @@ function Pillar({
       <p className="text-[14px] font-normal leading-[1.6] tracking-[-0.2px] text-[#131313] max-w-2xl mb-8">
         {body}
       </p>
-      <PillarCanvas>
-        <PillarImages images={images} />
+      <PillarCanvas tall={tall}>
+        {custom ?? (images && <PillarImages images={images} />)}
       </PillarCanvas>
     </div>
   );
@@ -179,21 +190,23 @@ export function BellaCaseStudy({ onBack, onSelectProject }: BellaCaseStudyProps)
             <Pillar
               label="Pillar 01 — Solution-first Browsing"
               heading="Architecture organised around the body, not the SKU."
-              body="The homepage opens with the four physical states a pregnant body actually moves through — sleep, sitting, pain, postpartum — and routes each one into a curated shop. The catalogue still exists, but it's the second layer, not the front door. The Pregnancy Pillows hub demonstrates the same principle inside a single product family."
+              body="The homepage opens with the four physical states a pregnant body actually moves through — sleep, sitting, pain, postpartum — and routes each one into a curated shop. The Pregnancy Pillows hub demonstrates the same principle inside a single product family, and the Shop itself opens with category tabs that mirror the four states rather than starting from a generic SKU grid."
               images={[
                 { src: solutionsImage, alt: 'Solutions by Need section', label: 'Home — Solutions by Need' },
                 { src: pregnancyPillowsImage, alt: 'Pregnancy pillows hub', label: 'Pillows — Curated Hub' },
-                { src: shopImage, alt: 'Shop with filters', label: 'Shop — Filtered Catalogue' },
+                { src: shopTabsImage, alt: 'Shop with category tabs', label: 'Shop — Category Tabs' },
               ]}
             />
 
-            {/* Pillar 2 — Personalised Quiz */}
+            {/* Pillar 2 — Personalised Quiz with 3 stages */}
             <Pillar
               label="Pillar 02 — Personalised Quiz Path"
-              heading="A 5-question conversation that ends in one matched product."
-              body="Instead of forcing the user to compare specs across 24 SKUs, a short anonymous quiz translates how she feels (trimester, pain points, sleep position) into a single concrete recommendation. The quiz is calm, paced, and reversible — it never feels like a sales funnel."
+              heading="A 6-step conversation that ends in one matched product."
+              body="The quiz has a clear arc: a calm landing, six paced questions with a progress bar, and a single matched recommendation at the end. The user always knows where she is in the flow — questions are reversible, answers are anonymous, and the result is concrete (one product, with reasoning) rather than a list of upsells."
               images={[
-                { src: quizImage, alt: 'Questionnaire flow', label: 'Quiz — Full Flow' },
+                { src: quizStartImage, alt: 'Quiz first question', label: 'Step 01 — Start' },
+                { src: quizMiddleImage, alt: 'Quiz mid-flow', label: 'Step 03 — Middle' },
+                { src: quizResultImage, alt: 'Quiz recommendation', label: 'Step 06 — Recommendation' },
               ]}
             />
 
@@ -201,34 +214,53 @@ export function BellaCaseStudy({ onBack, onSelectProject }: BellaCaseStudyProps)
             <Pillar
               label="Pillar 03 — Editorial Trust Layer"
               heading="Content earns the right to sell."
-              body="A real Knowledge Hub with sleep tips, pregnancy-norm guides and FAQ — promoted on the homepage as a peer surface to the shop, not buried in a footer. The editorial layer is what builds trust before any product is added to the cart, and it's what brings users back between purchases."
+              body="A real Knowledge Hub with sleep tips, pregnancy-norm guides and FAQ — promoted on the homepage as a peer surface to the shop, not buried in a footer. Each article opens with an editorial hero that sets a calm, trustworthy tone before any product is mentioned."
               images={[
-                { src: contentHubImage, alt: 'Content guidance section on home', label: 'Home — Content Promoted as Peer' },
-                { src: sleepTipsImage, alt: 'Sleep tips article', label: 'Sleep Tips Article' },
-                { src: pregnancyNormalImage, alt: 'Pregnancy normal article', label: 'What’s Normal Article' },
+                { src: contentHubImage, alt: 'Content guidance section on home', label: 'Home — Content as Peer' },
+                { src: sleepHeroImage, alt: 'Sleep tips article hero', label: 'Article — Sleep Tips Hero' },
+                { src: normalHeroImage, alt: 'What is normal article hero', label: 'Article — What’s Normal Hero' },
               ]}
             />
 
             {/* Pillar 4 — Real Voices */}
             <Pillar
-              label="Pillar 04 — Real Voices, Not Marketing"
-              heading="Stories from actual mothers — not stock testimonials."
-              body="Two surfaces, both above the fold on Home: an Instagram-style story carousel that runs real customer videos, and a verified review slider with names, weeks of pregnancy, and dates. There are no fake stars and no suspiciously generic copy. Trust is earned through specificity."
+              label="Pillar 04 — Trust Through Real Stories"
+              heading="Trust is built when other women tell the story — not the brand."
+              body="Two surfaces, both above the fold on Home, run on real customers. An Instagram-style story carousel scrolls horizontally through video moments from actual mothers. A verified-buyer review slider rotates through five-star reviews with names, weeks of pregnancy and dates. Both are interactive — users scrub the stories, swipe through the reviews — so the social proof feels live, not pre-rendered marketing."
               images={[
-                { src: userStoriesImage, alt: 'User stories carousel', label: 'Stories — Real Customers' },
-                { src: mothersReviewsImage, alt: 'Mothers reviews slider', label: 'Reviews — Verified Buyers' },
+                { src: storiesImage, alt: 'Mothers stories carousel', label: 'Home — Mothers’ Stories Carousel (interactive)' },
+                { src: reviewsImage, alt: 'Verified mothers reviews', label: 'Home — Verified Reviews Slider (interactive)' },
               ]}
             />
 
-            {/* Pillar 5 — Product Discovery */}
+            {/* Pillar 5 — Body Map (only the body map, multiple states) */}
             <Pillar
-              label="Pillar 05 — Product Discovery That Speaks to the Body"
-              heading="Show the product against the problem, not the spec sheet."
-              body="The homepage's interactive product zone uses a body-map composition to tell the user where the product touches and supports her — instead of leading with materials and dimensions. The PDP carries the same logic: feature first, fabric specs second, and customer reviews tightly integrated with the buy flow."
-              images={[
-                { src: interactiveProductImage, alt: 'Interactive product body-map section', label: 'Home — Body-Map Product View' },
-                { src: productDetailImage, alt: 'Product detail page', label: 'Product Detail Page' },
-              ]}
+              label="Pillar 05 — Product Discovery Through the Body"
+              heading="One interactive image. Five hotspots. The product is explained by the body, not the spec sheet."
+              body="The homepage's product zone is a single editorial photograph with five clickable hotspots — back, belly, hips, knees, ankles. On hover the dot lifts; on click a small annotation opens that names exactly what the pillow does at that point in the body. There is no separate diagram, no comparison chart — the product is explained by the body it touches."
+              tall
+              custom={
+                <div className="flex flex-col gap-4 w-full">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <p className="text-[11px] mb-1.5 leading-none text-[#1E1E1E]">Default — 5 hotspots visible</p>
+                      <ImageWithFallback src={bodyMapDefault} alt="Body map default state" className="block w-full h-auto rounded-md" />
+                    </div>
+                    <div>
+                      <p className="text-[11px] mb-1.5 leading-none text-[#1E1E1E]">Hotspot — Back support</p>
+                      <ImageWithFallback src={bodyMapBack} alt="Back hotspot active" className="block w-full h-auto rounded-md" />
+                    </div>
+                    <div>
+                      <p className="text-[11px] mb-1.5 leading-none text-[#1E1E1E]">Hotspot — Between knees</p>
+                      <ImageWithFallback src={bodyMapKnees} alt="Knees hotspot active" className="block w-full h-auto rounded-md" />
+                    </div>
+                    <div>
+                      <p className="text-[11px] mb-1.5 leading-none text-[#1E1E1E]">Hotspot — Ankle relief</p>
+                      <ImageWithFallback src={bodyMapAnkles} alt="Ankles hotspot active" className="block w-full h-auto rounded-md" />
+                    </div>
+                  </div>
+                </div>
+              }
             />
           </div>
         </section>
@@ -251,8 +283,8 @@ export function BellaCaseStudy({ onBack, onSelectProject }: BellaCaseStudyProps)
               <p className="text-[13px] text-[rgba(19,19,19,0.6)] mt-3 leading-[1.5]">Desktop screens shipped in Figma — Home, Shop, Pillows, Product, Quiz, Content Hub, 2 articles, Checkout, About</p>
             </div>
             <div className="py-6 border-b md:py-0 md:px-8 md:border-b-0 md:border-r border-neutral-200">
-              <p className="text-[48px] font-semibold tracking-[-1.5px] leading-none text-[#131313]">5q</p>
-              <p className="text-[13px] text-[rgba(19,19,19,0.6)] mt-3 leading-[1.5]">Quiz collapses 24 SKUs to one matched product — feeling-led, not spec-led</p>
+              <p className="text-[48px] font-semibold tracking-[-1.5px] leading-none text-[#131313]">6q</p>
+              <p className="text-[13px] text-[rgba(19,19,19,0.6)] mt-3 leading-[1.5]">A six-step quiz collapses the catalogue into a single matched product — feeling-led, not spec-led</p>
             </div>
             <div className="py-6 md:py-0 md:pl-8">
               <p className="text-[48px] font-semibold tracking-[-1.5px] leading-none text-[#131313]">100%</p>
@@ -267,17 +299,16 @@ export function BellaCaseStudy({ onBack, onSelectProject }: BellaCaseStudyProps)
 
         <div className="mx-6 md:mx-12 border-t border-neutral-200" />
 
-        {/* Selected Screens — Home, Checkout, About full pages */}
+        {/* Selected Screens — Home + Cart with product */}
         <section className="px-6 md:px-12 py-10 md:py-14">
           <SectionLabel>Selected Screens</SectionLabel>
           <h2 className="text-[22px] font-semibold tracking-[-0.5px] text-[#131313] leading-[1.3] mb-8 max-w-2xl">
             The full-page tour.
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {[
-              { src: heroImage, label: 'Home' },
-              { src: checkoutImage, label: 'Checkout' },
-              { src: aboutImage, label: 'About' },
+              { src: heroImage, label: 'Home — Above the Fold' },
+              { src: cartModalImage, label: 'Cart — With Items, Free-Shipping Threshold Met' },
             ].map((s) => (
               <div key={s.label} className="rounded-xl bg-[#ECEEF0] p-4 flex flex-col gap-3">
                 <p className="text-[11px] leading-none text-[#1E1E1E]">{s.label}</p>
