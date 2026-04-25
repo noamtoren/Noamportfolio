@@ -6,6 +6,7 @@ import { ImageWithFallback } from '@/app/components/figma/ImageWithFallback';
 import heroImage from '../../assets/bella-home-hires.png';
 import solutionsImage from '../../assets/2dfd007ccff4a3ab5905a1bc67d5535205ea07e2.png';
 import pregnancyPillowsImage from '../../assets/bella-pillows.png';
+import quizIntroImage from '../../assets/bella-quiz-intro.png';
 import quizStartImage from '../../assets/bella-quiz-start.png';
 import quizMiddleImage from '../../assets/bella-quiz-middle.png';
 import quizResultImage from '../../assets/bella-quiz-result.png';
@@ -32,21 +33,9 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
   );
 }
 
-function PillarCanvas({
-  children,
-  tall = false,
-  pad = true,
-}: {
-  children: React.ReactNode;
-  tall?: boolean;
-  pad?: boolean;
-}) {
+function PillarCanvas({ children }: { children: React.ReactNode }) {
   return (
-    <div
-      className={`rounded-xl bg-[#ECEEF0] flex items-center justify-center overflow-hidden ${
-        pad ? 'p-6 md:p-8' : ''
-      } ${tall ? 'min-h-[440px] md:min-h-[560px]' : 'min-h-[300px] md:min-h-[360px]'}`}
-    >
+    <div className="rounded-xl bg-[#ECEEF0] p-6 md:p-8 min-h-[300px] md:min-h-[360px] flex items-center justify-center">
       {children}
     </div>
   );
@@ -54,8 +43,15 @@ function PillarCanvas({
 
 type PillarImage = { src: string; alt: string; label: string };
 
+const PILLAR_IMAGE_WIDTHS: Record<number, number> = {
+  1: 440,
+  2: 340,
+  3: 220,
+  4: 160,
+};
+
 function PillarImages({ images }: { images: PillarImage[] }) {
-  const width = images.length === 2 ? 460 : 280;
+  const width = PILLAR_IMAGE_WIDTHS[images.length] ?? 200;
   return (
     <div className="flex flex-wrap items-start justify-center gap-6">
       {images.map((img, i) => (
@@ -73,16 +69,12 @@ function Pillar({
   heading,
   body,
   images,
-  tall,
-  pad = true,
   custom,
 }: {
   label: string;
   heading: string;
   body: string;
   images?: PillarImage[];
-  tall?: boolean;
-  pad?: boolean;
   custom?: React.ReactNode;
 }) {
   return (
@@ -94,67 +86,50 @@ function Pillar({
       <p className="text-[14px] font-normal leading-[1.6] tracking-[-0.2px] text-[#131313] max-w-2xl mb-8">
         {body}
       </p>
-      <PillarCanvas tall={tall} pad={pad}>
+      <PillarCanvas>
         {custom ?? (images && <PillarImages images={images} />)}
       </PillarCanvas>
     </div>
   );
 }
 
-// ─────────────────── Pillar 2 — Auto-cycling Quiz Carousel ──────────────────
+// ─────────────────── Pillar 2 — Quiz Carousel (silent, click to advance) ─────
 function QuizCarousel() {
   const slides = [
-    { src: quizStartImage, label: 'Step 01 · Start', step: 1 },
-    { src: quizMiddleImage, label: 'Step 03 · Middle', step: 3 },
-    { src: quizResultImage, label: 'Step 06 · Recommendation', step: 6 },
+    { src: quizIntroImage, alt: 'Quiz landing' },
+    { src: quizStartImage, alt: 'Quiz first question' },
+    { src: quizMiddleImage, alt: 'Quiz mid-flow' },
+    { src: quizResultImage, alt: 'Quiz recommendation' },
   ];
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
   useEffect(() => {
     if (paused) return;
-    const t = setInterval(() => setActive((i) => (i + 1) % slides.length), 2800);
+    const t = setInterval(() => setActive((i) => (i + 1) % slides.length), 3200);
     return () => clearInterval(t);
   }, [paused, slides.length]);
   return (
-    <div
-      className="w-full max-w-3xl flex flex-col items-center gap-4"
+    <button
+      type="button"
+      onClick={() => {
+        setActive((i) => (i + 1) % slides.length);
+        setPaused(true);
+      }}
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
+      className="relative block w-[440px] max-w-full aspect-[16/14] rounded-md overflow-hidden bg-white border border-neutral-200 cursor-pointer"
     >
-      <div className="relative w-full aspect-[16/14] rounded-lg overflow-hidden bg-white border border-neutral-200">
-        {slides.map((s, i) => (
-          <ImageWithFallback
-            key={i}
-            src={s.src}
-            alt={s.label}
-            className={`absolute inset-0 w-full h-full object-cover object-top transition-opacity duration-700 ${
-              i === active ? 'opacity-100' : 'opacity-0'
-            }`}
-          />
-        ))}
-      </div>
-      <div className="flex items-center gap-3">
-        {slides.map((s, i) => (
-          <button
-            key={i}
-            onClick={() => {
-              setActive(i);
-              setPaused(true);
-            }}
-            className={`text-[11px] px-3 py-1.5 rounded-full transition-colors border ${
-              i === active
-                ? 'bg-[#131313] text-white border-[#131313]'
-                : 'bg-white text-[#131313] border-neutral-300 hover:border-neutral-500'
-            }`}
-          >
-            {s.label}
-          </button>
-        ))}
-      </div>
-      <p className="text-[10px] text-[rgba(19,19,19,0.4)]">
-        Auto-advances every 2.8s · hover to pause · click to jump
-      </p>
-    </div>
+      {slides.map((s, i) => (
+        <ImageWithFallback
+          key={i}
+          src={s.src}
+          alt={s.alt}
+          className={`absolute inset-0 w-full h-full object-cover object-top transition-opacity duration-700 ${
+            i === active ? 'opacity-100' : 'opacity-0'
+          }`}
+        />
+      ))}
+    </button>
   );
 }
 
@@ -236,26 +211,16 @@ function StoryCard({ src, handle, label }: typeof STORY_CARDS[number]) {
 
 function VoicesShowcase() {
   return (
-    <div className="w-full max-w-4xl flex flex-col gap-8">
-      <div>
-        <p className="text-[11px] font-medium tracking-[1.2px] text-[rgba(19,19,19,0.5)] uppercase mb-3 text-center">
-          Mothers’ Stories — interactive carousel
-        </p>
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-          {STORY_CARDS.map((s) => (
-            <StoryCard key={s.handle} {...s} />
-          ))}
-        </div>
+    <div className="w-full max-w-4xl flex flex-col gap-6">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+        {STORY_CARDS.map((s) => (
+          <StoryCard key={s.handle} {...s} />
+        ))}
       </div>
-      <div>
-        <p className="text-[11px] font-medium tracking-[1.2px] text-[rgba(19,19,19,0.5)] uppercase mb-3 text-center">
-          Verified Reviews — slider
-        </p>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-          {REVIEWS.map((r) => (
-            <ReviewCard key={r.name} {...r} />
-          ))}
-        </div>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+        {REVIEWS.map((r) => (
+          <ReviewCard key={r.name} {...r} />
+        ))}
       </div>
     </div>
   );
@@ -279,70 +244,49 @@ const HOTSPOTS: Hotspot[] = [
 ];
 
 function InteractiveBodyMap() {
-  const [active, setActive] = useState<string | null>('back');
+  const [active, setActive] = useState<string | null>(null);
   return (
-    <div className="w-full max-w-3xl flex flex-col items-center gap-4">
-      <div className="relative w-full aspect-[16/9] rounded-2xl overflow-hidden bg-neutral-200" dir="rtl">
-        <img src={bodyMapBg} alt="Pregnancy pillow body map" className="absolute inset-0 w-full h-full object-cover" />
-        <div className="absolute inset-0 bg-black/15" />
-        {HOTSPOTS.map((h) => {
-          const isActive = active === h.id;
-          return (
-            <div
-              key={h.id}
-              style={{ position: 'absolute', top: h.position.top, right: h.position.right, zIndex: isActive ? 30 : 20 }}
-            >
-              <button
-                onClick={() => setActive(isActive ? null : h.id)}
-                className={`relative w-3.5 h-3.5 md:w-4 md:h-4 rounded-full border-2 border-white shadow-md transition-all duration-200 ${
-                  isActive ? 'bg-[#131313] scale-125' : 'bg-white/95 hover:scale-110'
-                }`}
-                aria-label={h.title}
-              >
-                <span
-                  className={`absolute inset-0 rounded-full ${
-                    isActive ? '' : 'animate-ping bg-white/60'
-                  }`}
-                />
-              </button>
-              {isActive && (
-                <div
-                  className={`absolute top-1/2 -translate-y-1/2 ${
-                    h.tooltipDirection === 'right' ? 'right-6' : 'left-6'
-                  } bg-white rounded-xl shadow-xl px-3 py-2 w-48 z-40`}
-                  style={{ direction: 'rtl' }}
-                >
-                  <p className="text-[11px] font-semibold text-[#131313] mb-0.5 leading-tight">
-                    {h.title}
-                  </p>
-                  <p className="text-[10px] text-[rgba(19,19,19,0.65)] leading-snug">
-                    {h.description}
-                  </p>
-                </div>
-              )}
-            </div>
-          );
-        })}
-      </div>
-      <div className="flex flex-wrap items-center justify-center gap-2">
-        {HOTSPOTS.map((h) => (
-          <button
+    <div className="relative w-full max-w-3xl aspect-[16/9] rounded-md overflow-hidden bg-neutral-200" dir="rtl">
+      <img src={bodyMapBg} alt="Pregnancy pillow body map" className="absolute inset-0 w-full h-full object-cover" />
+      <div className="absolute inset-0 bg-black/15" />
+      {HOTSPOTS.map((h) => {
+        const isActive = active === h.id;
+        return (
+          <div
             key={h.id}
-            onClick={() => setActive(h.id)}
-            className={`text-[11px] px-3 py-1.5 rounded-full transition-colors border ${
-              active === h.id
-                ? 'bg-[#131313] text-white border-[#131313]'
-                : 'bg-white text-[#131313] border-neutral-300 hover:border-neutral-500'
-            }`}
-            dir="rtl"
+            style={{ position: 'absolute', top: h.position.top, right: h.position.right, zIndex: isActive ? 30 : 20 }}
           >
-            {h.title}
-          </button>
-        ))}
-      </div>
-      <p className="text-[10px] text-[rgba(19,19,19,0.4)]">
-        Click any hotspot to read what the pillow does at that point in the body
-      </p>
+            <button
+              onClick={() => setActive(isActive ? null : h.id)}
+              className={`relative w-3.5 h-3.5 md:w-4 md:h-4 rounded-full border-2 border-white shadow-md transition-all duration-200 ${
+                isActive ? 'bg-[#131313] scale-125' : 'bg-white/95 hover:scale-110'
+              }`}
+              aria-label={h.title}
+            >
+              <span
+                className={`absolute inset-0 rounded-full ${
+                  isActive ? '' : 'animate-ping bg-white/60'
+                }`}
+              />
+            </button>
+            {isActive && (
+              <div
+                className={`absolute top-1/2 -translate-y-1/2 ${
+                  h.tooltipDirection === 'right' ? 'right-6' : 'left-6'
+                } bg-white rounded-xl shadow-xl px-3 py-2 w-48 z-40`}
+                style={{ direction: 'rtl' }}
+              >
+                <p className="text-[11px] font-semibold text-[#131313] mb-0.5 leading-tight">
+                  {h.title}
+                </p>
+                <p className="text-[10px] text-[rgba(19,19,19,0.65)] leading-snug">
+                  {h.description}
+                </p>
+              </div>
+            )}
+          </div>
+        );
+      })}
     </div>
   );
 }
@@ -444,7 +388,6 @@ export function BellaCaseStudy({ onBack, onSelectProject }: BellaCaseStudyProps)
               label="Pillar 02 — Personalised Quiz Path"
               heading="A 6-step conversation that ends in one matched product."
               body="The quiz has a clear arc: a calm landing, six paced questions with a progress bar, and a single matched recommendation at the end. The user always knows where she is in the flow — questions are reversible, answers are anonymous, and the result is concrete (one product, with reasoning) rather than a list of upsells."
-              tall
               custom={<QuizCarousel />}
             />
 
@@ -464,8 +407,7 @@ export function BellaCaseStudy({ onBack, onSelectProject }: BellaCaseStudyProps)
             <Pillar
               label="Pillar 04 — Trust Through Real Stories"
               heading="Trust is built when other women tell the story — not the brand."
-              body="Two surfaces, both above the fold on Home, run on real customers. An Instagram-style story carousel scrolls horizontally through video moments from actual mothers. A verified-buyer review slider rotates through five-star reviews with names, weeks of pregnancy and dates. Both are rebuilt here as live components — not screenshot crops — to show the actual building blocks of the trust layer."
-              tall
+              body="Two surfaces, both above the fold on Home, run on real customers. An Instagram-style story carousel runs short video moments from actual mothers. A verified-buyer review slider rotates through five-star reviews with names, weeks of pregnancy and dates. There are no fake stars and no generic copy — trust is earned through specificity."
               custom={<VoicesShowcase />}
             />
 
@@ -473,8 +415,7 @@ export function BellaCaseStudy({ onBack, onSelectProject }: BellaCaseStudyProps)
             <Pillar
               label="Pillar 05 — Product Discovery Through the Body"
               heading="One image. Five hotspots. The product is explained by the body, not the spec sheet."
-              body="The homepage's product zone is a single editorial photograph with five clickable hotspots — back, belly, hips, knees, ankles. On hover the dot pulses; on click a small annotation opens that names exactly what the pillow does at that point in the body. Try it: the version below is the live interaction, not a screenshot."
-              tall
+              body="The homepage's product zone is a single editorial photograph with five hotspots — back, belly, hips, knees, ankles. Each one names exactly what the pillow does at that point in the body, so the product is explained through the body it touches rather than through a spec sheet."
               custom={<InteractiveBodyMap />}
             />
           </div>
