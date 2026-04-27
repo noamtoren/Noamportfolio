@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import { Footer } from '@/app/components/Footer';
 import { ImageWithFallback } from '@/app/components/figma/ImageWithFallback';
 import { BellaCardAnimation } from '@/app/components/BellaCardAnimation';
@@ -13,33 +12,6 @@ import machonChiburHero from '../../assets/7e4406feba492b743bbe79e43d5ab8ec1d25e
 
 interface HomeProps {
   onProjectClick?: (projectId: string) => void;
-}
-
-const HERO_VERBS = ['designs and ships', 'prototypes and tests', 'crafts and iterates'];
-
-function AnimatedVerb() {
-  const [idx, setIdx] = useState(0);
-  useEffect(() => {
-    const t = setInterval(() => setIdx((i) => (i + 1) % HERO_VERBS.length), 2800);
-    return () => clearInterval(t);
-  }, []);
-  // Sizing placeholder uses the longest verb so the surrounding text never reflows.
-  const longest = HERO_VERBS.reduce((a, b) => (a.length > b.length ? a : b));
-  return (
-    <span className="relative inline-block align-baseline">
-      <span className="invisible font-semibold whitespace-nowrap">{longest}</span>
-      {HERO_VERBS.map((verb, i) => (
-        <span
-          key={verb}
-          className={`absolute left-0 top-0 text-[#B8552E] font-semibold whitespace-nowrap transition-all duration-[600ms] ease-out ${
-            i === idx ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'
-          }`}
-        >
-          {verb}
-        </span>
-      ))}
-    </span>
-  );
 }
 
 export function Home({ onProjectClick }: HomeProps) {
@@ -97,25 +69,25 @@ export function Home({ onProjectClick }: HomeProps) {
             <span className="text-neutral-900 font-semibold">full-time &amp; freelance</span>
           </p>
 
-          {/* Profile image — larger, with brand-tinted offset ring */}
-          <div className="rise-in mb-10" style={{ animationDelay: '200ms' }}>
+          {/* Profile image — original size, with brand-tinted offset ring */}
+          <div className="rise-in mb-8" style={{ animationDelay: '200ms' }}>
             <img
               src={profileImage}
               alt="Noam Toren"
-              className="w-[120px] h-[120px] md:w-[140px] md:h-[140px] rounded-2xl object-cover ring-2 ring-[#B8552E]/25 ring-offset-4 ring-offset-white"
+              className="w-[72px] h-[72px] md:w-20 md:h-20 rounded-lg object-cover ring-2 ring-[#B8552E]/25 ring-offset-4 ring-offset-white"
               style={{ objectPosition: 'center 35%' }}
             />
           </div>
 
-          {/* Intro headline — large typographic statement with rotating verb */}
-          <h1
-            className="rise-in text-[34px] md:text-[56px] leading-[1.1] tracking-[-1.5px] text-neutral-900 max-w-4xl mb-10 font-medium"
+          {/* Intro paragraph — regular sans with bold emphasis, no serif */}
+          <p
+            className="rise-in text-lg md:text-[22px] leading-[1.45] text-neutral-900 max-w-3xl mb-10"
             style={{ animationDelay: '300ms' }}
           >
-            Hey, I'm Noam! A UI/UX designer who{' '}
-            <AnimatedVerb />
+            Hey, I'm Noam! A UI/UX designer who
+            {' '}<span className="text-[#B8552E] font-semibold">designs and ships</span>
             {' '}digital products, from first idea to working interface.
-          </h1>
+          </p>
 
           {/* Social links — quiet grey text row, inside hero block */}
           <div
