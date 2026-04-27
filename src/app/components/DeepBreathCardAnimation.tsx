@@ -14,15 +14,27 @@ const HOME_VISIBLE = 100 / HOME_RATIO;
 const DASH_RATIO = (1024 / 310) / (2 / 3);
 const DASH_VISIBLE = 100 / DASH_RATIO;
 
-// Visual targets (image y%) sampled visually from the PNGs:
-//   HOME — Dashboard card sits in the welcome section just below hero (≈ 32%).
-//          Section 3 ("השליטה בידיים שלך") is the third stripe down (≈ 55%).
-//   DASHBOARD — "בית" nav link is in the top header (≈ 2%). The page bottom
-//          (just above footer) is around y≈82%.
-const HOME_DASH_CARD_IMG_Y = 32;
-const HOME_SECTION3_IMG_Y = 55;
-const DASH_HOME_NAV_IMG_Y = 2.5;
-const DASH_END_IMG_Y = 80;
+// Section bounds derived from the Figma metadata:
+//   HOME (335:5207, 1280×2364) — the page content is baked into a single
+//     instance occupying y=0–1759 (0–74.4%), then a Footer at y=1759–2364
+//     (74.4–100%). To avoid showing the footer, max scroll = 74.4 − visible
+//     window. Visible window = 36.1% of image at any time → max scroll 38.3%.
+//     Section with cards row sits roughly at image y=30–55%; centering it
+//     puts the scroll target around y=25.
+//   DASHBOARD (335:3888, 1280×4233) — children: Header (0–10.3%), Title
+//     (10.3–34.6%), Cards layout 1 (34.6–48.9%), Carousel (48.9–62.7%),
+//     CTA/Charts (62.7–85.7%), Footer (85.7–100%). To avoid the footer,
+//     max scroll = 85.7 − 20.2 = 65.5%.
+const HOME_FOOTER_Y = 74.4;
+const DASH_FOOTER_Y = 85.7;
+const HOME_MAX_SCROLL = HOME_FOOTER_Y - HOME_VISIBLE;     // 38.3
+const DASH_MAX_SCROLL = DASH_FOOTER_Y - DASH_VISIBLE;     // 65.5
+
+// Targets within bounds:
+const HOME_CAROUSEL_SCROLL = 24;       // shows the cards section in middle of viewport
+const HOME_DASH_CARD_IMG_Y = 30;       // y in image for the "Dashboard" card on home (when at scroll=0 it's near the bottom of the viewport)
+const DASH_HOME_NAV_IMG_Y = 2.5;       // top nav row on dashboard
+const DASH_END_SCROLL = DASH_MAX_SCROLL; // scroll dashboard to end without showing footer
 
 // Convert image y% to container y% given current scrollPct
 function imgToCardY(imgY: number, scrollPct: number, visiblePct: number): number {
@@ -130,14 +142,14 @@ export function DeepBreathCardAnimation() {
             setDashScroll(0);
             setCarouselPan(0);
           } else if (p === 'scrollToSection3') {
-            setHomeScroll(HOME_SECTION3_IMG_Y - HOME_VISIBLE / 2);
+            setHomeScroll(HOME_CAROUSEL_SCROLL);
           } else if (p === 'cursorPanLeft') {
             setCarouselPan(60);
           } else if (p === 'scrollBackToTop') {
             setHomeScroll(0);
             setCarouselPan(0);
           } else if (p === 'dashScrollDown') {
-            setDashScroll(DASH_END_IMG_Y - DASH_VISIBLE);
+            setDashScroll(DASH_END_SCROLL);
           } else if (p === 'dashScrollUp') {
             setDashScroll(0);
           }
@@ -165,7 +177,7 @@ export function DeepBreathCardAnimation() {
   // Carousel cursor: enters from right (x=88%) and pans leftward
   const carouselCursorX = 88 - carouselPan * 0.6; // 88 → 28
   // Section 3 carousel row in viewport: image y=55% with current home scroll
-  const carouselCursorY = imgToCardY(HOME_SECTION3_IMG_Y, homeScroll, HOME_VISIBLE);
+  const carouselCursorY = imgToCardY(HOME_CAROUSEL_SCROLL + HOME_VISIBLE / 2, homeScroll, HOME_VISIBLE);
   // Dashboard card on home: image y=32% at home top (scroll=0): container y=imgToCardY(32, 0, 36.1)
   const dashCardCardY = imgToCardY(HOME_DASH_CARD_IMG_Y, homeScroll, HOME_VISIBLE);
   // "Home" nav on dashboard: image y=2.5% at dash top (scroll=0)
