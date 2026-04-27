@@ -5,96 +5,110 @@ import reichmanLogo from '../../assets/0eca1c1712117942a77aaf2eac0853d722a8d9db.
 import sapirLogo from '../../assets/10465119e0965d66c2f44af33ec2c1346d923774.png';
 import israelFlag from '../../assets/62542f660fa3bba0da99ce087f58a22bf4518361.png';
 
+// TODO: replace with Spotify URL — current value is the existing playlist link.
 const SPOTIFY_PLAYLIST_URL =
   'https://open.spotify.com/playlist/2pyz77T5IPR2T4vFkvrfC6?si=584ca899d4804da2';
 
-type LeaderSide = 'top' | 'bottom' | 'left' | 'right';
+type PointerSide = 'down' | 'up' | 'left' | 'right';
 
-interface MuseumLabelProps {
+const POINTER_BY_SIDE: Record<PointerSide, CSSProperties> = {
+  down: {
+    top: '100%',
+    left: '50%',
+    transform: 'translate(-50%, -50%) rotate(45deg)',
+    borderRight: '1px solid rgba(0, 0, 0, 0.10)',
+    borderBottom: '1px solid rgba(0, 0, 0, 0.10)',
+  },
+  up: {
+    bottom: '100%',
+    left: '50%',
+    transform: 'translate(-50%, 50%) rotate(45deg)',
+    borderTop: '1px solid rgba(0, 0, 0, 0.10)',
+    borderLeft: '1px solid rgba(0, 0, 0, 0.10)',
+  },
+  right: {
+    left: '100%',
+    top: '50%',
+    transform: 'translate(-50%, -50%) rotate(45deg)',
+    borderTop: '1px solid rgba(0, 0, 0, 0.10)',
+    borderRight: '1px solid rgba(0, 0, 0, 0.10)',
+  },
+  left: {
+    right: '100%',
+    top: '50%',
+    transform: 'translate(50%, -50%) rotate(45deg)',
+    borderLeft: '1px solid rgba(0, 0, 0, 0.10)',
+    borderBottom: '1px solid rgba(0, 0, 0, 0.10)',
+  },
+};
+
+interface ShelfTooltipProps {
   label: string;
-  title: string;
+  title: ReactNode;
   body?: ReactNode;
   position: CSSProperties;
-  leaderSide: LeaderSide;
-  leaderLength?: number;
-  align?: 'start' | 'center' | 'end';
+  pointer: PointerSide;
 }
 
-function MuseumLabel({
-  label,
-  title,
-  body,
-  position,
-  leaderSide,
-  leaderLength = 18,
-  align = 'center',
-}: MuseumLabelProps) {
-  const leaderColor = 'rgba(0, 0, 0, 0.18)';
-  const leaderAxisOffset = align === 'start' ? '20%' : align === 'end' ? '80%' : '50%';
-  let leaderStyle: CSSProperties;
-  switch (leaderSide) {
-    case 'top':
-      leaderStyle = { position: 'absolute', left: leaderAxisOffset, bottom: '100%', width: 1, height: leaderLength, background: leaderColor };
-      break;
-    case 'bottom':
-      leaderStyle = { position: 'absolute', left: leaderAxisOffset, top: '100%', width: 1, height: leaderLength, background: leaderColor };
-      break;
-    case 'left':
-      leaderStyle = { position: 'absolute', top: leaderAxisOffset, right: '100%', width: leaderLength, height: 1, background: leaderColor };
-      break;
-    case 'right':
-      leaderStyle = { position: 'absolute', top: leaderAxisOffset, left: '100%', width: leaderLength, height: 1, background: leaderColor };
-      break;
-  }
+function ShelfTooltip({ label, title, body, position, pointer }: ShelfTooltipProps) {
   return (
     <div style={{ position: 'absolute', pointerEvents: 'none', zIndex: 20, ...position }}>
-      <div style={{ animation: 'museumLabelIn 200ms cubic-bezier(0.4, 0, 0.2, 1) both', position: 'relative' }}>
+      <div className="shelf-tooltip-anim" style={{ position: 'relative' }}>
         <div
           style={{
             background: 'var(--paper)',
-            border: '1px solid rgba(0, 0, 0, 0.12)',
-            boxShadow: '0 4px 16px rgba(0, 0, 0, 0.06)',
-            padding: '12px 14px',
+            color: 'var(--ink)',
+            border: '1px solid rgba(0, 0, 0, 0.10)',
+            boxShadow: '0 4px 14px rgba(0, 0, 0, 0.06)',
+            borderRadius: 6,
+            padding: '10px 12px',
             width: 'max-content',
-            maxWidth: 230,
-            minWidth: 150,
-            borderRadius: 2,
+            maxWidth: 240,
+            minWidth: 140,
             position: 'relative',
           }}
         >
           <p
             style={{
               fontSize: 9.5,
-              letterSpacing: '0.22em',
+              letterSpacing: '0.08em',
               textTransform: 'uppercase',
               color: 'var(--brass)',
               margin: 0,
-              marginBottom: 6,
+              marginBottom: 4,
               fontWeight: 500,
             }}
           >
             {label}
           </p>
-          <h4
+          <p
             style={{
-              fontFamily: "'Instrument Serif', Georgia, serif",
-              fontSize: 18,
-              lineHeight: 1.15,
+              fontSize: 13,
+              lineHeight: 1.4,
               color: 'var(--ink)',
               margin: 0,
-              marginBottom: body ? 6 : 0,
+              marginBottom: body ? 4 : 0,
               fontWeight: 400,
             }}
           >
             {title}
-          </h4>
+          </p>
           {body && (
-            <div style={{ fontSize: 12, lineHeight: 1.5, color: 'var(--ink-muted)', margin: 0 }}>
+            <div style={{ fontSize: 12.5, lineHeight: 1.5, color: 'rgba(26, 23, 21, 0.65)', margin: 0 }}>
               {body}
             </div>
           )}
+          {/* Pointer triangle (rotated square; paper-fill masks tooltip border at attachment) */}
+          <div
+            style={{
+              position: 'absolute',
+              width: 9,
+              height: 9,
+              background: 'var(--paper)',
+              ...POINTER_BY_SIDE[pointer],
+            }}
+          />
         </div>
-        <div style={leaderStyle} />
       </div>
     </div>
   );
@@ -104,9 +118,6 @@ export function About() {
   const [currentTime, setCurrentTime] = useState('');
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
 
-  // Live Asia/Jerusalem time. We tick every second so the visible minute is
-  // always within ~1s of true wall-clock; the rendered string only changes
-  // when the minute rolls over (hh:mm format).
   useEffect(() => {
     const updateTime = () => {
       const israelTime = new Date().toLocaleTimeString('en-US', {
@@ -126,117 +137,49 @@ export function About() {
     setHoveredItem((prev) => (prev === item ? null : item));
   };
 
+  const sectionLabelClass = 'text-xs uppercase tracking-widest mb-10 font-medium';
+  const subSectionLabelClass = 'text-xs uppercase tracking-widest mb-5 font-medium';
+
   return (
     <div className="absolute inset-0 overflow-auto pb-32 bg-white">
-      {/* Header — same pattern as Home hero */}
-      <section className="max-w-[1080px] mx-auto px-6 md:px-12 pt-8 md:pt-10">
-        <p className="text-[14px] leading-[1.6]">
-          <span className="text-neutral-400">UI/UX Designer </span>
-          <span className="text-neutral-900">Noam Toren</span>
-        </p>
-        <p className="text-[14px] leading-[1.6]">
-          <span className="text-neutral-400">Open for </span>
-          <span className="text-neutral-900">full-time &amp; freelance</span>
-        </p>
-      </section>
-
-      {/* I. ABOUT — editorial spread */}
-      <section className="max-w-[1080px] mx-auto px-6 md:px-12 mt-20 md:mt-28">
-        {/* Chapter mark */}
-        <p
-          className="text-[11px] uppercase mb-6"
-          style={{ color: 'var(--brass)', letterSpacing: '0.22em' }}
-        >
-          I. About
-        </p>
-
-        {/* Editorial headline */}
-        <h2
-          className="italic font-normal leading-[1.04] tracking-tight text-[44px] md:text-[68px] mb-5 md:mb-7"
-          style={{ fontFamily: "'Instrument Serif', Georgia, serif", color: 'var(--ink)' }}
-        >
-          On the Wall, a Life
-        </h2>
-
-        {/* Lede / standfirst */}
-        <p
-          className="italic text-[18px] md:text-[20px] leading-[1.45] max-w-[640px] mb-12 md:mb-16"
-          style={{ fontFamily: "'Instrument Serif', Georgia, serif", color: 'var(--ink-muted)' }}
-        >
-          A UX designer from Israel&rsquo;s south, building digital products with care &mdash; and quietly collecting the objects that shape him.
-        </p>
-
-        {/* Hairline */}
-        <div className="h-px mb-12 md:mb-14" style={{ background: 'var(--rule)' }} />
-
-        {/* Body — two-column magazine layout (desktop), single column (mobile) */}
-        <div
-          className="md:columns-2 md:gap-12 lg:gap-16 max-w-[960px] text-[16px] md:text-[16.5px] leading-[1.75]"
-          style={{ color: 'var(--ink)' }}
-        >
-          <p className="mb-5">
-            Noam Toren is a UX designer based in Tel Aviv, building digital products for early-stage startups, social-impact platforms, and a handful of stubborn solo ideas. The work runs end-to-end &mdash; research, structure, interface, and the small details that decide whether an interaction feels right or off by half a degree.
+      {/* Section 1 — Header (Home pattern) + grounded body paragraph */}
+      <section className="px-6 md:px-12 py-8 md:py-12 max-w-5xl mx-auto">
+        <div className="mb-12">
+          {/* Header — pixel-identical to Home */}
+          <p className="text-[14px] leading-[1.6]">
+            <span className="text-neutral-400">UI/UX Designer </span>
+            <span className="text-neutral-900">Noam Toren</span>
           </p>
-          <p className="mb-5">
-            He studied Communication at Reichman University and earned a Data Analyst certificate at Sapir College in the south, where the two halves of his practice settled into one: the human side of why people do what they do, and the structured side of how you measure it.
+          <p className="text-[14px] leading-[1.6]">
+            <span className="text-neutral-400">Open for </span>
+            <span className="text-neutral-900">full-time &amp; freelance</span>
           </p>
-          <p>
-            The result is a designer who treats every screen as a piece of writing. And when he&rsquo;s not designing, the rest of him is on the wall.
+
+          {/* Body paragraph — same typography as the original About page */}
+          <p className="text-base md:text-lg leading-relaxed text-neutral-700 font-light max-w-2xl mt-10">
+            I&rsquo;m Noam Toren, a UX designer based in Tel Aviv. I build digital products end-to-end &mdash; from research and structure to interface and the small details that decide whether something feels right or off by half a degree. The work runs across early-stage startups, social-impact platforms, and a handful of solo ideas I keep returning to. I studied Communication at Reichman University and earned a Data Analyst certificate at Sapir College in the south, where the human side of design met the structured side of how you measure it. The wall behind me says the rest.
           </p>
+
+          {/* Divider */}
+          <div className="h-px bg-neutral-100 mt-10" />
         </div>
-
-        {/* Hairline */}
-        <div className="h-px mt-16 md:mt-24" style={{ background: 'var(--rule)' }} />
       </section>
 
-      {/* II. THE SHELVES — chapter header (tooltip restyle ships in commit 5) */}
-      <section className="max-w-[1080px] mx-auto px-6 md:px-12 mt-16 md:mt-20">
-        <p
-          className="text-[11px] uppercase mb-3"
-          style={{ color: 'var(--brass)', letterSpacing: '0.22em' }}
-        >
-          II. The Shelves
-        </p>
-        <p
-          className="italic text-[18px] md:text-[20px] leading-[1.45]"
-          style={{ fontFamily: "'Instrument Serif', Georgia, serif", color: 'var(--ink-muted)' }}
-        >
-          A self-portrait in objects.
-        </p>
-      </section>
-
-      {/* Section 2: Shelf Scene - Full Image */}
+      {/* Section 2 — Shelf scene (composition unchanged; tooltips refined) */}
       <section className="px-8 py-12 relative overflow-hidden">
-        {/* Background */}
-        <div 
-          className="absolute inset-0"
-          style={{
-            background: '#F8F8F8',
-          }}
-        />
-        
+        <div className="absolute inset-0" style={{ background: '#F8F8F8' }} />
+
         <div className="max-w-5xl mx-auto relative">
-          {/* Main Shelf Image Container - Left Aligned */}
-          <div 
+          <div
             className="relative w-full"
-            style={{
-              aspectRatio: '1000 / 664',
-              maxWidth: '800px',
-              margin: '0 auto',
-            }}
+            style={{ aspectRatio: '1000 / 664', maxWidth: '800px', margin: '0 auto' }}
           >
-            {/* Background Shelf Image - Exact as is */}
             <img
               src={shelfImage}
               alt="Shelf scene"
-              style={{
-                width: '100%',
-                height: '100%',
-                objectFit: 'contain',
-                display: 'block',
-              }}
+              style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block' }}
             />
-            
+
             {/* Vinyl turntable — link to Spotify playlist */}
             <a
               href={SPOTIFY_PLAYLIST_URL}
@@ -244,23 +187,17 @@ export function About() {
               rel="noopener noreferrer"
               aria-label="Open Designer's Playlist on Spotify"
               className="absolute cursor-pointer"
-              style={{
-                left: '43%',
-                top: '79%',
-                width: '17%',
-                height: '14%',
-                zIndex: 10,
-              }}
+              style={{ left: '43%', top: '79%', width: '17%', height: '14%', zIndex: 10 }}
               onMouseEnter={() => setHoveredItem('vinyl')}
               onMouseLeave={() => setHoveredItem(null)}
             >
               {hoveredItem === 'vinyl' && (
-                <MuseumLabel
+                <ShelfTooltip
                   label="Now Playing"
-                  title="Designer's Playlist"
-                  body={<>What I listen to while I design. Press play.</>}
-                  position={{ bottom: '115%', left: '50%', transform: 'translateX(-50%)' }}
-                  leaderSide="bottom"
+                  title="Designer's playlist"
+                  body={<>My playlist for designing. Press play.</>}
+                  position={{ bottom: '120%', left: '50%', transform: 'translateX(-50%)' }}
+                  pointer="down"
                 />
               )}
             </a>
@@ -268,29 +205,23 @@ export function About() {
             {/* Clock — live Asia/Jerusalem time */}
             <div
               className="absolute cursor-pointer"
-              style={{
-                left: '46%',
-                top: '5%',
-                width: '13%',
-                height: '20%',
-                zIndex: 6,
-              }}
+              style={{ left: '46%', top: '5%', width: '13%', height: '20%', zIndex: 6 }}
               onMouseEnter={() => setHoveredItem('clock')}
               onMouseLeave={() => setHoveredItem(null)}
               onClick={() => toggleItem('clock')}
             >
               {hoveredItem === 'clock' && (
-                <MuseumLabel
+                <ShelfTooltip
                   label="Local Time"
-                  title="Tel Aviv, Israel"
-                  body={
+                  title={
                     <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
                       <img src={israelFlag} alt="" style={{ width: 14, height: 10 }} />
-                      <span style={{ color: 'var(--ink)' }}>{currentTime}</span>
+                      <span>{currentTime}</span>
                     </span>
                   }
-                  position={{ top: '115%', left: '50%', transform: 'translateX(-50%)' }}
-                  leaderSide="top"
+                  body={<>Tel Aviv, Israel</>}
+                  position={{ top: '120%', left: '50%', transform: 'translateX(-50%)' }}
+                  pointer="up"
                 />
               )}
             </div>
@@ -298,32 +229,33 @@ export function About() {
             {/* Kobe poster — top shelf, left */}
             <div
               className="absolute cursor-pointer"
-              style={{
-                left: '15%',
-                top: '15%',
-                width: '18%',
-                height: '25%',
-                zIndex: 6,
-              }}
+              style={{ left: '15%', top: '15%', width: '18%', height: '25%', zIndex: 6 }}
               onMouseEnter={() => setHoveredItem('kobe')}
               onMouseLeave={() => setHoveredItem(null)}
               onClick={() => toggleItem('kobe')}
             >
               {hoveredItem === 'kobe' && (
-                <MuseumLabel
+                <ShelfTooltip
                   label="Inspiration"
                   title="Mamba Mentality"
                   body={
                     <>
-                      He&rsquo;s the reason I fell in love with basketball.
-                      <span style={{ display: 'block', marginTop: 6, fontStyle: 'italic', color: 'var(--ink-muted)' }}>
+                      The reason I fell in love with basketball.
+                      <span
+                        style={{
+                          display: 'block',
+                          marginTop: 6,
+                          fontStyle: 'italic',
+                          color: 'rgba(26, 23, 21, 0.55)',
+                        }}
+                      >
                         &ldquo;If you&rsquo;re afraid to fail, then you&rsquo;re probably going to fail.&rdquo;
                         <span style={{ display: 'block', marginTop: 2 }}>&mdash; Kobe Bryant</span>
                       </span>
                     </>
                   }
-                  position={{ left: '108%', top: '20%' }}
-                  leaderSide="left"
+                  position={{ left: '110%', top: '15%' }}
+                  pointer="left"
                 />
               )}
             </div>
@@ -331,26 +263,22 @@ export function About() {
             {/* Anemone — top shelf, right area */}
             <div
               className="absolute cursor-pointer"
-              style={{
-                left: '70%',
-                top: '22%',
-                width: '8%',
-                height: '14%',
-                zIndex: 6,
-              }}
+              style={{ left: '70%', top: '22%', width: '8%', height: '14%', zIndex: 6 }}
               onMouseEnter={() => setHoveredItem('anemone')}
               onMouseLeave={() => setHoveredItem(null)}
               onClick={() => toggleItem('anemone')}
             >
               {hoveredItem === 'anemone' && (
-                <MuseumLabel
+                <ShelfTooltip
                   label="Hometown"
                   title="Darom Adom"
                   body={
-                    <>I&rsquo;m from the Gaza envelope. Every February the south turns red with anemones &mdash; that&rsquo;s home.</>
+                    <>
+                      I&rsquo;m from the Gaza envelope &mdash; every February the south turns red.
+                    </>
                   }
-                  position={{ top: '115%', left: '50%', transform: 'translateX(-50%)' }}
-                  leaderSide="top"
+                  position={{ top: '120%', left: '50%', transform: 'translateX(-50%)' }}
+                  pointer="up"
                 />
               )}
             </div>
@@ -358,24 +286,17 @@ export function About() {
             {/* Beret — top shelf, far right */}
             <div
               className="absolute cursor-pointer"
-              style={{
-                left: '87%',
-                top: '32%',
-                width: '10%',
-                height: '13%',
-                zIndex: 6,
-              }}
+              style={{ left: '87%', top: '32%', width: '10%', height: '13%', zIndex: 6 }}
               onMouseEnter={() => setHoveredItem('beret')}
               onMouseLeave={() => setHoveredItem(null)}
               onClick={() => toggleItem('beret')}
             >
               {hoveredItem === 'beret' && (
-                <MuseumLabel
+                <ShelfTooltip
                   label="Service"
-                  title="Paratroopers"
-                  body={<>Currently serving as a paratrooper in the IDF.</>}
-                  position={{ right: '115%', top: '0%' }}
-                  leaderSide="right"
+                  title="Currently serving as a paratrooper in the IDF."
+                  position={{ right: '120%', top: '0%' }}
+                  pointer="right"
                 />
               )}
             </div>
@@ -383,24 +304,17 @@ export function About() {
             {/* Basketball — bottom shelf, left */}
             <div
               className="absolute cursor-pointer"
-              style={{
-                left: '14%',
-                top: '70%',
-                width: '13%',
-                height: '20%',
-                zIndex: 6,
-              }}
+              style={{ left: '14%', top: '70%', width: '13%', height: '20%', zIndex: 6 }}
               onMouseEnter={() => setHoveredItem('basketball')}
               onMouseLeave={() => setHoveredItem(null)}
               onClick={() => toggleItem('basketball')}
             >
               {hoveredItem === 'basketball' && (
-                <MuseumLabel
+                <ShelfTooltip
                   label="On the Court"
-                  title="Still Playing"
-                  body={<>Mostly watching, sometimes shooting. Always learning from the game.</>}
-                  position={{ bottom: '115%', left: '50%', transform: 'translateX(-50%)' }}
-                  leaderSide="bottom"
+                  title="Mostly watching, sometimes playing."
+                  position={{ bottom: '120%', left: '50%', transform: 'translateX(-50%)' }}
+                  pointer="down"
                 />
               )}
             </div>
@@ -408,38 +322,37 @@ export function About() {
             {/* Brushes — bottom shelf, between basketball and vinyl */}
             <div
               className="absolute cursor-pointer"
-              style={{
-                left: '28%',
-                top: '60%',
-                width: '10%',
-                height: '28%',
-                zIndex: 6,
-              }}
+              style={{ left: '28%', top: '60%', width: '10%', height: '28%', zIndex: 6 }}
               onMouseEnter={() => setHoveredItem('brushes')}
               onMouseLeave={() => setHoveredItem(null)}
               onClick={() => toggleItem('brushes')}
             >
               {hoveredItem === 'brushes' && (
-                <MuseumLabel
+                <ShelfTooltip
                   label="Off Screen"
-                  title="Hands On"
-                  body={<>I sketch, paint, and make things by hand. Design starts on paper.</>}
-                  position={{ bottom: '108%', left: '50%', transform: 'translateX(-50%)' }}
-                  leaderSide="bottom"
+                  title="I sketch and paint."
+                  body={<>Design starts on paper.</>}
+                  position={{ bottom: '110%', left: '50%', transform: 'translateX(-50%)' }}
+                  pointer="down"
                 />
               )}
             </div>
 
-            {/* Museum-label entrance: fade + 4px translate, 200ms ease-out */}
             <style>{`
-              @keyframes museumLabelIn {
+              .shelf-tooltip-anim {
+                animation: shelfTooltipIn 180ms cubic-bezier(0.4, 0, 0.2, 1) both;
+              }
+              @keyframes shelfTooltipIn {
                 from { opacity: 0; transform: translateY(4px); }
                 to   { opacity: 1; transform: translateY(0); }
               }
+              @keyframes shelfTooltipFade {
+                from { opacity: 0; }
+                to   { opacity: 1; }
+              }
               @media (prefers-reduced-motion: reduce) {
-                @keyframes museumLabelIn {
-                  from { opacity: 0; }
-                  to   { opacity: 1; }
+                .shelf-tooltip-anim {
+                  animation: shelfTooltipFade 120ms ease-out both;
                 }
               }
             `}</style>
@@ -447,102 +360,81 @@ export function About() {
         </div>
       </section>
 
-      {/* III. INDEX — magazine masthead */}
-      <section className="max-w-[1080px] mx-auto px-6 md:px-12 mt-20 md:mt-28">
-        {/* Chapter mark */}
-        <p
-          className="text-[11px] uppercase mb-3"
-          style={{ color: 'var(--brass)', letterSpacing: '0.22em' }}
-        >
-          III. Index
-        </p>
+      {/* Section 3 — Professional Background (original structure, brass labels, ink body) */}
+      <section className="px-6 md:px-12 py-16 max-w-5xl mx-auto">
+        <h2 className={sectionLabelClass} style={{ color: 'var(--brass)' }}>
+          Professional Background
+        </h2>
 
-        {/* Subtitle */}
-        <p
-          className="italic text-[18px] md:text-[20px] leading-[1.45] mb-12 md:mb-14"
-          style={{ fontFamily: "'Instrument Serif', Georgia, serif", color: 'var(--ink-muted)' }}
-        >
-          Studies, tools, and footnotes.
-        </p>
-
-        {/* Hairline */}
-        <div className="h-px mb-10 md:mb-12" style={{ background: 'var(--rule)' }} />
-
-        {/* 3-column grid (desktop) — stacked on mobile */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-12 lg:gap-16">
+        <div className="space-y-16">
           {/* Education */}
           <div>
-            <h3
-              className="text-[12px] uppercase mb-2"
-              style={{ color: 'var(--brass)', letterSpacing: '0.2em', fontFamily: "'Instrument Serif', Georgia, serif" }}
-            >
+            <h3 className={subSectionLabelClass} style={{ color: 'var(--brass)' }}>
               Education
             </h3>
-            <ul>
-              <li
-                className="flex gap-4 py-4"
+            <div>
+              {/* Reichman University */}
+              <div
+                className="flex gap-3 py-5"
                 style={{ borderTop: '1px solid rgba(0, 0, 0, 0.06)' }}
               >
-                <span
-                  className="italic text-[13px] mt-0.5 shrink-0"
-                  style={{ fontFamily: "'Instrument Serif', Georgia, serif", color: 'var(--brass)', opacity: 0.7 }}
+                <div
+                  className="flex-shrink-0"
+                  style={{ width: '40px', height: '40px', borderRadius: '8px', background: '#F5F5F5' }}
                 >
-                  i.
-                </span>
-                <div className="flex-1">
-                  <p className="text-[15px] leading-[1.5]" style={{ color: 'var(--ink)' }}>
+                  <img
+                    src={reichmanLogo}
+                    alt="Reichman University Logo"
+                    style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block' }}
+                  />
+                </div>
+                <div>
+                  <p
+                    className="text-base leading-relaxed mb-0.5 font-medium"
+                    style={{ color: 'var(--ink)' }}
+                  >
                     B.A. in Communication
                   </p>
-                  <div className="flex items-center gap-2 mt-1.5">
-                    <img
-                      src={reichmanLogo}
-                      alt="Reichman University"
-                      className="w-4 h-4 object-contain"
-                      style={{ filter: 'grayscale(0.65)', opacity: 0.7 }}
-                    />
-                    <p className="text-[13px] leading-[1.5]" style={{ color: 'var(--ink-muted)' }}>
-                      Reichman University &middot; Present
-                    </p>
-                  </div>
+                  <p className="text-sm text-neutral-700 font-normal">Reichman University</p>
+                  <p className="text-sm text-neutral-400 font-light mt-0.5">Present</p>
                 </div>
-              </li>
-              <li
-                className="flex gap-4 py-4"
-                style={{ borderTop: '1px solid rgba(0, 0, 0, 0.06)', borderBottom: '1px solid rgba(0, 0, 0, 0.06)' }}
+              </div>
+
+              {/* Sapir College */}
+              <div
+                className="flex gap-3 py-5"
+                style={{
+                  borderTop: '1px solid rgba(0, 0, 0, 0.06)',
+                  borderBottom: '1px solid rgba(0, 0, 0, 0.06)',
+                }}
               >
-                <span
-                  className="italic text-[13px] mt-0.5 shrink-0"
-                  style={{ fontFamily: "'Instrument Serif', Georgia, serif", color: 'var(--brass)', opacity: 0.7 }}
+                <div
+                  className="flex-shrink-0"
+                  style={{ width: '40px', height: '40px', borderRadius: '8px', background: '#F5F5F5' }}
                 >
-                  ii.
-                </span>
-                <div className="flex-1">
-                  <p className="text-[15px] leading-[1.5]" style={{ color: 'var(--ink)' }}>
+                  <img
+                    src={sapirLogo}
+                    alt="Sapir College Logo"
+                    style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block' }}
+                  />
+                </div>
+                <div>
+                  <p
+                    className="text-base leading-relaxed mb-0.5 font-medium"
+                    style={{ color: 'var(--ink)' }}
+                  >
                     Data Analyst Certificate
                   </p>
-                  <div className="flex items-center gap-2 mt-1.5">
-                    <img
-                      src={sapirLogo}
-                      alt="Sapir College"
-                      className="w-4 h-4 object-contain"
-                      style={{ filter: 'grayscale(0.65)', opacity: 0.7 }}
-                    />
-                    <p className="text-[13px] leading-[1.5]" style={{ color: 'var(--ink-muted)' }}>
-                      Sapir College
-                    </p>
-                  </div>
+                  <p className="text-sm text-neutral-700 font-normal">Sapir College</p>
                 </div>
-              </li>
-            </ul>
+              </div>
+            </div>
           </div>
 
-          {/* Coursework */}
+          {/* Relevant Coursework */}
           <div>
-            <h3
-              className="text-[12px] uppercase mb-2"
-              style={{ color: 'var(--brass)', letterSpacing: '0.2em', fontFamily: "'Instrument Serif', Georgia, serif" }}
-            >
-              Coursework
+            <h3 className={subSectionLabelClass} style={{ color: 'var(--brass)' }}>
+              Relevant Coursework
             </h3>
             <ul>
               {[
@@ -552,66 +444,41 @@ export function About() {
                 'Cognitive Psychology in UX',
                 'Human–Computer Interaction',
                 'Advanced Topics in UX Psychology',
-              ].map((item, idx, arr) => {
-                const roman = ['i', 'ii', 'iii', 'iv', 'v', 'vi'][idx];
-                const isLast = idx === arr.length - 1;
-                return (
-                  <li
-                    key={item}
-                    className="flex gap-4 py-3"
-                    style={{
-                      borderTop: '1px solid rgba(0, 0, 0, 0.06)',
-                      ...(isLast ? { borderBottom: '1px solid rgba(0, 0, 0, 0.06)' } : {}),
-                    }}
-                  >
-                    <span
-                      className="italic text-[13px] mt-0.5 shrink-0 w-6"
-                      style={{ fontFamily: "'Instrument Serif', Georgia, serif", color: 'var(--brass)', opacity: 0.7 }}
-                    >
-                      {roman}.
-                    </span>
-                    <p className="text-[15px] leading-[1.55]" style={{ color: 'var(--ink)' }}>
-                      {item}
-                    </p>
-                  </li>
-                );
-              })}
+              ].map((item, idx, arr) => (
+                <li
+                  key={item}
+                  className="text-base font-light py-3"
+                  style={{
+                    color: 'var(--ink)',
+                    borderTop: '1px solid rgba(0, 0, 0, 0.06)',
+                    ...(idx === arr.length - 1 ? { borderBottom: '1px solid rgba(0, 0, 0, 0.06)' } : {}),
+                  }}
+                >
+                  {item}
+                </li>
+              ))}
             </ul>
           </div>
 
           {/* Tools */}
           <div>
-            <h3
-              className="text-[12px] uppercase mb-2"
-              style={{ color: 'var(--brass)', letterSpacing: '0.2em', fontFamily: "'Instrument Serif', Georgia, serif" }}
-            >
+            <h3 className={subSectionLabelClass} style={{ color: 'var(--brass)' }}>
               Tools
             </h3>
             <ul>
-              {['Figma', 'Wireframing', 'Prototyping', 'User Flows'].map((item, idx, arr) => {
-                const roman = ['i', 'ii', 'iii', 'iv'][idx];
-                const isLast = idx === arr.length - 1;
-                return (
-                  <li
-                    key={item}
-                    className="flex gap-4 py-3"
-                    style={{
-                      borderTop: '1px solid rgba(0, 0, 0, 0.06)',
-                      ...(isLast ? { borderBottom: '1px solid rgba(0, 0, 0, 0.06)' } : {}),
-                    }}
-                  >
-                    <span
-                      className="italic text-[13px] mt-0.5 shrink-0 w-6"
-                      style={{ fontFamily: "'Instrument Serif', Georgia, serif", color: 'var(--brass)', opacity: 0.7 }}
-                    >
-                      {roman}.
-                    </span>
-                    <p className="text-[15px] leading-[1.55]" style={{ color: 'var(--ink)' }}>
-                      {item}
-                    </p>
-                  </li>
-                );
-              })}
+              {['Figma', 'Wireframing', 'Prototyping', 'User Flows'].map((item, idx, arr) => (
+                <li
+                  key={item}
+                  className="text-base font-light py-3"
+                  style={{
+                    color: 'var(--ink)',
+                    borderTop: '1px solid rgba(0, 0, 0, 0.06)',
+                    ...(idx === arr.length - 1 ? { borderBottom: '1px solid rgba(0, 0, 0, 0.06)' } : {}),
+                  }}
+                >
+                  {item}
+                </li>
+              ))}
             </ul>
           </div>
         </div>

@@ -40,12 +40,10 @@
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
 
-  /* Editorial palette — vintage Italian magazine */
+  /* Subtle vintage accents (used sparingly on About) */
   --brass: #B8915A;
   --paper: #F5F0E8;
   --ink: #1A1715;
-  --ink-muted: rgba(26, 23, 21, 0.55);
-  --rule: rgba(0, 0, 0, 0.08);
 }
 
 .dark {

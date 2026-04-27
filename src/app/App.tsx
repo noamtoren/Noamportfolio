@@ -18,8 +18,10 @@ export default function App() {
   const [selectedProject, setSelectedProject] = useState<string | null>(null);
   const shouldReduceMotion = useReducedMotion() ?? false;
 
-  // Site-wide page transition variants. Animates only opacity/transform/filter.
-  // Reduced-motion: opacity-only, 120ms.
+  // Site-wide page transitions. Animates only opacity + transform.
+  // Out 200ms / In 240ms with 50ms overlap (in is delayed 150ms so the new
+  // page starts entering 50ms before the old one finishes leaving).
+  // Reduced-motion: 120ms opacity-only fade.
   const pageVariants = shouldReduceMotion
     ? {
         initial: { opacity: 0 },
@@ -27,18 +29,16 @@ export default function App() {
         exit: { opacity: 0, transition: { duration: 0.12, ease: PAGE_EASE } },
       }
     : {
-        initial: { opacity: 0, y: 4, filter: 'blur(4px)' },
+        initial: { opacity: 0, y: 4 },
         animate: {
           opacity: 1,
           y: 0,
-          filter: 'blur(0px)',
-          transition: { duration: 0.28, ease: PAGE_EASE },
+          transition: { duration: 0.24, ease: PAGE_EASE, delay: 0.15 },
         },
         exit: {
           opacity: 0,
           y: -4,
-          filter: 'blur(4px)',
-          transition: { duration: 0.22, ease: PAGE_EASE },
+          transition: { duration: 0.2, ease: PAGE_EASE },
         },
       };
 
