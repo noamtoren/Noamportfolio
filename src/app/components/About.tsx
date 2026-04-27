@@ -250,7 +250,6 @@ export function About() {
                 width: '17%',
                 height: '14%',
                 zIndex: 10,
-                clipPath: 'ellipse(50% 50% at 50% 50%)',
               }}
               onMouseEnter={() => setHoveredItem('vinyl')}
               onMouseLeave={() => setHoveredItem(null)}
@@ -275,7 +274,6 @@ export function About() {
                 width: '13%',
                 height: '20%',
                 zIndex: 6,
-                clipPath: 'circle(50% at 50% 50%)',
               }}
               onMouseEnter={() => setHoveredItem('clock')}
               onMouseLeave={() => setHoveredItem(null)}
@@ -391,7 +389,6 @@ export function About() {
                 width: '13%',
                 height: '20%',
                 zIndex: 6,
-                clipPath: 'circle(50% at 50% 50%)',
               }}
               onMouseEnter={() => setHoveredItem('basketball')}
               onMouseLeave={() => setHoveredItem(null)}
