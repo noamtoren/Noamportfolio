@@ -9,14 +9,16 @@ type Hotspot = {
   tooltipDirection: 'left' | 'right';
 };
 
-// Percentages of the original 1536×1024 photo. Inner screen is also 3:2,
-// so positions land directly on the body parts with no aspect-ratio reprojection.
+// Percentages of the original 1536×1024 photo. Inner screen is 3:2 so positions
+// land directly on the body parts. Values are derived from the case-study
+// hotspots that already sit correctly, reprojected from the case-study's 16:9
+// crop into the original-image (3:2) coordinate space.
 const HOTSPOTS: Hotspot[] = [
-  { id: 'back',    title: 'תמיכה בגב',       description: 'תמיכה בעמוד השדרה ובאזור הגב התחתון', position: { top: '27%', left: '70%' }, tooltipDirection: 'left'  },
-  { id: 'hips',    title: 'תמיכה באגן',      description: 'יישור נכון של האגן והירכיים',          position: { top: '36%', left: '50%' }, tooltipDirection: 'right' },
-  { id: 'belly',   title: 'תמיכה בבטן',      description: 'הקלה על תחושת המשקל',                  position: { top: '32%', left: '58%' }, tooltipDirection: 'left'  },
-  { id: 'knees',   title: 'תמיכה בברכיים',  description: 'יישור נכון בין הרגליים',               position: { top: '60%', left: '32%' }, tooltipDirection: 'right' },
-  { id: 'ankles',  title: 'תמיכה בקרסוליים', description: 'הפחתת נפיחות והרמה עדינה',            position: { top: '43%', left: '14%' }, tooltipDirection: 'right' },
+  { id: 'back',    title: 'תמיכה בגב',       description: 'תמיכה בעמוד השדרה ובאזור הגב התחתון', position: { top: '28%', left: '70%' }, tooltipDirection: 'left'  },
+  { id: 'hips',    title: 'תמיכה באגן',      description: 'יישור נכון של האגן והירכיים',          position: { top: '37%', left: '47%' }, tooltipDirection: 'right' },
+  { id: 'belly',   title: 'תמיכה בבטן',      description: 'הקלה על תחושת המשקל',                  position: { top: '35%', left: '56%' }, tooltipDirection: 'left'  },
+  { id: 'knees',   title: 'תמיכה בברכיים',  description: 'יישור נכון בין הרגליים',               position: { top: '60%', left: '36%' }, tooltipDirection: 'right' },
+  { id: 'ankles',  title: 'תמיכה בקרסוליים', description: 'הפחתת נפיחות והרמה עדינה',            position: { top: '45%', left: '14%' }, tooltipDirection: 'right' },
 ];
 
 type Phase = 'idle' | 'approach' | 'clicked' | 'release';
@@ -120,6 +122,10 @@ export function BellaCardAnimation() {
             scales with the camera (so the click "magnifies" it into legibility). */}
         {HOTSPOTS.map((h, i) => {
           const isActive = i === hotspotIdx && phase === 'clicked';
+          // During clicked phase, fade out non-active hotspots so they don't
+          // sit on top of the active hotspot's tooltip
+          const dotOpacity =
+            phase === 'clicked' && i !== hotspotIdx ? 0 : 1;
           return (
             <div
               key={h.id}
@@ -129,22 +135,23 @@ export function BellaCardAnimation() {
                 left: h.position.left,
                 width: 0,
                 height: 0,
+                zIndex: isActive ? 25 : 10,
               }}
             >
-              {/* Dot — inverse-scaled */}
+              {/* Dot — inverse-scaled, fades out on non-active during clicked */}
               <div
                 className="relative"
                 style={{
                   transform: `translate(-50%, -50%) scale(${1 / scale})`,
-                  transition: `transform 800ms ${EASING}`,
+                  transition: `transform 800ms ${EASING}, opacity 250ms ease-out`,
+                  opacity: dotOpacity,
                 }}
               >
                 {!isActive && (
                   <span
-                    className="absolute -inset-[3px] rounded-full bg-white/45 animate-ping pointer-events-none"
+                    className="absolute -inset-[3px] rounded-full bg-white pointer-events-none"
                     style={{
-                      animationDuration: '3.2s',
-                      animationTimingFunction: 'cubic-bezier(0,0,0.2,1)',
+                      animation: 'bellaHotspotPulse 2.6s ease-out infinite',
                     }}
                   />
                 )}
@@ -158,10 +165,10 @@ export function BellaCardAnimation() {
                 </div>
               </div>
 
-              {/* Tooltip — inside the camera, so it scales with the zoom-in.
-                  Offset (24px) keeps it clear of the hotspot dot at any zoom level. */}
+              {/* Tooltip — inside the camera, scales with zoom-in. Sits at z 30 so
+                  it always lifts above any other hotspot dot at the same depth. */}
               <div
-                className={`absolute rounded-[8px] border border-white/55 bg-gradient-to-b from-white/70 to-white/50 backdrop-blur-md shadow-[0_4px_14px_rgba(43,42,40,0.22),0_1px_3px_rgba(43,42,40,0.10)] px-2.5 py-2 transition-[opacity,transform] duration-300 ease-out pointer-events-none ${
+                className={`absolute rounded-[8px] border border-white/55 bg-gradient-to-b from-white/70 to-white/50 backdrop-blur-md shadow-[0_4px_14px_rgba(43,42,40,0.22),0_1px_3px_rgba(43,42,40,0.10)] px-2.5 py-2 transition-[opacity,transform] duration-300 ease-out pointer-events-none z-30 ${
                   isActive ? 'opacity-100' : 'opacity-0'
                 }`}
                 style={{
