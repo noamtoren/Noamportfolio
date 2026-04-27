@@ -152,9 +152,22 @@ export function About() {
             <span className="text-neutral-900">full-time &amp; freelance</span>
           </p>
 
-          {/* Body paragraph — same family as the Hero, sized smaller for editorial calm */}
-          <p className="text-[14px] md:text-[15px] leading-relaxed text-neutral-700 font-light max-w-2xl mt-10">
-            Nice to meet you! I&rsquo;m Noam Toren, a UX designer based in Tel Aviv. I build digital products end-to-end &mdash; from research and structure to interface and the small details that decide whether something feels right or off by half a degree. The work runs across early-stage startups, social-impact platforms, and a handful of solo ideas I keep returning to. I studied Communication at Reichman University and earned a Data Analyst certificate at Sapir College in the south, where the human side of design met the structured side of how you measure it. The wall behind me says the rest.
+          {/* Editorial headline — Playfair Display italic, masculine Italian-newspaper feel */}
+          <h2
+            className="text-[34px] md:text-[44px] leading-[1.05] tracking-tight mt-10 md:mt-12 mb-5 md:mb-6"
+            style={{
+              fontFamily: "'Playfair Display', 'Cormorant Garamond', Georgia, serif",
+              fontStyle: 'italic',
+              fontWeight: 500,
+              color: '#1A1715',
+            }}
+          >
+            Nice to meet you!
+          </h2>
+
+          {/* Body paragraph — same family as the Hero, slightly smaller than the original */}
+          <p className="text-[15px] md:text-[16px] leading-relaxed text-neutral-700 font-light max-w-2xl">
+            I&rsquo;m Noam Toren, a UX designer based in Tel Aviv. I build digital products end-to-end &mdash; from research and structure to interface and the small details that decide whether something feels right or off by half a degree. The work runs across early-stage startups, social-impact platforms, and a handful of solo ideas I keep returning to. I studied Communication at Reichman University and earned a Data Analyst certificate at Sapir College in the south, where the human side of design met the structured side of how you measure it. The wall behind me says the rest.
           </p>
 
           {/* Divider */}
