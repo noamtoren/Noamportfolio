@@ -140,7 +140,7 @@ export function About() {
   return (
     <div className="absolute inset-0 overflow-auto pb-32 bg-white">
       {/* Section 1 — Header (Home pattern) + grounded body paragraph */}
-      <section className="px-6 md:px-12 py-8 md:py-12 max-w-5xl mx-auto">
+      <section className="px-6 md:px-12 py-8 md:py-12 max-w-[1080px] mx-auto">
         <div className="mb-12">
           {/* Header — pixel-identical to Home */}
           <p className="text-[14px] leading-[1.6]">
@@ -179,7 +179,7 @@ export function About() {
       <section className="px-8 py-12 relative overflow-hidden">
         <div className="absolute inset-0" style={{ background: '#F8F8F8' }} />
 
-        <div className="max-w-5xl mx-auto relative">
+        <div className="max-w-[1080px] mx-auto relative">
           <div
             className="relative w-full"
             style={{ aspectRatio: '1000 / 664', maxWidth: '800px', margin: '0 auto' }}
@@ -371,7 +371,7 @@ export function About() {
       </section>
 
       {/* Section 3 — Professional Background (original LinkedIn-style cards) */}
-      <section className="px-6 md:px-12 py-16 max-w-5xl mx-auto">
+      <section className="px-6 md:px-12 py-16 max-w-[1080px] mx-auto">
         <h2 className="text-xs uppercase tracking-widest text-neutral-400 mb-10 font-medium">
           Professional Background
         </h2>
