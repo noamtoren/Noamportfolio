@@ -2,39 +2,39 @@ import { useEffect, useState } from 'react';
 import deepbreathHome from '../../assets/deepbreath-home.png';
 import deepbreathDashboard from '../../assets/deepbreath-dashboard.png';
 
-// Home PNG: 555×1024 (aspect 0.542). In 3:2 container scaled to width:
-//   image height = container_w / 0.542 ≈ 1.846 × container_w
-//   container height = 0.667 × container_w
-//   ratio = 2.769 (image_h / container_h). Visible at any time = 36.1% of image.
-const HOME_RATIO = (1024 / 555) / (2 / 3);
-const HOME_VISIBLE = 100 / HOME_RATIO;
+// Frames pulled from canvas 335:3290 — the TWO leftmost in the canvas:
+//   335:5866 "Home • Desktop"     1280×2311 → exported 568×1024
+//   335:7020 "דשבורד • Desktop"   1280×2431 → exported 540×1024
+// (Older 335:5207/335:3888 frames at x=0/1599 weren't actually leftmost —
+//  the real leftmost two sit at x=-28208 / x=-26818 in the canvas.)
+const HOME_RATIO = (1024 / 568) / (2 / 3); // 2.703
+const HOME_VISIBLE = 100 / HOME_RATIO;     // 37.0
 
-// Dashboard PNG: 310×1024 (aspect 0.303). Even taller per width.
-//   ratio = 4.952. Visible = 20.2% of image at any time.
-const DASH_RATIO = (1024 / 310) / (2 / 3);
-const DASH_VISIBLE = 100 / DASH_RATIO;
+const DASH_RATIO = (1024 / 540) / (2 / 3); // 2.846
+const DASH_VISIBLE = 100 / DASH_RATIO;     // 35.1
 
-// Section bounds derived from the Figma metadata:
-//   HOME (335:5207, 1280×2364) — the page content is baked into a single
-//     instance occupying y=0–1759 (0–74.4%), then a Footer at y=1759–2364
-//     (74.4–100%). To avoid showing the footer, max scroll = 74.4 − visible
-//     window. Visible window = 36.1% of image at any time → max scroll 38.3%.
-//     Section with cards row sits roughly at image y=30–55%; centering it
-//     puts the scroll target around y=25.
-//   DASHBOARD (335:3888, 1280×4233) — children: Header (0–10.3%), Title
-//     (10.3–34.6%), Cards layout 1 (34.6–48.9%), Carousel (48.9–62.7%),
-//     CTA/Charts (62.7–85.7%), Footer (85.7–100%). To avoid the footer,
-//     max scroll = 85.7 − 20.2 = 65.5%.
-const HOME_FOOTER_Y = 74.4;
-const DASH_FOOTER_Y = 85.7;
-const HOME_MAX_SCROLL = HOME_FOOTER_Y - HOME_VISIBLE;     // 38.3
-const DASH_MAX_SCROLL = DASH_FOOTER_Y - DASH_VISIBLE;     // 65.5
+// Section geometry from Figma metadata for the new (correct) frames:
+//   HOME (335:5866) children:
+//     y=0-533    (0-23.1%)  Header
+//     y=533-954  (23.1-41.3%) CTA — hero block with photo + video play
+//     y=954-1706 (41.3-73.8%) Layout — "השליטה בידיים שלך" cards/carousel
+//     y=1706-2311 (73.8-100%) Footer
+//   DASHBOARD (335:7020) children:
+//     y=0-437    (0-18.0%)   Header (with "בית" nav link)
+//     y=437-477  (18.0-19.6%) Info+Indicator (70% progress bar)
+//     y=477-538  (19.6-22.1%) Section Title ("דשבורד")
+//     y=538-1786 (22.1-73.5%) Group 76 — charts, stats, timeline
+//     y=1786-2431 (73.5-100%) Footer
+const HOME_FOOTER_Y = 73.8;
+const DASH_FOOTER_Y = 73.5;
+const HOME_MAX_SCROLL = HOME_FOOTER_Y - HOME_VISIBLE;   // 36.8 — never exceed this
+const DASH_MAX_SCROLL = DASH_FOOTER_Y - DASH_VISIBLE;   // 38.4 — never exceed this
 
-// Targets within bounds:
-const HOME_CAROUSEL_SCROLL = 24;       // shows the cards section in middle of viewport
-const HOME_DASH_CARD_IMG_Y = 30;       // y in image for the "Dashboard" card on home (when at scroll=0 it's near the bottom of the viewport)
-const DASH_HOME_NAV_IMG_Y = 2.5;       // top nav row on dashboard
-const DASH_END_SCROLL = DASH_MAX_SCROLL; // scroll dashboard to end without showing footer
+// Targets:
+const HOME_CAROUSEL_SCROLL = 36;          // shows the Layout/section3 nicely, footer just clipped off
+const HOME_DASH_CARD_IMG_Y = 30;          // estimated y for the Dashboard card on home
+const DASH_HOME_NAV_IMG_Y = 2.5;          // top header on dashboard ("בית" nav)
+const DASH_END_SCROLL = DASH_MAX_SCROLL;  // scroll dashboard end-of-content (footer clipped)
 
 // Convert image y% to container y% given current scrollPct
 function imgToCardY(imgY: number, scrollPct: number, visiblePct: number): number {
