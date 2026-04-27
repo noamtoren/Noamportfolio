@@ -2,6 +2,11 @@
 @import './tailwind.css';
 @import './theme.css';
 
+/* Crisper image rendering on retina screens */
+img {
+  image-rendering: -webkit-optimize-contrast;
+}
+
 /* BELLA card animation — soft hotspot pulse */
 @keyframes bellaHotspotPulse {
   0%, 100% { transform: scale(1); opacity: 0.55; }
