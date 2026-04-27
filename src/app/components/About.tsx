@@ -152,11 +152,11 @@ export function About() {
             <span className="text-neutral-900">full-time &amp; freelance</span>
           </p>
 
-          {/* Editorial headline — Playfair Display italic, masculine Italian-newspaper feel */}
+          {/* Editorial headline — Bodoni Moda italic, classical Italian newspaper voice */}
           <h2
             className="text-[24px] md:text-[30px] leading-[1.1] tracking-tight mt-10 md:mt-12 mb-4 md:mb-5"
             style={{
-              fontFamily: "'Playfair Display', 'Cormorant Garamond', Georgia, serif",
+              fontFamily: "'Bodoni Moda', 'Playfair Display', Georgia, serif",
               fontStyle: 'italic',
               fontWeight: 500,
               color: '#1A1715',
