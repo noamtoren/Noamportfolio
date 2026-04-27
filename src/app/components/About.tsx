@@ -137,9 +137,6 @@ export function About() {
     setHoveredItem((prev) => (prev === item ? null : item));
   };
 
-  const sectionLabelClass = 'text-xs uppercase tracking-widest mb-10 font-medium';
-  const subSectionLabelClass = 'text-xs uppercase tracking-widest mb-5 font-medium';
-
   return (
     <div className="absolute inset-0 overflow-auto pb-32 bg-white">
       {/* Section 1 — Header (Home pattern) + grounded body paragraph */}
@@ -155,9 +152,9 @@ export function About() {
             <span className="text-neutral-900">full-time &amp; freelance</span>
           </p>
 
-          {/* Body paragraph — same typography as the original About page */}
-          <p className="text-base md:text-lg leading-relaxed text-neutral-700 font-light max-w-2xl mt-10">
-            I&rsquo;m Noam Toren, a UX designer based in Tel Aviv. I build digital products end-to-end &mdash; from research and structure to interface and the small details that decide whether something feels right or off by half a degree. The work runs across early-stage startups, social-impact platforms, and a handful of solo ideas I keep returning to. I studied Communication at Reichman University and earned a Data Analyst certificate at Sapir College in the south, where the human side of design met the structured side of how you measure it. The wall behind me says the rest.
+          {/* Body paragraph — same family as the Hero, sized smaller for editorial calm */}
+          <p className="text-[14px] md:text-[15px] leading-relaxed text-neutral-700 font-light max-w-2xl mt-10">
+            Nice to meet you! I&rsquo;m Noam Toren, a UX designer based in Tel Aviv. I build digital products end-to-end &mdash; from research and structure to interface and the small details that decide whether something feels right or off by half a degree. The work runs across early-stage startups, social-impact platforms, and a handful of solo ideas I keep returning to. I studied Communication at Reichman University and earned a Data Analyst certificate at Sapir College in the south, where the human side of design met the structured side of how you measure it. The wall behind me says the rest.
           </p>
 
           {/* Divider */}
@@ -360,24 +357,21 @@ export function About() {
         </div>
       </section>
 
-      {/* Section 3 — Professional Background (original structure, brass labels, ink body) */}
+      {/* Section 3 — Professional Background (original LinkedIn-style cards) */}
       <section className="px-6 md:px-12 py-16 max-w-5xl mx-auto">
-        <h2 className={sectionLabelClass} style={{ color: 'var(--brass)' }}>
+        <h2 className="text-xs uppercase tracking-widest text-neutral-400 mb-10 font-medium">
           Professional Background
         </h2>
 
         <div className="space-y-16">
           {/* Education */}
           <div>
-            <h3 className={subSectionLabelClass} style={{ color: 'var(--brass)' }}>
+            <h3 className="text-xs uppercase tracking-widest text-neutral-400 mb-5 font-medium">
               Education
             </h3>
-            <div>
+            <div className="space-y-8">
               {/* Reichman University */}
-              <div
-                className="flex gap-3 py-5"
-                style={{ borderTop: '1px solid rgba(0, 0, 0, 0.06)' }}
-              >
+              <div className="flex gap-3">
                 <div
                   className="flex-shrink-0"
                   style={{ width: '40px', height: '40px', borderRadius: '8px', background: '#F5F5F5' }}
@@ -389,10 +383,7 @@ export function About() {
                   />
                 </div>
                 <div>
-                  <p
-                    className="text-base leading-relaxed mb-0.5 font-medium"
-                    style={{ color: 'var(--ink)' }}
-                  >
+                  <p className="text-base text-neutral-900 leading-relaxed mb-0.5 font-medium">
                     B.A. in Communication
                   </p>
                   <p className="text-sm text-neutral-700 font-normal">Reichman University</p>
@@ -401,13 +392,7 @@ export function About() {
               </div>
 
               {/* Sapir College */}
-              <div
-                className="flex gap-3 py-5"
-                style={{
-                  borderTop: '1px solid rgba(0, 0, 0, 0.06)',
-                  borderBottom: '1px solid rgba(0, 0, 0, 0.06)',
-                }}
-              >
+              <div className="flex gap-3">
                 <div
                   className="flex-shrink-0"
                   style={{ width: '40px', height: '40px', borderRadius: '8px', background: '#F5F5F5' }}
@@ -419,10 +404,7 @@ export function About() {
                   />
                 </div>
                 <div>
-                  <p
-                    className="text-base leading-relaxed mb-0.5 font-medium"
-                    style={{ color: 'var(--ink)' }}
-                  >
+                  <p className="text-base text-neutral-900 leading-relaxed mb-0.5 font-medium">
                     Data Analyst Certificate
                   </p>
                   <p className="text-sm text-neutral-700 font-normal">Sapir College</p>
@@ -433,52 +415,29 @@ export function About() {
 
           {/* Relevant Coursework */}
           <div>
-            <h3 className={subSectionLabelClass} style={{ color: 'var(--brass)' }}>
+            <h3 className="text-xs uppercase tracking-widest text-neutral-400 mb-5 font-medium">
               Relevant Coursework
             </h3>
-            <ul>
-              {[
-                'Advanced UX Design – Behavioral Aspects',
-                'User Experience Design',
-                'Interactive Product Design',
-                'Cognitive Psychology in UX',
-                'Human–Computer Interaction',
-                'Advanced Topics in UX Psychology',
-              ].map((item, idx, arr) => (
-                <li
-                  key={item}
-                  className="text-base font-light py-3"
-                  style={{
-                    color: 'var(--ink)',
-                    borderTop: '1px solid rgba(0, 0, 0, 0.06)',
-                    ...(idx === arr.length - 1 ? { borderBottom: '1px solid rgba(0, 0, 0, 0.06)' } : {}),
-                  }}
-                >
-                  {item}
-                </li>
-              ))}
+            <ul className="space-y-3.5 text-base text-neutral-700 font-light">
+              <li>Advanced UX Design – Behavioral Aspects</li>
+              <li>User Experience Design</li>
+              <li>Interactive Product Design</li>
+              <li>Cognitive Psychology in UX</li>
+              <li>Human–Computer Interaction</li>
+              <li>Advanced Topics in UX Psychology</li>
             </ul>
           </div>
 
           {/* Tools */}
           <div>
-            <h3 className={subSectionLabelClass} style={{ color: 'var(--brass)' }}>
+            <h3 className="text-xs uppercase tracking-widest text-neutral-400 mb-5 font-medium">
               Tools
             </h3>
-            <ul>
-              {['Figma', 'Wireframing', 'Prototyping', 'User Flows'].map((item, idx, arr) => (
-                <li
-                  key={item}
-                  className="text-base font-light py-3"
-                  style={{
-                    color: 'var(--ink)',
-                    borderTop: '1px solid rgba(0, 0, 0, 0.06)',
-                    ...(idx === arr.length - 1 ? { borderBottom: '1px solid rgba(0, 0, 0, 0.06)' } : {}),
-                  }}
-                >
-                  {item}
-                </li>
-              ))}
+            <ul className="space-y-3.5 text-base text-neutral-700 font-light">
+              <li>Figma</li>
+              <li>Wireframing</li>
+              <li>Prototyping</li>
+              <li>User Flows</li>
             </ul>
           </div>
         </div>
