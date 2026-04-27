@@ -8,3 +8,9 @@
   50%      { transform: scale(1.85); opacity: 0; }
 }
 
+/* Supply Net card — typing caret blink */
+@keyframes supplyNetCaret {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0; }
+}
+
