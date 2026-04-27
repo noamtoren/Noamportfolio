@@ -1,24 +1,21 @@
-import { useEffect, useState } from 'react';
-import { ArrowLeft, Search, User, ShoppingBag, Star, CheckCircle2, Play, Heart } from 'lucide-react';
+import { useState } from 'react';
+import { ArrowLeft, Search, User, ShoppingBag } from 'lucide-react';
 import { Footer } from '@/app/components/Footer';
 import { CaseNavFooter } from '@/app/components/CaseNavFooter';
 import { ImageWithFallback } from '@/app/components/figma/ImageWithFallback';
 import heroImage from '../../assets/bella-home-hires.png';
-import solutionsImage from '../../assets/2dfd007ccff4a3ab5905a1bc67d5535205ea07e2.png';
-import pregnancyPillowsImage from '../../assets/bella-pillows.png';
-import quizIntroImage from '../../assets/bella-quiz-intro.png';
-import quizStartImage from '../../assets/bella-quiz-start.png';
-import quizMiddleImage from '../../assets/bella-quiz-middle.png';
-import quizResultImage from '../../assets/bella-quiz-result.png';
-import contentHubImage from '../../assets/2b35accf6040327f1a4293aad8b40fdd0928d71c.png';
-import articleSleepImage from '../../assets/bella-article-sleep.png';
-import articleNormalImage from '../../assets/bella-article-normal.png';
-import bodyMapBg from '../../assets/bella-bodymap-bg.jpg';
+import p1SolutionsImage from '../../assets/bella-p1-solutions-v2.png';
+import p1ShopImage from '../../assets/bella-p1-shop.png';
+import p2QuizIntroImage from '../../assets/bella-p2-quiz-intro-v2.png';
+import p2QuizStepImage from '../../assets/bella-p2-quiz-step.png';
+import p2QuizResultsImage from '../../assets/bella-p2-quiz-results.png';
+import p3HubImage from '../../assets/bella-p3-hub-v2.png';
+import p3SleepImage from '../../assets/bella-p3-sleep-v2.png';
+import p3NormalImage from '../../assets/bella-p3-normal-v2.png';
+import p4StoriesImage from '../../assets/bella-p4-stories.png';
+import p4ReviewsImage from '../../assets/bella-p4-reviews.png';
+import bodyMapBg from '../../assets/bella-bodymap-bg-v2.jpg';
 import cartModalImage from '../../assets/bella-cart-hires.png';
-import story1 from '../../assets/bella-story-1.png';
-import story2 from '../../assets/bella-story-2.png';
-import story3 from '../../assets/bella-story-3.png';
-import story4 from '../../assets/bella-story-4.png';
 
 interface BellaCaseStudyProps {
   onBack: () => void;
@@ -93,197 +90,84 @@ function Pillar({
   );
 }
 
-// ─────────────────── Pillar 2 — Quiz Carousel (silent, click to advance) ─────
-function QuizCarousel() {
-  const slides = [
-    { src: quizIntroImage, alt: 'Quiz landing' },
-    { src: quizStartImage, alt: 'Quiz first question' },
-    { src: quizMiddleImage, alt: 'Quiz mid-flow' },
-    { src: quizResultImage, alt: 'Quiz recommendation' },
-  ];
-  const [active, setActive] = useState(0);
-  const [paused, setPaused] = useState(false);
-  useEffect(() => {
-    if (paused) return;
-    const t = setInterval(() => setActive((i) => (i + 1) % slides.length), 3200);
-    return () => clearInterval(t);
-  }, [paused, slides.length]);
-  return (
-    <button
-      type="button"
-      onClick={() => {
-        setActive((i) => (i + 1) % slides.length);
-        setPaused(true);
-      }}
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
-      className="relative block w-[440px] max-w-full aspect-[16/14] rounded-md overflow-hidden bg-white border border-neutral-200 cursor-pointer"
-    >
-      {slides.map((s, i) => (
-        <ImageWithFallback
-          key={i}
-          src={s.src}
-          alt={s.alt}
-          className={`absolute inset-0 w-full h-full object-cover object-top transition-opacity duration-700 ${
-            i === active ? 'opacity-100' : 'opacity-0'
-          }`}
-        />
-      ))}
-    </button>
-  );
-}
-
-// ─────────────────── Pillar 4 — Reviews + Stories Feature Cards ──────────────────
-const REVIEWS = [
-  {
-    name: 'מיכל לוי',
-    week: 'שבוע 27',
-    text: 'איכות מעולה ושירות מהיר. הכרית עזרה לי מאוד עם כאבי הגב בחודשים האחרונים להריון.',
-    date: '8 בינואר 2026',
-  },
-  {
-    name: 'שרה כהן',
-    week: 'שבוע 33',
-    text: 'שינה נוחה יותר, תמיכה מושלמת לגב ולבטן. הכרית הזו ליוותה אותי לאורך כל ההריון.',
-    date: '14 בינואר 2026',
-  },
-  {
-    name: 'יעל',
-    week: 'שבוע 27',
-    text: 'לא האמנתי שכרית יכולה לשנות ככה את השינה. סוף סוף אני קמה בלי כאבי גב.',
-    date: '3 בינואר 2026',
-  },
-];
-
-function ReviewCard({ name, week, text, date }: typeof REVIEWS[number]) {
-  return (
-    <div className="bg-white rounded-2xl border border-neutral-200 p-5 flex flex-col gap-3 shadow-sm">
-      <div className="flex items-center gap-1">
-        {Array.from({ length: 5 }).map((_, i) => (
-          <Star key={i} className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
-        ))}
-      </div>
-      <p className="text-[12px] leading-[1.6] text-[#131313]" dir="rtl">
-        {text}
-      </p>
-      <p className="text-[10px] text-[rgba(19,19,19,0.5)] mt-auto" dir="rtl">{date}</p>
-      <div className="border-t border-neutral-100 pt-3" dir="rtl">
-        <p className="text-[12px] font-medium text-[#131313]">{name}</p>
-        <div className="flex items-center gap-1 mt-1">
-          <CheckCircle2 className="w-3 h-3 text-emerald-600" />
-          <span className="text-[10px] text-emerald-700">קונה מאומתת</span>
-          <span className="text-[10px] text-[rgba(19,19,19,0.4)] mx-1">·</span>
-          <span className="text-[10px] text-[rgba(19,19,19,0.5)]">{week}</span>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-const STORY_CARDS = [
-  { src: story1, handle: 'noya.raz', label: 'Sleep Story' },
-  { src: story2, handle: 'mayan.k', label: 'Back Pain Tip' },
-  { src: story3, handle: 'roni.sh', label: 'Nursery Setup' },
-  { src: story4, handle: 'tal.b', label: 'Recovery Routine' },
-];
-
-function StoryCard({ src, handle, label }: typeof STORY_CARDS[number]) {
-  return (
-    <div className="relative rounded-2xl overflow-hidden bg-neutral-200" style={{ aspectRatio: '9 / 14' }}>
-      <ImageWithFallback src={src} alt={handle} className="w-full h-full object-cover" />
-      <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/40" />
-      <div className="absolute top-2 left-2 flex items-center gap-1.5">
-        <div className="w-6 h-6 rounded-full bg-white/30 backdrop-blur-sm border border-white/60" />
-        <span className="text-[10px] font-medium text-white drop-shadow-sm">{handle}</span>
-      </div>
-      <div className="absolute inset-0 flex items-center justify-center">
-        <div className="w-10 h-10 rounded-full bg-white/85 flex items-center justify-center backdrop-blur-sm">
-          <Play className="w-4 h-4 text-[#131313] fill-[#131313] ml-0.5" />
-        </div>
-      </div>
-      <div className="absolute bottom-2 left-2 right-2 flex items-end justify-between">
-        <span className="text-[10px] text-white drop-shadow-sm">{label}</span>
-        <Heart className="w-3.5 h-3.5 text-white drop-shadow-sm" />
-      </div>
-    </div>
-  );
-}
-
-function VoicesShowcase() {
-  return (
-    <div className="w-full max-w-4xl flex flex-col gap-6">
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-        {STORY_CARDS.map((s) => (
-          <StoryCard key={s.handle} {...s} />
-        ))}
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-        {REVIEWS.map((r) => (
-          <ReviewCard key={r.name} {...r} />
-        ))}
-      </div>
-    </div>
-  );
-}
-
 // ─────────────────── Pillar 5 — Live Interactive Body Map ──────────────────
+// Hotspot positions are derived from the original Figma feature (node 283:599):
+// container 1100×618.75; back at left=655/top=65.75, belly 602/274.75,
+// hips 493/87.75, knees 320/351.75, ankles 147/132.75. Converted to %.
 type Hotspot = {
   id: string;
   title: string;
   description: string;
-  position: { top: string; right: string };
+  position: { top: string; left: string };
   tooltipDirection: 'left' | 'right';
 };
 
 const HOTSPOTS: Hotspot[] = [
-  { id: 'back', title: 'תמיכה בגב', description: 'הכרית תומכת בעמוד השדרה ומפחיתה לחץ על אזור הגב התחתון', position: { top: '22%', right: '41.2%' }, tooltipDirection: 'left' },
-  { id: 'belly', title: 'תמיכה בבטן', description: 'תומכת בבטן בעדינות ומקלה על תחושת המשקל', position: { top: '52%', right: '42.5%' }, tooltipDirection: 'right' },
-  { id: 'hips', title: 'תמיכה באגן ובירכיים', description: 'יישור נכון של האגן מפחית כאבים ומשפר את איכות השינה', position: { top: '25%', right: '51.9%' }, tooltipDirection: 'left' },
-  { id: 'knees', title: 'תמיכה בין הברכיים', description: 'שומרת על יישור נכון של הרגליים ומפחיתה לחץ על הברכיים', position: { top: '62%', right: '68.4%' }, tooltipDirection: 'right' },
-  { id: 'ankles', title: 'תמיכה בקרסוליים', description: 'מרימה את הרגליים במעט ועוזרת להפחית נפיחות', position: { top: '31%', right: '85.2%' }, tooltipDirection: 'right' },
+  { id: 'back', title: 'תמיכה בגב', description: 'הכרית תומכת בעמוד השדרה ומפחיתה לחץ על אזור הגב התחתון', position: { top: '10.6%', left: '59.5%' }, tooltipDirection: 'right' },
+  { id: 'hips', title: 'תמיכה באגן ובירכיים', description: 'יישור נכון של האגן מפחית כאבים ומשפר את איכות השינה', position: { top: '14.2%', left: '44.8%' }, tooltipDirection: 'right' },
+  { id: 'belly', title: 'תמיכה בבטן', description: 'תומכת בבטן בעדינות ומקלה על תחושת המשקל', position: { top: '44.4%', left: '54.7%' }, tooltipDirection: 'right' },
+  { id: 'knees', title: 'תמיכה בין הברכיים', description: 'שומרת על יישור נכון של הרגליים ומפחיתה לחץ על הברכיים', position: { top: '56.9%', left: '29.1%' }, tooltipDirection: 'left' },
+  { id: 'ankles', title: 'תמיכה בקרסוליים', description: 'מרימה את הרגליים במעט ועוזרת להפחית נפיחות', position: { top: '21.5%', left: '13.4%' }, tooltipDirection: 'left' },
 ];
 
 function InteractiveBodyMap() {
-  const [active, setActive] = useState<string | null>(null);
+  const [hovered, setHovered] = useState<string | null>(null);
   return (
-    <div className="relative w-full max-w-3xl aspect-[16/9] rounded-md overflow-hidden bg-neutral-200" dir="rtl">
-      <img src={bodyMapBg} alt="Pregnancy pillow body map" className="absolute inset-0 w-full h-full object-cover" />
-      <div className="absolute inset-0 bg-black/15" />
+    <div
+      className="relative w-full max-w-4xl rounded-2xl overflow-hidden bg-[#f1eae2]"
+      style={{ aspectRatio: '1100 / 618.75' }}
+      dir="ltr"
+    >
+      <img
+        src={bodyMapBg}
+        alt="Pregnancy pillow feature highlights"
+        className={`absolute inset-0 w-full h-full object-cover transition-transform duration-[700ms] ease-out ${
+          hovered ? 'scale-[1.04]' : 'scale-100'
+        }`}
+      />
+      <div className="absolute inset-0 bg-black/[0.06]" />
+
       {HOTSPOTS.map((h) => {
-        const isActive = active === h.id;
+        const isHovered = hovered === h.id;
         return (
           <div
             key={h.id}
-            style={{ position: 'absolute', top: h.position.top, right: h.position.right, zIndex: isActive ? 30 : 20 }}
+            className="absolute"
+            style={{ top: h.position.top, left: h.position.left, zIndex: isHovered ? 30 : 20 }}
+            onMouseEnter={() => setHovered(h.id)}
+            onMouseLeave={() => setHovered(null)}
           >
+            {/* Pulsing rings */}
+            <span className="absolute inset-0 -m-3 rounded-full bg-white/60 animate-ping pointer-events-none" />
+            <span className="absolute inset-0 -m-2 rounded-full bg-white/40 pointer-events-none" />
+
+            {/* Hotspot dot */}
             <button
-              onClick={() => setActive(isActive ? null : h.id)}
-              className={`relative w-3.5 h-3.5 md:w-4 md:h-4 rounded-full border-2 border-white shadow-md transition-all duration-200 ${
-                isActive ? 'bg-[#131313] scale-125' : 'bg-white/95 hover:scale-110'
-              }`}
+              type="button"
               aria-label={h.title}
+              className={`relative w-8 h-8 rounded-full border border-white/60 bg-white/90 backdrop-blur-sm shadow-[0_4px_6px_rgba(0,0,0,0.1),0_2px_4px_rgba(0,0,0,0.1)] flex items-center justify-center transition-transform duration-200 ${
+                isHovered ? 'scale-110' : 'hover:scale-110'
+              }`}
             >
-              <span
-                className={`absolute inset-0 rounded-full ${
-                  isActive ? '' : 'animate-ping bg-white/60'
-                }`}
-              />
+              <span className="block w-1.5 h-1.5 rounded-full bg-[#2b2a28]/70" />
             </button>
-            {isActive && (
-              <div
-                className={`absolute top-1/2 -translate-y-1/2 ${
-                  h.tooltipDirection === 'right' ? 'right-6' : 'left-6'
-                } bg-white rounded-xl shadow-xl px-3 py-2 w-48 z-40`}
-                style={{ direction: 'rtl' }}
-              >
-                <p className="text-[11px] font-semibold text-[#131313] mb-0.5 leading-tight">
-                  {h.title}
-                </p>
-                <p className="text-[10px] text-[rgba(19,19,19,0.65)] leading-snug">
-                  {h.description}
-                </p>
-              </div>
-            )}
+
+            {/* Glass tooltip */}
+            <div
+              className={`absolute top-1/2 -translate-y-1/2 ${
+                h.tooltipDirection === 'right' ? 'left-12' : 'right-12'
+              } w-56 px-4 py-3 rounded-xl border border-white/50 bg-white/40 backdrop-blur-md shadow-[0_8px_24px_rgba(43,42,40,0.18)] transition-all duration-200 pointer-events-none ${
+                isHovered ? 'opacity-100 translate-x-0' : `opacity-0 ${h.tooltipDirection === 'right' ? '-translate-x-1' : 'translate-x-1'}`
+              }`}
+              style={{ direction: 'rtl' }}
+            >
+              <p className="text-[12px] font-semibold text-[#131313] mb-1 leading-tight">
+                {h.title}
+              </p>
+              <p className="text-[11px] text-[rgba(19,19,19,0.75)] leading-snug">
+                {h.description}
+              </p>
+            </div>
           </div>
         );
       })}
@@ -376,46 +260,53 @@ export function BellaCaseStudy({ onBack, onSelectProject }: BellaCaseStudyProps)
             <Pillar
               label="Pillar 01 — Solution-first Browsing"
               heading="Architecture organised around the body, not the SKU."
-              body="The homepage opens with the four physical states a pregnant body actually moves through — sleep, sitting, pain, postpartum — and routes each one into a curated shop. The Pregnancy Pillows hub demonstrates the same principle inside a single product family: every entry point is a state of being, not a SKU."
+              body="The homepage opens with the four physical states a pregnant body actually moves through — sleep, sitting, pain, postpartum — and routes each one into a curated shop. The shop itself preserves the same logic: filters are framed around lived needs (week of pregnancy, sleeping position, back pain) rather than abstract product taxonomy, so the user is buying a solution, not browsing a catalogue."
               images={[
-                { src: solutionsImage, alt: 'Solutions by Need section', label: 'Home — Solutions by Need' },
-                { src: pregnancyPillowsImage, alt: 'Pregnancy pillows hub', label: 'Pillows — Curated Hub' },
+                { src: p1SolutionsImage, alt: 'Home — Solutions by Need', label: 'Home — Solutions by Need' },
+                { src: p1ShopImage, alt: 'Shop — Filter by need', label: 'Shop — Filter by Need' },
               ]}
             />
 
-            {/* Pillar 2 — Personalised Quiz: interactive auto-cycling carousel */}
+            {/* Pillar 2 — Personalised Quiz Path: 3 static screens, SupplyNet style */}
             <Pillar
               label="Pillar 02 — Personalised Quiz Path"
               heading="A 6-step conversation that ends in one matched product."
-              body="The quiz has a clear arc: a calm landing, six paced questions with a progress bar, and a single matched recommendation at the end. The user always knows where she is in the flow — questions are reversible, answers are anonymous, and the result is concrete (one product, with reasoning) rather than a list of upsells."
-              custom={<QuizCarousel />}
-            />
-
-            {/* Pillar 3 — Editorial Trust: full article hero captures with new images */}
-            <Pillar
-              label="Pillar 03 — Editorial Trust Layer"
-              heading="Content earns the right to sell."
-              body="A real Knowledge Hub with sleep tips, pregnancy-norm guides and FAQ — promoted on the homepage as a peer surface to the shop, not buried in a footer. Each article opens with an editorial hero that sets a calm, trustworthy tone before any product is mentioned."
+              body="The quiz has a clear arc: a calm landing, six paced questions with a progress bar, and a single matched recommendation at the end. The user always knows where she is in the flow — questions are reversible, answers are anonymous, and the result is three concrete picks with reasoning, not a list of upsells."
               images={[
-                { src: contentHubImage, alt: 'Content guidance section on home', label: 'Home — Content as Peer' },
-                { src: articleSleepImage, alt: 'Sleep tips article', label: 'Article — Sleep Tips' },
-                { src: articleNormalImage, alt: 'What is normal article', label: 'Article — What’s Normal' },
+                { src: p2QuizIntroImage, alt: 'Quiz — landing screen', label: 'Quiz — Landing' },
+                { src: p2QuizStepImage, alt: 'Quiz — question with progress bar', label: 'Quiz — Question 3 of 6' },
+                { src: p2QuizResultsImage, alt: 'Quiz — personalised recommendations', label: 'Quiz — Matched Result' },
               ]}
             />
 
-            {/* Pillar 4 — Real Voices: live React feature cards */}
+            {/* Pillar 3 — Editorial Trust Layer */}
+            <Pillar
+              label="Pillar 03 — Editorial Trust Layer"
+              heading="Content earns the right to sell."
+              body="A real Knowledge Hub with sleep tips, pregnancy-norm guides and FAQ — promoted on the homepage as a peer surface to the shop, not buried in a footer. Each article opens with an editorial hero that sets a calm, trustworthy tone before any product is mentioned, and links back to the matching solution only after the reader has been informed."
+              images={[
+                { src: p3HubImage, alt: 'Content Hub landing', label: 'Content Hub — Landing' },
+                { src: p3SleepImage, alt: 'Sleep tips article', label: 'Article — Sleep in Pregnancy' },
+                { src: p3NormalImage, alt: 'What is normal article', label: 'Article — What’s Normal' },
+              ]}
+            />
+
+            {/* Pillar 4 — Trust Through Real Stories: SupplyNet-style static screens */}
             <Pillar
               label="Pillar 04 — Trust Through Real Stories"
               heading="Trust is built when other women tell the story — not the brand."
-              body="Two surfaces, both above the fold on Home, run on real customers. An Instagram-style story carousel runs short video moments from actual mothers. A verified-buyer review slider rotates through five-star reviews with names, weeks of pregnancy and dates. There are no fake stars and no generic copy — trust is earned through specificity."
-              custom={<VoicesShowcase />}
+              body="Two surfaces, both above the fold on Home, run on real customers. An Instagram-style story carousel runs short video moments from actual mothers. A verified-buyer review slider rotates through five-star reviews with names, weeks of pregnancy and dates. No fake stars, no generic copy — trust is earned through specificity."
+              images={[
+                { src: p4StoriesImage, alt: 'Home — User stories section', label: 'Home — User Stories' },
+                { src: p4ReviewsImage, alt: 'Home — Verified reviews', label: 'Home — Verified Reviews' },
+              ]}
             />
 
-            {/* Pillar 5 — Live interactive body map */}
+            {/* Pillar 5 — Interactive feature: hotspots, glass tooltip, image zoom */}
             <Pillar
               label="Pillar 05 — Product Discovery Through the Body"
               heading="One image. Five hotspots. The product is explained by the body, not the spec sheet."
-              body="The homepage's product zone is a single editorial photograph with five hotspots — back, belly, hips, knees, ankles. Each one names exactly what the pillow does at that point in the body, so the product is explained through the body it touches rather than through a spec sheet."
+              body="The homepage's product zone is a single editorial photograph of a woman with the pillow, overlaid with five hotspots — back, hips, belly, knees, ankles. Each hotspot pulses gently to invite exploration; on hover, a glass-frame tooltip names what the pillow does at that point in the body, and the photograph zooms slightly to focus attention. The product is explained through the body it touches rather than through a spec sheet."
               custom={<InteractiveBodyMap />}
             />
           </div>
