@@ -49,32 +49,16 @@ export function About() {
 
   return (
     <div className="absolute inset-0 overflow-auto pb-32 bg-white">
-      {/* Section 1: Hero / Introduction */}
-      <section className="px-6 md:px-12 py-8 md:py-12 max-w-5xl mx-auto">
-        <div className="mb-12">
-          {/* Name - Primary Identifier */}
-          <h1 className="text-lg font-semibold text-black mb-1 tracking-tight">
-            Noam Toren
-          </h1>
-
-          {/* Role */}
-          <p className="text-xs text-neutral-500 mb-6 tracking-normal font-normal">
-            UX Designer
-          </p>
-
-          {/* Headline - Editorial Serif Style */}
-          <h2 className="font-serif text-3xl md:text-4xl text-neutral-600 mb-4 tracking-tight leading-tight font-normal italic">
-            Nice to meet you!
-          </h2>
-
-          {/* Body Text - Below Headline */}
-          <p className="text-base md:text-lg leading-relaxed text-neutral-700 font-light max-w-2xl">
-            I’m Noam Toren, a UX designer focused on creating simple, intuitive, and accessible digital experiences. Over the past year, I’ve worked on a diverse range of projects, from e-commerce platforms to social impact initiatives. This experience has helped me develop a responsible, user-centered design approach. I believe that a great user experience is built through thorough research and meticulous attention to detail, ensuring that the final product is precise, accessible, and provides real value.
-          </p>
-
-          {/* Divider */}
-          <div className="h-px bg-neutral-100 mt-10" />
-        </div>
+      {/* Header — same pattern as Home hero */}
+      <section className="max-w-[1080px] mx-auto px-6 md:px-12 pt-8 md:pt-10">
+        <p className="text-[14px] leading-[1.6]">
+          <span className="text-neutral-400">UI/UX Designer </span>
+          <span className="text-neutral-900">Noam Toren</span>
+        </p>
+        <p className="text-[14px] leading-[1.6]">
+          <span className="text-neutral-400">Open for </span>
+          <span className="text-neutral-900">full-time &amp; freelance</span>
+        </p>
       </section>
 
       {/* Section 2: Shelf Scene - Full Image */}
