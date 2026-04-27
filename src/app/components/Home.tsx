@@ -1,5 +1,6 @@
 import { Footer } from '@/app/components/Footer';
 import { ImageWithFallback } from '@/app/components/figma/ImageWithFallback';
+import { BellaCardAnimation } from '@/app/components/BellaCardAnimation';
 import profileImage from '../../assets/99a913ce6253b1dc7d05b1c7995c57d8d1596876.png';
 import bellaMockup from '../../assets/f4d14d9769234e371e3b2c43f272901073d360c7.png';
 import supplyNetHero from '../../assets/57b61d37a32011c4d800094d142fc794b97687b4.png';
@@ -141,12 +142,22 @@ export function Home({ onProjectClick }: HomeProps) {
                 <div className="h-px w-full origin-left scale-x-0 bg-neutral-900 transition-transform duration-[500ms] ease-out group-hover:scale-x-100 mb-3" />
 
                 {/* Mockup — soft shadow + tiny lift on hover */}
-                <div className="aspect-[4/3] rounded-lg bg-[#F2F0EC] flex items-center justify-center p-8 overflow-hidden shadow-[0_0_0_rgba(0,0,0,0)] transition-all duration-[400ms] ease-out will-change-transform group-hover:-translate-y-1 group-hover:shadow-[0_12px_32px_-12px_rgba(0,0,0,0.12)]">
-                  <ImageWithFallback
-                    src={project.image}
-                    alt={project.title}
-                    className="w-full h-full object-contain"
-                  />
+                <div
+                  className={`aspect-[4/3] rounded-lg overflow-hidden shadow-[0_0_0_rgba(0,0,0,0)] transition-all duration-[400ms] ease-out will-change-transform group-hover:-translate-y-1 group-hover:shadow-[0_12px_32px_-12px_rgba(0,0,0,0.12)] ${
+                    project.id === 'bella'
+                      ? ''
+                      : 'bg-[#F2F0EC] flex items-center justify-center p-8'
+                  }`}
+                >
+                  {project.id === 'bella' ? (
+                    <BellaCardAnimation />
+                  ) : (
+                    <ImageWithFallback
+                      src={project.image}
+                      alt={project.title}
+                      className="w-full h-full object-contain"
+                    />
+                  )}
                 </div>
               </div>
             ))}
