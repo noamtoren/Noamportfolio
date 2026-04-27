@@ -61,6 +61,71 @@ export function About() {
         </p>
       </section>
 
+      {/* I. ABOUT — editorial spread */}
+      <section className="max-w-[1080px] mx-auto px-6 md:px-12 mt-20 md:mt-28">
+        {/* Chapter mark */}
+        <p
+          className="text-[11px] uppercase mb-6"
+          style={{ color: 'var(--brass)', letterSpacing: '0.22em' }}
+        >
+          I. About
+        </p>
+
+        {/* Editorial headline */}
+        <h2
+          className="italic font-normal leading-[1.04] tracking-tight text-[44px] md:text-[68px] mb-5 md:mb-7"
+          style={{ fontFamily: "'Instrument Serif', Georgia, serif", color: 'var(--ink)' }}
+        >
+          On the Wall, a Life
+        </h2>
+
+        {/* Lede / standfirst */}
+        <p
+          className="italic text-[18px] md:text-[20px] leading-[1.45] max-w-[640px] mb-12 md:mb-16"
+          style={{ fontFamily: "'Instrument Serif', Georgia, serif", color: 'var(--ink-muted)' }}
+        >
+          A UX designer from Israel&rsquo;s south, building digital products with care &mdash; and quietly collecting the objects that shape him.
+        </p>
+
+        {/* Hairline */}
+        <div className="h-px mb-12 md:mb-14" style={{ background: 'var(--rule)' }} />
+
+        {/* Body — two-column magazine layout (desktop), single column (mobile) */}
+        <div
+          className="md:columns-2 md:gap-12 lg:gap-16 max-w-[960px] text-[16px] md:text-[16.5px] leading-[1.75]"
+          style={{ color: 'var(--ink)' }}
+        >
+          <p className="mb-5">
+            Noam Toren is a UX designer based in Tel Aviv, building digital products for early-stage startups, social-impact platforms, and a handful of stubborn solo ideas. The work runs end-to-end &mdash; research, structure, interface, and the small details that decide whether an interaction feels right or off by half a degree.
+          </p>
+          <p className="mb-5">
+            He studied Communication at Reichman University and earned a Data Analyst certificate at Sapir College in the south, where the two halves of his practice settled into one: the human side of why people do what they do, and the structured side of how you measure it.
+          </p>
+          <p>
+            The result is a designer who treats every screen as a piece of writing. And when he&rsquo;s not designing, the rest of him is on the wall.
+          </p>
+        </div>
+
+        {/* Hairline */}
+        <div className="h-px mt-16 md:mt-24" style={{ background: 'var(--rule)' }} />
+      </section>
+
+      {/* II. THE SHELVES — chapter header (tooltip restyle ships in commit 5) */}
+      <section className="max-w-[1080px] mx-auto px-6 md:px-12 mt-16 md:mt-20">
+        <p
+          className="text-[11px] uppercase mb-3"
+          style={{ color: 'var(--brass)', letterSpacing: '0.22em' }}
+        >
+          II. The Shelves
+        </p>
+        <p
+          className="italic text-[18px] md:text-[20px] leading-[1.45]"
+          style={{ fontFamily: "'Instrument Serif', Georgia, serif", color: 'var(--ink-muted)' }}
+        >
+          A self-portrait in objects.
+        </p>
+      </section>
+
       {/* Section 2: Shelf Scene - Full Image */}
       <section className="px-8 py-12 relative overflow-hidden">
         {/* Background */}
@@ -542,115 +607,171 @@ export function About() {
         </div>
       </section>
 
-      {/* Section 3: Professional Background */}
-      <section className="px-6 md:px-12 py-16 max-w-5xl mx-auto">
-        <h2 className="text-xs uppercase tracking-widest text-neutral-400 mb-10 font-medium">
-          Professional Background
-        </h2>
+      {/* III. INDEX — magazine masthead */}
+      <section className="max-w-[1080px] mx-auto px-6 md:px-12 mt-20 md:mt-28">
+        {/* Chapter mark */}
+        <p
+          className="text-[11px] uppercase mb-3"
+          style={{ color: 'var(--brass)', letterSpacing: '0.22em' }}
+        >
+          III. Index
+        </p>
 
-        <div className="space-y-16">
+        {/* Subtitle */}
+        <p
+          className="italic text-[18px] md:text-[20px] leading-[1.45] mb-12 md:mb-14"
+          style={{ fontFamily: "'Instrument Serif', Georgia, serif", color: 'var(--ink-muted)' }}
+        >
+          Studies, tools, and footnotes.
+        </p>
+
+        {/* Hairline */}
+        <div className="h-px mb-10 md:mb-12" style={{ background: 'var(--rule)' }} />
+
+        {/* 3-column grid (desktop) — stacked on mobile */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-12 lg:gap-16">
           {/* Education */}
           <div>
-            <h3 className="text-xs uppercase tracking-widest text-neutral-400 mb-5 font-medium">
+            <h3
+              className="text-[12px] uppercase mb-2"
+              style={{ color: 'var(--brass)', letterSpacing: '0.2em', fontFamily: "'Instrument Serif', Georgia, serif" }}
+            >
               Education
             </h3>
-            <div className="space-y-8">
-              {/* Reichman University */}
-              <div className="flex gap-3">
-                {/* Institution Logo Placeholder */}
-                <div 
-                  className="flex-shrink-0"
-                  style={{
-                    width: '40px',
-                    height: '40px',
-                    borderRadius: '8px',
-                    background: '#F5F5F5',
-                  }}
+            <ul>
+              <li
+                className="flex gap-4 py-4"
+                style={{ borderTop: '1px solid rgba(0, 0, 0, 0.06)' }}
+              >
+                <span
+                  className="italic text-[13px] mt-0.5 shrink-0"
+                  style={{ fontFamily: "'Instrument Serif', Georgia, serif", color: 'var(--brass)', opacity: 0.7 }}
                 >
-                  <img
-                    src={reichmanLogo}
-                    alt="Reichman University Logo"
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      objectFit: 'contain',
-                      display: 'block',
-                    }}
-                  />
-                </div>
-                <div>
-                  <p className="text-base text-neutral-900 leading-relaxed mb-0.5 font-medium">
+                  i.
+                </span>
+                <div className="flex-1">
+                  <p className="text-[15px] leading-[1.5]" style={{ color: 'var(--ink)' }}>
                     B.A. in Communication
                   </p>
-                  <p className="text-sm text-neutral-700 font-normal">
-                    Reichman University
-                  </p>
-                  <p className="text-sm text-neutral-400 font-light mt-0.5">
-                    Present
-                  </p>
+                  <div className="flex items-center gap-2 mt-1.5">
+                    <img
+                      src={reichmanLogo}
+                      alt="Reichman University"
+                      className="w-4 h-4 object-contain"
+                      style={{ filter: 'grayscale(0.65)', opacity: 0.7 }}
+                    />
+                    <p className="text-[13px] leading-[1.5]" style={{ color: 'var(--ink-muted)' }}>
+                      Reichman University &middot; Present
+                    </p>
+                  </div>
                 </div>
-              </div>
-
-              {/* Sapir College */}
-              <div className="flex gap-3">
-                {/* Institution Logo Placeholder */}
-                <div 
-                  className="flex-shrink-0"
-                  style={{
-                    width: '40px',
-                    height: '40px',
-                    borderRadius: '8px',
-                    background: '#F5F5F5',
-                  }}
+              </li>
+              <li
+                className="flex gap-4 py-4"
+                style={{ borderTop: '1px solid rgba(0, 0, 0, 0.06)', borderBottom: '1px solid rgba(0, 0, 0, 0.06)' }}
+              >
+                <span
+                  className="italic text-[13px] mt-0.5 shrink-0"
+                  style={{ fontFamily: "'Instrument Serif', Georgia, serif", color: 'var(--brass)', opacity: 0.7 }}
                 >
-                  <img
-                    src={sapirLogo}
-                    alt="Sapir College Logo"
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      objectFit: 'contain',
-                      display: 'block',
-                    }}
-                  />
-                </div>
-                <div>
-                  <p className="text-base text-neutral-900 leading-relaxed mb-0.5 font-medium">
+                  ii.
+                </span>
+                <div className="flex-1">
+                  <p className="text-[15px] leading-[1.5]" style={{ color: 'var(--ink)' }}>
                     Data Analyst Certificate
                   </p>
-                  <p className="text-sm text-neutral-700 font-normal">
-                    Sapir College
-                  </p>
+                  <div className="flex items-center gap-2 mt-1.5">
+                    <img
+                      src={sapirLogo}
+                      alt="Sapir College"
+                      className="w-4 h-4 object-contain"
+                      style={{ filter: 'grayscale(0.65)', opacity: 0.7 }}
+                    />
+                    <p className="text-[13px] leading-[1.5]" style={{ color: 'var(--ink-muted)' }}>
+                      Sapir College
+                    </p>
+                  </div>
                 </div>
-              </div>
-            </div>
+              </li>
+            </ul>
           </div>
 
-          {/* Relevant Coursework */}
+          {/* Coursework */}
           <div>
-            <h3 className="text-xs uppercase tracking-widest text-neutral-400 mb-5 font-medium">
-              Relevant Coursework
+            <h3
+              className="text-[12px] uppercase mb-2"
+              style={{ color: 'var(--brass)', letterSpacing: '0.2em', fontFamily: "'Instrument Serif', Georgia, serif" }}
+            >
+              Coursework
             </h3>
-            <ul className="space-y-3.5 text-base text-neutral-700 font-light">
-              <li>Advanced UX Design – Behavioral Aspects</li>
-              <li>User Experience Design</li>
-              <li>Interactive Product Design</li>
-              <li>Cognitive Psychology in UX</li>
-              <li>Human–Computer Interaction</li>
-              <li>Advanced Topics in UX Psychology</li>
+            <ul>
+              {[
+                'Advanced UX Design – Behavioral Aspects',
+                'User Experience Design',
+                'Interactive Product Design',
+                'Cognitive Psychology in UX',
+                'Human–Computer Interaction',
+                'Advanced Topics in UX Psychology',
+              ].map((item, idx, arr) => {
+                const roman = ['i', 'ii', 'iii', 'iv', 'v', 'vi'][idx];
+                const isLast = idx === arr.length - 1;
+                return (
+                  <li
+                    key={item}
+                    className="flex gap-4 py-3"
+                    style={{
+                      borderTop: '1px solid rgba(0, 0, 0, 0.06)',
+                      ...(isLast ? { borderBottom: '1px solid rgba(0, 0, 0, 0.06)' } : {}),
+                    }}
+                  >
+                    <span
+                      className="italic text-[13px] mt-0.5 shrink-0 w-6"
+                      style={{ fontFamily: "'Instrument Serif', Georgia, serif", color: 'var(--brass)', opacity: 0.7 }}
+                    >
+                      {roman}.
+                    </span>
+                    <p className="text-[15px] leading-[1.55]" style={{ color: 'var(--ink)' }}>
+                      {item}
+                    </p>
+                  </li>
+                );
+              })}
             </ul>
           </div>
 
           {/* Tools */}
           <div>
-            <h3 className="text-xs uppercase tracking-widest text-neutral-400 mb-5 font-medium">
+            <h3
+              className="text-[12px] uppercase mb-2"
+              style={{ color: 'var(--brass)', letterSpacing: '0.2em', fontFamily: "'Instrument Serif', Georgia, serif" }}
+            >
               Tools
             </h3>
-            <ul className="space-y-3.5 text-base text-neutral-700 font-light">
-              <li>Figma</li>
-              <li>Wireframing</li>
-              <li>Prototyping</li>
-              <li>User Flows</li>
+            <ul>
+              {['Figma', 'Wireframing', 'Prototyping', 'User Flows'].map((item, idx, arr) => {
+                const roman = ['i', 'ii', 'iii', 'iv'][idx];
+                const isLast = idx === arr.length - 1;
+                return (
+                  <li
+                    key={item}
+                    className="flex gap-4 py-3"
+                    style={{
+                      borderTop: '1px solid rgba(0, 0, 0, 0.06)',
+                      ...(isLast ? { borderBottom: '1px solid rgba(0, 0, 0, 0.06)' } : {}),
+                    }}
+                  >
+                    <span
+                      className="italic text-[13px] mt-0.5 shrink-0 w-6"
+                      style={{ fontFamily: "'Instrument Serif', Georgia, serif", color: 'var(--brass)', opacity: 0.7 }}
+                    >
+                      {roman}.
+                    </span>
+                    <p className="text-[15px] leading-[1.55]" style={{ color: 'var(--ink)' }}>
+                      {item}
+                    </p>
+                  </li>
+                );
+              })}
             </ul>
           </div>
         </div>
