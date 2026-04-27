@@ -4,23 +4,27 @@ import searchResultsState from '../../assets/supplynet-search-results.png';
 
 const QUERY = 'sprinkler systems';
 
-// All coordinates are % of the empty PNG (1532×1024, displayed object-cover top).
-// Zoom origin is the start of the input so the typed text grows away from it
-// (no clipping on the right). The cursor click lands on the same point so it
-// stays on the input after zoom.
+// All coordinates are % of the rendered card. Pixel-sampled from the empty
+// PNG (3024×2070), then converted to container-% (image aspect 1.461 vs
+// container 1.5 → image_y * 1.0262).
+//   Search input white box: image y=750-820 → container y=37.2-40.6
+//   Search icon at image x≈9%; placeholder text starts at image x≈12%.
+// Zoom origin sits at the start of the input so the input stays in view and
+// the cursor "click" lands on the search-icon side; the typed text grows
+// rightward into the input.
 const SEARCH_INPUT = {
-  clickX: 14,
-  clickY: 58,
-  // White mask that covers the "Search for products" placeholder
-  maskLeft: 11.5,
-  maskTop: 56.4,
-  maskWidth: 30,
-  maskHeight: 3.5,
-  // Where the typed text starts (offset within the mask, after the search icon)
-  textPaddingLeft: 1.5,
+  clickX: 10,
+  clickY: 39,
+  // White mask that covers the "Search for products" placeholder text
+  maskLeft: 11,
+  maskTop: 37.4,
+  maskWidth: 23.4,
+  maskHeight: 3,
+  // Where the typed text starts (offset within the mask, just after the icon)
+  textPaddingLeft: 0.5,
 };
 
-const ZOOM = 2.7;
+const ZOOM = 3;
 const TYPING_MS = 75;
 
 const PHASE_DURATIONS = {
@@ -197,10 +201,11 @@ export function SupplyNetCardAnimation() {
               width: `${SEARCH_INPUT.maskWidth}%`,
               height: `${SEARCH_INPUT.maskHeight}%`,
               paddingLeft: `${SEARCH_INPUT.textPaddingLeft}%`,
-              fontSize: '5px',
+              fontSize: '4.5px',
               lineHeight: 1,
               color: '#131313',
-              fontFamily: 'inherit',
+              fontFamily: 'Inter, sans-serif',
+              fontWeight: 400,
             }}
           >
             <span>{QUERY.slice(0, typedLen)}</span>
