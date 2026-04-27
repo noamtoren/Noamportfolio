@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { SupplyNetCase } from '@/app/components/SupplyNetCase';
 import { BellaCaseStudy } from '@/app/components/BellaCaseStudy';
 import { MachonChiburCaseStudy } from '@/app/components/MachonChiburCaseStudy';
@@ -8,11 +9,40 @@ import { About } from '@/app/components/About';
 import { Sketches } from '@/app/components/Sketches';
 import { Contact } from '@/app/components/Contact';
 
+const PAGE_EASE = [0.4, 0, 0.2, 1] as const;
+
 type Tab = 'home' | 'about' | 'sketches' | 'contact';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<Tab>('home');
   const [selectedProject, setSelectedProject] = useState<string | null>(null);
+  const shouldReduceMotion = useReducedMotion() ?? false;
+
+  // Site-wide page transition variants. Animates only opacity/transform/filter.
+  // Reduced-motion: opacity-only, 120ms.
+  const pageVariants = shouldReduceMotion
+    ? {
+        initial: { opacity: 0 },
+        animate: { opacity: 1, transition: { duration: 0.12, ease: PAGE_EASE } },
+        exit: { opacity: 0, transition: { duration: 0.12, ease: PAGE_EASE } },
+      }
+    : {
+        initial: { opacity: 0, y: 4, filter: 'blur(4px)' },
+        animate: {
+          opacity: 1,
+          y: 0,
+          filter: 'blur(0px)',
+          transition: { duration: 0.28, ease: PAGE_EASE },
+        },
+        exit: {
+          opacity: 0,
+          y: -4,
+          filter: 'blur(4px)',
+          transition: { duration: 0.22, ease: PAGE_EASE },
+        },
+      };
+
+  const routeKey = selectedProject ? `project:${selectedProject}` : `tab:${activeTab}`;
 
   const tabs = [
     { id: 'home' as Tab, label: 'Home' },
@@ -64,7 +94,18 @@ export default function App() {
     <div className="h-screen flex flex-col bg-white">
       {/* Main Content Area */}
       <main className="flex-1 overflow-hidden relative">
-        {renderContent()}
+        <AnimatePresence initial={false}>
+          <motion.div
+            key={routeKey}
+            className="absolute inset-0"
+            variants={pageVariants}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+          >
+            {renderContent()}
+          </motion.div>
+        </AnimatePresence>
       </main>
 
       {/* Floating Bottom Tab Navigation */}
