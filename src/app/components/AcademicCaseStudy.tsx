@@ -32,7 +32,7 @@ function PillarCanvas({ children }: { children: React.ReactNode }) {
 type PillarImage = { src: string; alt: string; label: string };
 
 const PILLAR_IMAGE_WIDTHS: Record<number, number> = {
-  1: 440,
+  1: 340,
   2: 340,
   3: 220,
   4: 160,
