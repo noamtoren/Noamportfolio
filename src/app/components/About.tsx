@@ -593,11 +593,11 @@ export function About() {
                   />
                 </div>
                 <div>
-                  <p className="text-[15px] md:text-[16px] text-neutral-900 leading-relaxed mb-0.5 font-medium">
+                  <p className="text-[14px] md:text-[15px] text-neutral-900 leading-relaxed mb-0.5 font-medium">
                     B.A. in Communication
                   </p>
-                  <p className="text-[14px] md:text-[15px] text-neutral-700 font-light leading-relaxed">Reichman University</p>
-                  <p className="text-[13px] md:text-[14px] text-neutral-400 font-light mt-0.5 leading-relaxed">Present</p>
+                  <p className="text-[13px] md:text-[14px] text-neutral-700 font-light leading-relaxed">Reichman University</p>
+                  <p className="text-[12px] md:text-[13px] text-neutral-400 font-light mt-0.5 leading-relaxed">Present</p>
                 </div>
               </div>
 
@@ -614,10 +614,10 @@ export function About() {
                   />
                 </div>
                 <div>
-                  <p className="text-[15px] md:text-[16px] text-neutral-900 leading-relaxed mb-0.5 font-medium">
+                  <p className="text-[14px] md:text-[15px] text-neutral-900 leading-relaxed mb-0.5 font-medium">
                     Data Analyst Certificate
                   </p>
-                  <p className="text-[14px] md:text-[15px] text-neutral-700 font-light leading-relaxed">Sapir College</p>
+                  <p className="text-[13px] md:text-[14px] text-neutral-700 font-light leading-relaxed">Sapir College</p>
                 </div>
               </div>
             </div>
@@ -628,7 +628,7 @@ export function About() {
             <h3 className="text-xs uppercase tracking-widest text-neutral-400 mb-5 font-medium">
               Relevant Coursework
             </h3>
-            <ul className="space-y-3.5 text-[15px] md:text-[16px] text-neutral-700 font-light leading-relaxed">
+            <ul className="space-y-3 text-[14px] md:text-[15px] text-neutral-700 font-light leading-relaxed">
               <li>Advanced UX Design – Behavioral Aspects</li>
               <li>User Experience Design</li>
               <li>Interactive Product Design</li>
@@ -643,7 +643,7 @@ export function About() {
             <h3 className="text-xs uppercase tracking-widest text-neutral-400 mb-5 font-medium">
               Tools
             </h3>
-            <ul className="space-y-3.5 text-[15px] md:text-[16px] text-neutral-700 font-light leading-relaxed">
+            <ul className="space-y-3 text-[14px] md:text-[15px] text-neutral-700 font-light leading-relaxed">
               <li>Figma</li>
               <li>Wireframing</li>
               <li>Prototyping</li>
