@@ -27,7 +27,7 @@ type Phase =
   | 'results';
 
 const ZOOM = 1.8;
-const ZOOM_ORIGIN = { x: '24%', y: '30%' };
+const ZOOM_ORIGIN = { x: '20%', y: '34%' };
 
 const TYPING_MS = 70;
 
@@ -73,29 +73,29 @@ const SearchIcon = ({ size = 7 }: { size?: number }) => (
 
 const FilterIcon = ({ size = 6 }: { size?: number }) => (
   <svg width={size} height={size} viewBox="0 0 16 16" fill="none">
-    <path d="M2 4h12M4 8h8M6 12h4" stroke="#131313" strokeWidth="1.6" strokeLinecap="round" />
+    <path d="M3 5h10M5 9h6M7 13h2" stroke="#131313" strokeWidth="1.6" strokeLinecap="round" />
   </svg>
 );
 
-const PlusIcon = ({ size = 6, color = 'white' }: { size?: number; color?: string }) => (
+const PlusIcon = ({ size = 5, color = 'white' }: { size?: number; color?: string }) => (
   <svg width={size} height={size} viewBox="0 0 16 16" fill="none">
     <path d="M8 3v10M3 8h10" stroke={color} strokeWidth="1.8" strokeLinecap="round" />
   </svg>
 );
 
-const DownloadIcon = ({ size = 6 }: { size?: number }) => (
+const DownloadIcon = ({ size = 5 }: { size?: number }) => (
   <svg width={size} height={size} viewBox="0 0 16 16" fill="none">
     <path d="M8 2v8M5 7l3 3 3-3M3 13h10" stroke="#131313" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );
 
-function Caret({ heightEm = 0.85 }: { heightEm?: number }) {
+function Caret() {
   return (
     <span
       style={{
         display: 'inline-block',
         width: '0.7px',
-        height: `${heightEm}em`,
+        height: '0.85em',
         background: '#131313',
         marginLeft: '0.5px',
         verticalAlign: 'middle',
@@ -183,8 +183,7 @@ export function SupplyNetCardAnimation() {
     phase === 'zoomIn' ||
     phase === 'typing' ||
     phase === 'pauseAfterTyping';
-  const cursorAtSearch =
-    phase !== 'idle';
+  const cursorAtSearch = phase !== 'idle';
   const cursorVisible =
     phase === 'idle' ||
     phase === 'cursorMove' ||
@@ -194,36 +193,12 @@ export function SupplyNetCardAnimation() {
     phase === 'results';
   const clickPulse = phase === 'click';
 
-  const cursorPos = cursorAtSearch ? { left: '24%', top: '30%' } : { left: '70%', top: '70%' };
-
-  const renderTitle = (
-    <div className="relative leading-tight">
-      <div
-        style={{
-          opacity: showResults ? 0 : 1,
-          transition: 'opacity 280ms ease-out',
-        }}
-      >
-        <h2 className="text-[14px] font-semibold tracking-tight text-[#131313] whitespace-nowrap leading-tight">
-          What are you looking for ?
-        </h2>
-        <p className="text-[7px] text-[#A0A6B8] mt-0.5">Find the best suppliers</p>
-      </div>
-      <h2
-        className="absolute top-0 left-0 text-[14px] font-semibold tracking-tight text-[#131313] whitespace-nowrap leading-tight"
-        style={{
-          opacity: showResults ? 1 : 0,
-          transition: 'opacity 280ms ease-out',
-        }}
-      >
-        {QUERY}
-      </h2>
-    </div>
-  );
+  const cursorPos = cursorAtSearch
+    ? { left: '20%', top: '34%' }
+    : { left: '70%', top: '70%' };
 
   return (
     <div className="relative w-full h-full bg-white overflow-hidden" dir="ltr">
-      {/* Camera */}
       <div
         className="absolute inset-0 flex flex-col"
         style={{
@@ -233,10 +208,10 @@ export function SupplyNetCardAnimation() {
           willChange: 'transform',
         }}
       >
-        {/* Top nav */}
-        <div className="flex items-center justify-between px-2.5 pt-1.5 pb-1.5 border-b border-black/[0.06] flex-shrink-0">
-          <span className="text-[5.5px] tracking-[0.2em] font-semibold text-[#131313]">SUPPLY NET</span>
-          <div className="flex items-center gap-2.5">
+        {/* Top nav — no border in the design */}
+        <div className="flex items-center justify-between px-3 pt-2 pb-2 flex-shrink-0">
+          <span className="text-[5.5px] tracking-[0.22em] font-semibold text-[#131313]">SUPPLY NET</span>
+          <div className="flex items-center gap-3">
             <span className="text-[5.5px] text-[#131313] font-medium">Home</span>
             <span className="text-[5.5px] text-[#131313]/40">projects</span>
             <span className="text-[5.5px] text-[#131313]/40">About Us</span>
@@ -246,38 +221,62 @@ export function SupplyNetCardAnimation() {
         </div>
 
         {/* Title row */}
-        <div className="px-2.5 pt-2 pb-1.5 flex items-start justify-between flex-shrink-0">
-          {renderTitle}
-          <div className="flex items-center gap-1">
-            <span className="bg-[#131313] text-white text-[5.5px] font-medium px-1.5 py-1 rounded-[2px] flex items-center gap-1 leading-none">
+        <div className="px-3 pt-2 pb-2 flex items-start justify-between flex-shrink-0">
+          <div className="relative leading-tight">
+            <div
+              style={{
+                opacity: showResults ? 0 : 1,
+                transition: 'opacity 280ms ease-out',
+              }}
+            >
+              <h2 className="text-[15px] font-semibold tracking-[-0.3px] text-[#131313] whitespace-nowrap leading-[1.05]">
+                What are you looking for ?
+              </h2>
+              <p className="text-[7.5px] text-[#A0A6B8] mt-1">Find the best suppliers</p>
+            </div>
+            <h2
+              className="absolute top-0 left-0 text-[15px] font-semibold tracking-[-0.3px] text-[#131313] whitespace-nowrap leading-[1.05]"
+              style={{
+                opacity: showResults ? 1 : 0,
+                transition: 'opacity 280ms ease-out',
+              }}
+            >
+              {QUERY}
+            </h2>
+          </div>
+          <div className="flex items-center gap-1.5 mt-0.5">
+            <span className="bg-[#131313] text-white text-[5.5px] font-medium px-2 py-1.5 rounded-[4px] flex items-center gap-1 leading-none">
               <PlusIcon size={5} /> Add a file
             </span>
-            <span className="border border-[#131313]/15 text-[#131313] text-[5.5px] font-medium px-1.5 py-1 rounded-[2px] flex items-center gap-1 leading-none">
+            <span className="border border-[#131313]/12 text-[#131313] text-[5.5px] font-medium px-2 py-1.5 rounded-[4px] flex items-center gap-1 leading-none">
               <DownloadIcon size={5} /> Download PDF Report
             </span>
           </div>
         </div>
 
         {/* Tabs */}
-        <div className="px-2.5 flex items-center gap-3 border-b border-black/[0.06] flex-shrink-0">
-          <span className="text-[6px] font-medium text-[#131313] border-b border-[#131313] py-1 -mb-px">Overview</span>
-          <span className="text-[6px] text-[#131313]/40 py-1">History</span>
-          <span className="text-[6px] text-[#131313]/40 py-1">Buying group</span>
+        <div className="px-3 flex-shrink-0">
+          <div className="flex items-end gap-3 border-b border-black/[0.07]">
+            <span className="text-[6.5px] font-medium text-[#131313] py-1.5 border-b-[1.4px] border-[#131313] -mb-px">Overview</span>
+            <span className="text-[6.5px] text-[#131313]/40 py-1.5">History</span>
+            <span className="text-[6.5px] text-[#131313]/40 py-1.5">Buying group</span>
+          </div>
         </div>
 
         {/* Search row */}
-        <div className="px-2 py-1.5 bg-[#ECEEF0] flex-shrink-0">
-          <div className="flex items-center gap-1">
+        <div className="px-3 py-2 bg-[#ECEEF0] flex-shrink-0">
+          <div className="flex items-center gap-2">
             {/* Search input */}
             <div
-              className={`flex-[2_1_0] flex items-center gap-1 bg-white px-1.5 py-1 rounded-[2px] transition-all duration-150 ${
+              className={`flex items-center gap-1 bg-white px-1.5 py-1.5 rounded-[3px] transition-shadow duration-150 ${
                 isInputFocused
-                  ? 'ring-1 ring-[#131313]/35 shadow-[0_0_0_2px_rgba(19,19,19,0.06)]'
-                  : 'ring-1 ring-transparent'
+                  ? 'shadow-[0_0_0_1.5px_rgba(19,19,19,0.35),0_0_0_3px_rgba(19,19,19,0.06)]'
+                  : 'shadow-none'
               }`}
+              style={{ width: '36%' }}
             >
               <SearchIcon size={6} />
-              <span className="text-[6px] leading-none text-[#131313] flex items-center min-h-[6px] flex-1 overflow-hidden whitespace-nowrap">
+              <span className="text-[6.5px] leading-none text-[#131313] flex items-center min-h-[6.5px] flex-1 overflow-hidden whitespace-nowrap">
                 {!isInputFocused && typedLen === 0 && !showResults ? (
                   <span className="text-[#131313]/30">Search for products</span>
                 ) : (
@@ -290,38 +289,41 @@ export function SupplyNetCardAnimation() {
             </div>
 
             {/* Quantity */}
-            <div className="px-1.5 py-1 bg-white rounded-[2px] flex flex-col flex-1 min-w-0">
+            <div className="bg-white px-1.5 py-1 rounded-[3px] flex flex-col" style={{ width: '13%' }}>
               <span className="text-[4.5px] text-[#A0A6B8] leading-none mb-[1px] truncate">Quantity</span>
-              <span className="text-[6px] leading-none truncate">
+              <span className="text-[6.5px] leading-none truncate">
                 {showResults ? <span className="text-[#131313]">200</span> : <span className="text-[#A0A6B8]">Number</span>}
               </span>
             </div>
 
             {/* Date */}
-            <div className="px-1.5 py-1 bg-white rounded-[2px] flex flex-col flex-1 min-w-0">
+            <div className="bg-white px-1.5 py-1 rounded-[3px] flex flex-col" style={{ width: '15%' }}>
               <span className="text-[4.5px] text-[#A0A6B8] leading-none mb-[1px] truncate">Required delivery date</span>
-              <span className="text-[6px] leading-none truncate">
+              <span className="text-[6.5px] leading-none truncate">
                 {showResults ? <span className="text-[#131313]">12/30/2025</span> : <span className="text-[#A0A6B8]">mm/dd/yyyy</span>}
               </span>
             </div>
 
+            {/* Spacer */}
+            <div className="flex-1" />
+
             {/* Filter */}
-            <div className="flex items-center gap-1 bg-white px-1.5 py-1 rounded-[2px]">
+            <div className="flex items-center gap-1 bg-white border border-[#131313]/10 px-2 py-1.5 rounded-[3px] leading-none">
               <FilterIcon size={5} />
-              <span className="text-[6px] text-[#131313]">Filter</span>
+              <span className="text-[6.5px] text-[#131313] leading-none">Filter</span>
             </div>
           </div>
         </div>
 
         {/* Results table */}
         <div
-          className="flex-1 overflow-hidden min-h-0"
+          className="flex-1 overflow-hidden min-h-0 px-3"
           style={{
             opacity: showResults ? 1 : 0,
             transition: 'opacity 380ms ease-out',
           }}
         >
-          <div className="grid grid-cols-[1fr_1.2fr_0.7fr_0.8fr_0.8fr_0.95fr] gap-1 px-2.5 py-1 text-[4.5px] uppercase tracking-[0.1em] text-[#A0A6B8] font-medium">
+          <div className="grid grid-cols-[1fr_1.2fr_0.7fr_0.85fr_0.85fr_0.95fr] gap-1 py-1 text-[4.5px] uppercase tracking-[0.1em] text-[#A0A6B8] font-medium">
             <span>SUPPLIERS</span>
             <span>MAIL</span>
             <span>UNIT PRICE</span>
@@ -332,7 +334,7 @@ export function SupplyNetCardAnimation() {
           {ROWS.map((r, i) => (
             <div
               key={i}
-              className="grid grid-cols-[1fr_1.2fr_0.7fr_0.8fr_0.8fr_0.95fr] gap-1 px-2.5 py-[3px] border-t border-black/[0.04] items-center"
+              className="grid grid-cols-[1fr_1.2fr_0.7fr_0.85fr_0.85fr_0.95fr] gap-1 py-[3px] border-t border-black/[0.04] items-center"
             >
               <span className="text-[5.5px] text-[#131313]">Business Name</span>
               <span className="text-[5.5px] text-[#131313]/70 truncate">example@email.com</span>
@@ -341,11 +343,11 @@ export function SupplyNetCardAnimation() {
               <span className="text-[5.5px] text-[#131313] tabular-nums">{r.flex || '-'}</span>
               <div className="flex justify-end">
                 {r.groupBuy === 'join' ? (
-                  <span className="text-[4.5px] font-medium bg-[#131313] text-white px-1.5 py-[2px] rounded-[2px] inline-flex items-center gap-0.5 leading-none whitespace-nowrap">
+                  <span className="text-[4.5px] font-medium bg-[#131313] text-white px-1.5 py-[3px] rounded-[3px] inline-flex items-center gap-0.5 leading-none whitespace-nowrap">
                     Join a group buy <span className="text-[5.5px] leading-none">→</span>
                   </span>
                 ) : (
-                  <span className="text-[4.5px] font-medium bg-[#ECEEF0] text-[#131313]/40 px-1.5 py-[2px] rounded-[2px] leading-none whitespace-nowrap">
+                  <span className="text-[4.5px] font-medium bg-[#ECEEF0] text-[#131313]/40 px-1.5 py-[3px] rounded-[3px] leading-none whitespace-nowrap">
                     Start a group buy
                   </span>
                 )}
@@ -355,7 +357,7 @@ export function SupplyNetCardAnimation() {
         </div>
       </div>
 
-      {/* Cursor — screen space */}
+      {/* Cursor */}
       <div
         className="absolute z-40 pointer-events-none"
         style={{
