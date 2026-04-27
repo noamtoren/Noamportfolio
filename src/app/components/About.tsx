@@ -1,4 +1,4 @@
-import { useState, useEffect, type ReactNode, type CSSProperties } from 'react';
+import { useState, useEffect } from 'react';
 import { Footer } from '@/app/components/Footer';
 import shelfImage from '../../assets/03d57eb367e80d93c04f4eeced97b1e07dd810c3.png';
 import reichmanLogo from '../../assets/0eca1c1712117942a77aaf2eac0853d722a8d9db.png';
@@ -9,113 +9,9 @@ import israelFlag from '../../assets/62542f660fa3bba0da99ce087f58a22bf4518361.pn
 const SPOTIFY_PLAYLIST_URL =
   'https://open.spotify.com/playlist/2pyz77T5IPR2T4vFkvrfC6?si=584ca899d4804da2';
 
-type PointerSide = 'down' | 'up' | 'left' | 'right';
-
-const POINTER_BY_SIDE: Record<PointerSide, CSSProperties> = {
-  down: {
-    top: '100%',
-    left: '50%',
-    transform: 'translate(-50%, -50%) rotate(45deg)',
-    borderRight: '1px solid rgba(0, 0, 0, 0.10)',
-    borderBottom: '1px solid rgba(0, 0, 0, 0.10)',
-  },
-  up: {
-    bottom: '100%',
-    left: '50%',
-    transform: 'translate(-50%, 50%) rotate(45deg)',
-    borderTop: '1px solid rgba(0, 0, 0, 0.10)',
-    borderLeft: '1px solid rgba(0, 0, 0, 0.10)',
-  },
-  right: {
-    left: '100%',
-    top: '50%',
-    transform: 'translate(-50%, -50%) rotate(45deg)',
-    borderTop: '1px solid rgba(0, 0, 0, 0.10)',
-    borderRight: '1px solid rgba(0, 0, 0, 0.10)',
-  },
-  left: {
-    right: '100%',
-    top: '50%',
-    transform: 'translate(50%, -50%) rotate(45deg)',
-    borderLeft: '1px solid rgba(0, 0, 0, 0.10)',
-    borderBottom: '1px solid rgba(0, 0, 0, 0.10)',
-  },
-};
-
-interface ShelfTooltipProps {
-  label: string;
-  title: ReactNode;
-  body?: ReactNode;
-  position: CSSProperties;
-  pointer: PointerSide;
-}
-
-function ShelfTooltip({ label, title, body, position, pointer }: ShelfTooltipProps) {
-  return (
-    <div style={{ position: 'absolute', pointerEvents: 'none', zIndex: 20, ...position }}>
-      <div className="shelf-tooltip-anim" style={{ position: 'relative' }}>
-        <div
-          style={{
-            background: 'var(--paper)',
-            color: 'var(--ink)',
-            border: '1px solid rgba(0, 0, 0, 0.10)',
-            boxShadow: '0 4px 14px rgba(0, 0, 0, 0.06)',
-            borderRadius: 6,
-            padding: '10px 12px',
-            width: 'max-content',
-            maxWidth: 240,
-            minWidth: 140,
-            position: 'relative',
-          }}
-        >
-          <p
-            style={{
-              fontSize: 9.5,
-              letterSpacing: '0.08em',
-              textTransform: 'uppercase',
-              color: 'var(--brass)',
-              margin: 0,
-              marginBottom: 4,
-              fontWeight: 500,
-            }}
-          >
-            {label}
-          </p>
-          <p
-            style={{
-              fontSize: 13,
-              lineHeight: 1.4,
-              color: 'var(--ink)',
-              margin: 0,
-              marginBottom: body ? 4 : 0,
-              fontWeight: 400,
-            }}
-          >
-            {title}
-          </p>
-          {body && (
-            <div style={{ fontSize: 12.5, lineHeight: 1.5, color: 'rgba(26, 23, 21, 0.65)', margin: 0 }}>
-              {body}
-            </div>
-          )}
-          {/* Pointer triangle (rotated square; paper-fill masks tooltip border at attachment) */}
-          <div
-            style={{
-              position: 'absolute',
-              width: 9,
-              height: 9,
-              background: 'var(--paper)',
-              ...POINTER_BY_SIDE[pointer],
-            }}
-          />
-        </div>
-      </div>
-    </div>
-  );
-}
-
 export function About() {
   const [currentTime, setCurrentTime] = useState('');
+  const [vinylHovered, setVinylHovered] = useState(false);
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
 
   useEffect(() => {
@@ -133,8 +29,23 @@ export function About() {
     return () => clearInterval(interval);
   }, []);
 
+  const handleVinylClick = () => {
+    // On touch devices, first tap shows the hover state; second tap opens the link.
+    if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+      if (!vinylHovered) {
+        setVinylHovered(true);
+        return;
+      }
+    }
+    window.open(SPOTIFY_PLAYLIST_URL, '_blank', 'noopener,noreferrer');
+  };
+
   const toggleItem = (item: string) => {
-    setHoveredItem((prev) => (prev === item ? null : item));
+    if (hoveredItem === item) {
+      setHoveredItem(null);
+    } else {
+      setHoveredItem(item);
+    }
   };
 
   return (
@@ -175,194 +86,480 @@ export function About() {
         </div>
       </section>
 
-      {/* Section 2 — Shelf scene (composition unchanged; tooltips refined) */}
+      {/* Section 2: Shelf Scene - Full Image */}
       <section className="px-8 py-12 relative overflow-hidden">
-        <div className="absolute inset-0" style={{ background: '#F8F8F8' }} />
-
-        <div className="max-w-[1080px] mx-auto relative">
-          <div
+        {/* Background */}
+        <div 
+          className="absolute inset-0"
+          style={{
+            background: '#F8F8F8',
+          }}
+        />
+        
+        <div className="max-w-5xl mx-auto relative">
+          {/* Main Shelf Image Container - Left Aligned */}
+          <div 
             className="relative w-full"
-            style={{ aspectRatio: '1000 / 664', maxWidth: '800px', margin: '0 auto' }}
+            style={{
+              aspectRatio: '1000 / 664',
+              maxWidth: '800px',
+              margin: '0 auto',
+            }}
           >
+            {/* Background Shelf Image - Exact as is */}
             <img
               src={shelfImage}
               alt="Shelf scene"
-              style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block' }}
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'contain',
+                display: 'block',
+              }}
             />
-
-            {/* Vinyl turntable — link to Spotify playlist */}
-            <a
-              href={SPOTIFY_PLAYLIST_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Open Designer's Playlist on Spotify"
-              className="absolute cursor-pointer"
-              style={{ left: '43%', top: '79%', width: '17%', height: '14%', zIndex: 10 }}
-              onMouseEnter={() => setHoveredItem('vinyl')}
-              onMouseLeave={() => setHoveredItem(null)}
-            >
-              {hoveredItem === 'vinyl' && (
-                <ShelfTooltip
-                  label="Now Playing"
-                  title="Designer's playlist"
-                  body={<>My playlist for designing. Press play.</>}
-                  position={{ bottom: '120%', left: '50%', transform: 'translateX(-50%)' }}
-                  pointer="down"
-                />
-              )}
-            </a>
-
-            {/* Clock — live Asia/Jerusalem time */}
+            
+            {/* Interactive Vinyl Turntable Overlay - Updated position for new layout */}
             <div
               className="absolute cursor-pointer"
-              style={{ left: '46%', top: '5%', width: '13%', height: '20%', zIndex: 6 }}
-              onMouseEnter={() => setHoveredItem('clock')}
-              onMouseLeave={() => setHoveredItem(null)}
-              onClick={() => toggleItem('clock')}
+              style={{
+                left: '43%',
+                top: '79%',
+                width: '17%',
+                height: '14%',
+                zIndex: 10,
+              }}
+              onClick={handleVinylClick}
+              onMouseEnter={() => setVinylHovered(true)}
+              onMouseLeave={() => setVinylHovered(false)}
             >
-              {hoveredItem === 'clock' && (
-                <ShelfTooltip
-                  label="Local Time"
-                  title={
-                    <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
-                      <img src={israelFlag} alt="" style={{ width: 14, height: 10 }} />
-                      <span>{currentTime}</span>
-                    </span>
-                  }
-                  body={<>Tel Aviv, Israel</>}
-                  position={{ top: '120%', left: '50%', transform: 'translateX(-50%)' }}
-                  pointer="up"
-                />
+              {/* Spotify Icon appears ABOVE the turntable on hover */}
+              {vinylHovered && (
+                <div
+                  style={{
+                    position: 'absolute',
+                    bottom: '110%',
+                    left: '50%',
+                    transform: 'translateX(-50%)',
+                    zIndex: 8,
+                  }}
+                >
+                  <div
+                    style={{
+                      width: '70px',
+                      height: '70px',
+                      animation: 'spotifyFadeIn 300ms cubic-bezier(0.16, 1, 0.3, 1)',
+                    }}
+                  >
+                    {/* Dark Background Circle - matching other hovers */}
+                    <div
+                      style={{
+                        width: '100%',
+                        height: '100%',
+                        borderRadius: '50%',
+                        background: 'rgba(23, 23, 23, 0.92)',
+                        backdropFilter: 'blur(16px)',
+                        boxShadow: '0 8px 24px rgba(0, 0, 0, 0.2), 0 2px 8px rgba(0, 0, 0, 0.1)',
+                        position: 'relative',
+                        border: '1px solid rgba(255, 255, 255, 0.08)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}
+                    >
+                      {/* Spotify Logo - Green circle with BLACK lines */}
+                      <svg 
+                        width="36" 
+                        height="36" 
+                        viewBox="0 0 24 24" 
+                        fill="none"
+                        style={{
+                          filter: 'drop-shadow(0 2px 4px rgba(29, 185, 84, 0.3))',
+                        }}
+                      >
+                        <circle 
+                          cx="12" 
+                          cy="12" 
+                          r="11" 
+                          fill="#1DB954"
+                        />
+                        <path 
+                          d="M17.5 10.4c-3.8-2.3-10.1-2.5-13.7-1.4-.6.2-1.2-.2-1.4-.8-.2-.6.2-1.2.8-1.4 4.1-1.3 11-1 15.3 1.6.5.3.7 1 .4 1.5-.3.5-1 .7-1.4.5zm-.2 2.6c-.3.4-.8.6-1.2.3-3.2-2-8.1-2.6-11.9-1.4-.5.1-1-.1-1.1-.6-.1-.5.1-1 .6-1.1 4.3-1.3 9.8-.7 13.4 1.6.4.3.6.8.2 1.2zm-1.3 2.5c-.2.3-.6.5-1 .3-2.8-1.7-6.3-2.1-10.4-1.1-.4.1-.8-.1-.9-.5-.1-.4.1-.8.5-.9 4.5-1.1 8.4-.6 11.5 1.3.4.2.5.6.3.9z" 
+                          fill="#1a1a1a"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              )}
+              
+              {/* Elegant CTA Label - appears with delay from BELOW */}
+              {vinylHovered && (
+                <div
+                  style={{
+                    position: 'absolute',
+                    top: '115%',
+                    left: '50%',
+                    transform: 'translateX(-50%)',
+                    zIndex: 7,
+                    animation: 'ctaSlideUpFromBelow 300ms cubic-bezier(0.16, 1, 0.3, 1) 500ms both',
+                  }}
+                >
+                  <div
+                    style={{
+                      padding: '6px 12px',
+                      background: 'rgba(23, 23, 23, 0.88)',
+                      backdropFilter: 'blur(12px)',
+                      borderRadius: '6px',
+                      border: '1px solid rgba(255, 255, 255, 0.06)',
+                      boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+                    }}
+                  >
+                    <p
+                      style={{
+                        fontSize: '11px',
+                        fontWeight: '500',
+                        color: 'rgba(255, 255, 255, 0.85)',
+                        margin: 0,
+                        letterSpacing: '0.3px',
+                        whiteSpace: 'nowrap',
+                      }}
+                    >
+                      Click to play music
+                    </p>
+                  </div>
+                </div>
               )}
             </div>
+            
+            {/* Live Time Display Overlay - positioned BELOW the clock */}
+            <div
+              className="absolute"
+              style={{
+                left: '49%',
+                top: '31%',
+                transform: 'translateX(-50%)',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px',
+                zIndex: 5,
+              }}
+            >
+              {/* Israel Flag */}
+              <img
+                src={israelFlag}
+                alt="Israel Flag"
+                style={{
+                  width: '20px',
+                  height: '15px',
+                }}
+              />
+              
+              {/* Live Time */}
+              <span 
+                style={{ 
+                  fontSize: '15px',
+                  fontWeight: '500',
+                  color: '#5A6C7D',
+                  letterSpacing: '0.3px',
+                }}
+              >
+                {currentTime}
+              </span>
+            </div>
 
-            {/* Kobe poster — top shelf, left */}
+            {/* Refined Hover Interactions - Updated positions for new layout */}
+            
+            {/* Hotspot 1: Kobe Image - Top shelf LEFT side - opens UPWARD */}
             <div
               className="absolute cursor-pointer"
-              style={{ left: '15%', top: '15%', width: '18%', height: '25%', zIndex: 6 }}
+              style={{
+                left: '15%',
+                top: '15%',
+                width: '18%',
+                height: '25%',
+                zIndex: 6,
+              }}
               onMouseEnter={() => setHoveredItem('kobe')}
               onMouseLeave={() => setHoveredItem(null)}
               onClick={() => toggleItem('kobe')}
             >
               {hoveredItem === 'kobe' && (
-                <ShelfTooltip
-                  label="Inspiration"
-                  title="Mamba Mentality"
-                  body={
-                    <>
-                      The reason I fell in love with basketball.
-                      <span
-                        style={{
-                          display: 'block',
-                          marginTop: 6,
-                          fontStyle: 'italic',
-                          color: 'rgba(26, 23, 21, 0.55)',
-                        }}
-                      >
-                        &ldquo;If you&rsquo;re afraid to fail, then you&rsquo;re probably going to fail.&rdquo;
-                        <span style={{ display: 'block', marginTop: 2 }}>&mdash; Kobe Bryant</span>
-                      </span>
-                    </>
-                  }
-                  position={{ left: '110%', top: '15%' }}
-                  pointer="left"
-                />
+                <div
+                  style={{
+                    position: 'absolute',
+                    bottom: '100%',
+                    left: '50%',
+                    transform: 'translateX(-50%)',
+                    padding: '10px 18px',
+                    background: 'rgba(23, 23, 23, 0.92)',
+                    backdropFilter: 'blur(16px)',
+                    borderRadius: '8px',
+                    boxShadow: '0 8px 24px rgba(0, 0, 0, 0.2), 0 2px 8px rgba(0, 0, 0, 0.1)',
+                    whiteSpace: 'nowrap',
+                    animation: 'tooltipSlideUp 300ms cubic-bezier(0.16, 1, 0.3, 1)',
+                    pointerEvents: 'none',
+                    border: '1px solid rgba(255, 255, 255, 0.08)',
+                    marginBottom: '8px',
+                  }}
+                >
+                  <p
+                    style={{
+                      fontSize: '14px',
+                      fontWeight: '500',
+                      color: '#ffffff',
+                      margin: 0,
+                      letterSpacing: '0.2px',
+                    }}
+                  >
+                    "If you're afraid to fail, then you're probably going to fail."
+                  </p>
+                  <p
+                    style={{
+                      fontSize: '12px',
+                      fontWeight: '400',
+                      color: 'rgba(255, 255, 255, 0.6)',
+                      margin: 0,
+                      marginTop: '4px',
+                      letterSpacing: '0.2px',
+                    }}
+                  >
+                    — Kobe Bryant
+                  </p>
+                </div>
               )}
             </div>
 
-            {/* Anemone — top shelf, right area */}
+            {/* Hotspot 2: Red Beret - Top shelf, far RIGHT - tooltip opens BELOW */}
             <div
               className="absolute cursor-pointer"
-              style={{ left: '70%', top: '22%', width: '8%', height: '14%', zIndex: 6 }}
-              onMouseEnter={() => setHoveredItem('anemone')}
-              onMouseLeave={() => setHoveredItem(null)}
-              onClick={() => toggleItem('anemone')}
-            >
-              {hoveredItem === 'anemone' && (
-                <ShelfTooltip
-                  label="Hometown"
-                  title="Darom Adom"
-                  body={
-                    <>
-                      I&rsquo;m from the Gaza envelope &mdash; every February the south turns red.
-                    </>
-                  }
-                  position={{ top: '120%', left: '50%', transform: 'translateX(-50%)' }}
-                  pointer="up"
-                />
-              )}
-            </div>
-
-            {/* Beret — top shelf, far right */}
-            <div
-              className="absolute cursor-pointer"
-              style={{ left: '87%', top: '32%', width: '10%', height: '13%', zIndex: 6 }}
+              style={{
+                left: '87%',
+                top: '29%',
+                width: '10%',
+                height: '13%',
+                zIndex: 6,
+              }}
               onMouseEnter={() => setHoveredItem('beret')}
               onMouseLeave={() => setHoveredItem(null)}
               onClick={() => toggleItem('beret')}
             >
               {hoveredItem === 'beret' && (
-                <ShelfTooltip
-                  label="Service"
-                  title="Currently serving as a paratrooper in the IDF."
-                  position={{ right: '120%', top: '0%' }}
-                  pointer="right"
-                />
+                <div
+                  style={{
+                    position: 'absolute',
+                    top: '110%',
+                    left: '50%',
+                    transform: 'translateX(-50%)',
+                    padding: '11px 13px',
+                    background: 'rgba(23, 23, 23, 0.92)',
+                    backdropFilter: 'blur(16px)',
+                    borderRadius: '8px',
+                    boxShadow: '0 8px 24px rgba(0, 0, 0, 0.2), 0 2px 8px rgba(0, 0, 0, 0.1)',
+                    animation: 'tooltipSlideDown 300ms cubic-bezier(0.16, 1, 0.3, 1)',
+                    pointerEvents: 'none',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    border: '1px solid rgba(255, 255, 255, 0.08)',
+                  }}
+                >
+                  {/* Minimalist Parachute Icon - White version */}
+                  <svg 
+                    width="24" 
+                    height="24" 
+                    viewBox="0 0 32 32" 
+                    fill="none"
+                  >
+                    <path 
+                      d="M16 4 C8 4 4 10 4 14 L16 14 L28 14 C28 10 24 4 16 4 Z" 
+                      fill="#ffffff" 
+                      opacity="0.9"
+                    />
+                    <line 
+                      x1="7" 
+                      y1="14" 
+                      x2="14" 
+                      y2="26" 
+                      stroke="#ffffff" 
+                      strokeWidth="1.5" 
+                      strokeLinecap="round"
+                      opacity="0.9"
+                    />
+                    <line 
+                      x1="16" 
+                      y1="14" 
+                      x2="16" 
+                      y2="26" 
+                      stroke="#ffffff" 
+                      strokeWidth="1.5" 
+                      strokeLinecap="round"
+                      opacity="0.9"
+                    />
+                    <line 
+                      x1="25" 
+                      y1="14" 
+                      x2="18" 
+                      y2="26" 
+                      stroke="#ffffff" 
+                      strokeWidth="1.5" 
+                      strokeLinecap="round"
+                      opacity="0.9"
+                    />
+                    <circle 
+                      cx="16" 
+                      cy="27" 
+                      r="2" 
+                      fill="#ffffff"
+                      opacity="0.9"
+                    />
+                  </svg>
+                </div>
               )}
             </div>
 
-            {/* Basketball — bottom shelf, left */}
+            {/* Hotspot 3: Anemone Flower (Red) - Top shelf RIGHT side */}
             <div
               className="absolute cursor-pointer"
-              style={{ left: '14%', top: '70%', width: '13%', height: '20%', zIndex: 6 }}
+              style={{
+                left: '72%',
+                top: '22%',
+                width: '9%',
+                height: '14%',
+                zIndex: 6,
+              }}
+              onMouseEnter={() => setHoveredItem('anemone')}
+              onMouseLeave={() => setHoveredItem(null)}
+              onClick={() => toggleItem('anemone')}
+            >
+              {hoveredItem === 'anemone' && (
+                <div
+                  style={{
+                    position: 'absolute',
+                    bottom: '115%',
+                    left: '50%',
+                    transform: 'translateX(-50%)',
+                    padding: '10px 18px',
+                    background: 'rgba(23, 23, 23, 0.92)',
+                    backdropFilter: 'blur(16px)',
+                    borderRadius: '8px',
+                    boxShadow: '0 8px 24px rgba(0, 0, 0, 0.2), 0 2px 8px rgba(0, 0, 0, 0.1)',
+                    whiteSpace: 'nowrap',
+                    animation: 'tooltipSlideUp 300ms cubic-bezier(0.16, 1, 0.3, 1)',
+                    pointerEvents: 'none',
+                    border: '1px solid rgba(255, 255, 255, 0.08)',
+                  }}
+                >
+                  <p
+                    style={{
+                      fontSize: '14px',
+                      fontWeight: '500',
+                      color: '#ffffff',
+                      margin: 0,
+                      letterSpacing: '0.2px',
+                    }}
+                  >
+                    Roots in the South
+                  </p>
+                </div>
+              )}
+            </div>
+
+            {/* Hotspot 4: Basketball - Bottom shelf LEFT */}
+            <div
+              className="absolute cursor-pointer"
+              style={{
+                left: '18%',
+                top: '75%',
+                width: '13%',
+                height: '16%',
+                zIndex: 6,
+              }}
               onMouseEnter={() => setHoveredItem('basketball')}
               onMouseLeave={() => setHoveredItem(null)}
               onClick={() => toggleItem('basketball')}
             >
               {hoveredItem === 'basketball' && (
-                <ShelfTooltip
-                  label="On the Court"
-                  title="Mostly watching, sometimes playing."
-                  position={{ bottom: '120%', left: '50%', transform: 'translateX(-50%)' }}
-                  pointer="down"
-                />
+                <div
+                  style={{
+                    position: 'absolute',
+                    bottom: '115%',
+                    left: '-50%',
+                    padding: '10px 18px',
+                    background: 'rgba(23, 23, 23, 0.92)',
+                    backdropFilter: 'blur(16px)',
+                    borderRadius: '8px',
+                    boxShadow: '0 8px 24px rgba(0, 0, 0, 0.2), 0 2px 8px rgba(0, 0, 0, 0.1)',
+                    whiteSpace: 'nowrap',
+                    animation: 'tooltipSlideUpLeft 300ms cubic-bezier(0.16, 1, 0.3, 1)',
+                    pointerEvents: 'none',
+                    border: '1px solid rgba(255, 255, 255, 0.08)',
+                  }}
+                >
+                  <p
+                    style={{
+                      fontSize: '14px',
+                      fontWeight: '500',
+                      color: '#ffffff',
+                      margin: 0,
+                      letterSpacing: '0.2px',
+                    }}
+                  >
+                    My quiet place.
+                  </p>
+                </div>
               )}
             </div>
 
-            {/* Brushes — bottom shelf, between basketball and vinyl */}
-            <div
-              className="absolute cursor-pointer"
-              style={{ left: '28%', top: '60%', width: '10%', height: '28%', zIndex: 6 }}
-              onMouseEnter={() => setHoveredItem('brushes')}
-              onMouseLeave={() => setHoveredItem(null)}
-              onClick={() => toggleItem('brushes')}
-            >
-              {hoveredItem === 'brushes' && (
-                <ShelfTooltip
-                  label="Off Screen"
-                  title="I sketch and paint."
-                  body={<>Design starts on paper.</>}
-                  position={{ bottom: '110%', left: '50%', transform: 'translateX(-50%)' }}
-                  pointer="down"
-                />
-              )}
-            </div>
-
+            {/* Enhanced CSS Animations for Tooltips */}
             <style>{`
-              .shelf-tooltip-anim {
-                animation: shelfTooltipIn 180ms cubic-bezier(0.4, 0, 0.2, 1) both;
+              @keyframes tooltipSlideUp {
+                from {
+                  opacity: 0;
+                  transform: translateX(-50%) translateY(8px) scale(0.94);
+                }
+                to {
+                  opacity: 1;
+                  transform: translateX(-50%) translateY(0) scale(1);
+                }
               }
-              @keyframes shelfTooltipIn {
-                from { opacity: 0; transform: translateY(4px); }
-                to   { opacity: 1; transform: translateY(0); }
+              @keyframes tooltipSlideDown {
+                from {
+                  opacity: 0;
+                  transform: translateX(-50%) translateY(-8px) scale(0.94);
+                }
+                to {
+                  opacity: 1;
+                  transform: translateX(-50%) translateY(0) scale(1);
+                }
               }
-              @keyframes shelfTooltipFade {
-                from { opacity: 0; }
-                to   { opacity: 1; }
+              @keyframes tooltipSlideUpLeft {
+                from {
+                  opacity: 0;
+                  transform: translateY(8px) scale(0.94);
+                }
+                to {
+                  opacity: 1;
+                  transform: translateY(0) scale(1);
+                }
               }
-              @media (prefers-reduced-motion: reduce) {
-                .shelf-tooltip-anim {
-                  animation: shelfTooltipFade 120ms ease-out both;
+              @keyframes spotifyFadeIn {
+                from {
+                  opacity: 0;
+                  transform: scale(0.85);
+                }
+                to {
+                  opacity: 1;
+                  transform: scale(1);
+                }
+              }
+              @keyframes ctaSlideUpFromBelow {
+                from {
+                  opacity: 0;
+                  transform: translateY(10px);
+                }
+                to {
+                  opacity: 1;
+                  transform: translateY(0);
                 }
               }
             `}</style>
