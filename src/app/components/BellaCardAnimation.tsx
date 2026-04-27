@@ -10,11 +10,11 @@ type Hotspot = {
 };
 
 const HOTSPOTS: Hotspot[] = [
-  { id: 'back', title: 'תמיכה בגב', description: 'תמיכה בעמוד השדרה ובאזור הגב התחתון', position: { top: '10.6%', left: '59.5%' }, tooltipDirection: 'right' },
-  { id: 'hips', title: 'תמיכה באגן', description: 'יישור נכון של האגן והירכיים', position: { top: '14.2%', left: '44.8%' }, tooltipDirection: 'right' },
-  { id: 'belly', title: 'תמיכה בבטן', description: 'הקלה על תחושת המשקל', position: { top: '44.4%', left: '54.7%' }, tooltipDirection: 'right' },
-  { id: 'knees', title: 'תמיכה בברכיים', description: 'יישור נכון בין הרגליים', position: { top: '56.9%', left: '29.1%' }, tooltipDirection: 'right' },
-  { id: 'ankles', title: 'תמיכה בקרסוליים', description: 'הפחתת נפיחות והרמה עדינה', position: { top: '21.5%', left: '13.4%' }, tooltipDirection: 'right' },
+  { id: 'back', title: 'תמיכה בגב', description: 'תמיכה בעמוד השדרה ובאזור הגב התחתון', position: { top: '24%', left: '70%' }, tooltipDirection: 'left' },
+  { id: 'hips', title: 'תמיכה באגן', description: 'יישור נכון של האגן והירכיים', position: { top: '34%', left: '47%' }, tooltipDirection: 'right' },
+  { id: 'belly', title: 'תמיכה בבטן', description: 'הקלה על תחושת המשקל', position: { top: '32%', left: '56%' }, tooltipDirection: 'right' },
+  { id: 'knees', title: 'תמיכה בברכיים', description: 'יישור נכון בין הרגליים', position: { top: '62%', left: '36%' }, tooltipDirection: 'right' },
+  { id: 'ankles', title: 'תמיכה בקרסוליים', description: 'הפחתת נפיחות והרמה עדינה', position: { top: '44%', left: '14%' }, tooltipDirection: 'right' },
 ];
 
 type Phase = 'idle' | 'approach' | 'clicked' | 'release';
@@ -26,7 +26,8 @@ const PHASE_DURATIONS: Record<Phase, number> = {
   release: 900,
 };
 
-const ZOOM_SCALE = 1.55;
+const ZOOM_BETWEEN = 1.2;
+const ZOOM_IN = 1.55;
 
 function CursorIcon() {
   return (
@@ -51,11 +52,9 @@ function CursorIcon() {
 export function BellaCardAnimation() {
   const [phase, setPhase] = useState<Phase>('idle');
   const [hotspotIdx, setHotspotIdx] = useState(0);
-  const [paused, setPaused] = useState(false);
   const [clickPulse, setClickPulse] = useState(false);
 
   useEffect(() => {
-    if (paused) return;
     const t = setTimeout(() => {
       if (phase === 'idle') setPhase('approach');
       else if (phase === 'approach') setPhase('clicked');
@@ -66,7 +65,7 @@ export function BellaCardAnimation() {
       }
     }, PHASE_DURATIONS[phase]);
     return () => clearTimeout(t);
-  }, [phase, hotspotIdx, paused]);
+  }, [phase, hotspotIdx]);
 
   // Brief click "press" pulse at the start of clicked + release phases
   useEffect(() => {
@@ -78,25 +77,26 @@ export function BellaCardAnimation() {
   }, [phase]);
 
   const activeHotspot = HOTSPOTS[hotspotIdx];
-  const isZoomed = phase === 'clicked';
   const isShowingTooltip = phase === 'clicked';
+
+  // Scale: idle=1.0 (full wide, only at start), clicked=ZOOM_IN, otherwise ZOOM_BETWEEN
+  const scale =
+    phase === 'idle' ? 1 : phase === 'clicked' ? ZOOM_IN : ZOOM_BETWEEN;
 
   // Cursor target in % of container
   const cursorTarget =
     phase === 'idle' ? { top: '52%', left: '48%' } : activeHotspot.position;
 
   return (
-    <div
-      className="relative w-full h-full overflow-hidden bg-[#f1eae2]"
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
-    >
+    <div className="relative w-full h-full overflow-hidden bg-[#f1eae2]">
       {/* Zoom container — image + hotspot dots scale together */}
       <div
-        className="absolute inset-0 transition-transform duration-[800ms] ease-[cubic-bezier(0.22,1,0.36,1)]"
+        className="absolute inset-0"
         style={{
-          transform: isZoomed ? `scale(${ZOOM_SCALE})` : 'scale(1)',
+          transform: `scale(${scale})`,
           transformOrigin: `${activeHotspot.position.left} ${activeHotspot.position.top}`,
+          transition:
+            'transform 800ms cubic-bezier(0.22,1,0.36,1), transform-origin 1000ms cubic-bezier(0.45,0.05,0.55,0.95)',
         }}
       >
         <img

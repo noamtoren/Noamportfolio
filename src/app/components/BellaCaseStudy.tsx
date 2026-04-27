@@ -105,11 +105,11 @@ type Hotspot = {
 };
 
 const HOTSPOTS: Hotspot[] = [
-  { id: 'back', title: 'תמיכה בגב', description: 'הכרית תומכת בעמוד השדרה ומפחיתה לחץ על אזור הגב התחתון', position: { top: '10.6%', left: '59.5%' }, tooltipDirection: 'right' },
-  { id: 'hips', title: 'תמיכה באגן ובירכיים', description: 'יישור נכון של האגן מפחית כאבים ומשפר את איכות השינה', position: { top: '14.2%', left: '44.8%' }, tooltipDirection: 'right' },
-  { id: 'belly', title: 'תמיכה בבטן', description: 'תומכת בבטן בעדינות ומקלה על תחושת המשקל', position: { top: '44.4%', left: '54.7%' }, tooltipDirection: 'right' },
-  { id: 'knees', title: 'תמיכה בין הברכיים', description: 'שומרת על יישור נכון של הרגליים ומפחיתה לחץ על הברכיים', position: { top: '56.9%', left: '29.1%' }, tooltipDirection: 'right' },
-  { id: 'ankles', title: 'תמיכה בקרסוליים', description: 'מרימה את הרגליים במעט ועוזרת להפחית נפיחות', position: { top: '21.5%', left: '13.4%' }, tooltipDirection: 'right' },
+  { id: 'back', title: 'תמיכה בגב', description: 'הכרית תומכת בעמוד השדרה ומפחיתה לחץ על אזור הגב התחתון', position: { top: '24%', left: '70%' }, tooltipDirection: 'left' },
+  { id: 'hips', title: 'תמיכה באגן ובירכיים', description: 'יישור נכון של האגן מפחית כאבים ומשפר את איכות השינה', position: { top: '34%', left: '47%' }, tooltipDirection: 'right' },
+  { id: 'belly', title: 'תמיכה בבטן', description: 'תומכת בבטן בעדינות ומקלה על תחושת המשקל', position: { top: '32%', left: '56%' }, tooltipDirection: 'right' },
+  { id: 'knees', title: 'תמיכה בין הברכיים', description: 'שומרת על יישור נכון של הרגליים ומפחיתה לחץ על הברכיים', position: { top: '62%', left: '36%' }, tooltipDirection: 'right' },
+  { id: 'ankles', title: 'תמיכה בקרסוליים', description: 'מרימה את הרגליים במעט ועוזרת להפחית נפיחות', position: { top: '44%', left: '14%' }, tooltipDirection: 'right' },
 ];
 
 function InteractiveBodyMap() {

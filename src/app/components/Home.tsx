@@ -143,14 +143,16 @@ export function Home({ onProjectClick }: HomeProps) {
 
                 {/* Mockup — soft shadow + tiny lift on hover */}
                 <div
-                  className={`aspect-[4/3] rounded-lg overflow-hidden shadow-[0_0_0_rgba(0,0,0,0)] transition-all duration-[400ms] ease-out will-change-transform group-hover:-translate-y-1 group-hover:shadow-[0_12px_32px_-12px_rgba(0,0,0,0.12)] ${
+                  className={`aspect-[4/3] rounded-lg overflow-hidden ring-1 ring-transparent shadow-[0_0_0_rgba(0,0,0,0)] transition-all duration-[400ms] ease-out will-change-transform group-hover:-translate-y-2 group-hover:ring-black/[0.08] group-hover:shadow-[0_18px_40px_-12px_rgba(0,0,0,0.18)] ${
                     project.id === 'bella'
-                      ? ''
+                      ? 'bg-[#ECEEF0] p-6'
                       : 'bg-[#F2F0EC] flex items-center justify-center p-8'
                   }`}
                 >
                   {project.id === 'bella' ? (
-                    <BellaCardAnimation />
+                    <div className="relative w-full h-full rounded-md overflow-hidden shadow-[0_4px_16px_rgba(43,42,40,0.10)]">
+                      <BellaCardAnimation />
+                    </div>
                   ) : (
                     <ImageWithFallback
                       src={project.image}
