@@ -152,13 +152,13 @@ export function About() {
             <span className="text-neutral-900">full-time &amp; freelance</span>
           </p>
 
-          {/* Editorial headline — Bodoni Moda italic, classical Italian newspaper voice */}
+          {/* Editorial headline — DM Serif Display italic, dramatic editorial voice */}
           <h2
             className="text-[24px] md:text-[30px] leading-[1.1] tracking-tight mt-10 md:mt-12 mb-4 md:mb-5"
             style={{
-              fontFamily: "'Bodoni Moda', 'Playfair Display', Georgia, serif",
+              fontFamily: "'DM Serif Display', Georgia, serif",
               fontStyle: 'italic',
-              fontWeight: 500,
+              fontWeight: 400,
               color: '#1A1715',
             }}
           >
