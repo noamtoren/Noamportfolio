@@ -217,7 +217,7 @@ export function DeepBreathCardAnimation() {
           className="absolute inset-x-0 top-0 w-full select-none"
           draggable={false}
           style={{
-            transform: `translateY(${-homeScroll * HOME_RATIO}%)`,
+            transform: `translateY(${-homeScroll}%)`,
             transition: `transform ${PHASE_DURATIONS.scrollToSection3}ms ${EASING}`,
             willChange: 'transform',
           }}
@@ -235,7 +235,7 @@ export function DeepBreathCardAnimation() {
           className="absolute inset-x-0 top-0 w-full select-none"
           draggable={false}
           style={{
-            transform: `translateY(${-dashScroll * DASH_RATIO}%)`,
+            transform: `translateY(${-dashScroll}%)`,
             transition: `transform ${PHASE_DURATIONS.dashScrollDown}ms ${EASING}`,
             willChange: 'transform',
           }}
