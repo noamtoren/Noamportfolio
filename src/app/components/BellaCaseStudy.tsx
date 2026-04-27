@@ -104,12 +104,15 @@ type Hotspot = {
   tooltipDirection: 'left' | 'right';
 };
 
+// Positions reprojected from the original 1536×1024 image (also used in the home
+// card) into this case study's 16:9 frame. Conversion: case_y = (orig_y - 7.79)
+// / 84.4 * 100; X stays unchanged because the image fills width without crop.
 const HOTSPOTS: Hotspot[] = [
-  { id: 'back', title: 'תמיכה בגב', description: 'הכרית תומכת בעמוד השדרה ומפחיתה לחץ על אזור הגב התחתון', position: { top: '24%', left: '70%' }, tooltipDirection: 'left' },
-  { id: 'hips', title: 'תמיכה באגן ובירכיים', description: 'יישור נכון של האגן מפחית כאבים ומשפר את איכות השינה', position: { top: '34%', left: '47%' }, tooltipDirection: 'right' },
-  { id: 'belly', title: 'תמיכה בבטן', description: 'תומכת בבטן בעדינות ומקלה על תחושת המשקל', position: { top: '32%', left: '56%' }, tooltipDirection: 'right' },
-  { id: 'knees', title: 'תמיכה בין הברכיים', description: 'שומרת על יישור נכון של הרגליים ומפחיתה לחץ על הברכיים', position: { top: '62%', left: '36%' }, tooltipDirection: 'right' },
-  { id: 'ankles', title: 'תמיכה בקרסוליים', description: 'מרימה את הרגליים במעט ועוזרת להפחית נפיחות', position: { top: '44%', left: '14%' }, tooltipDirection: 'right' },
+  { id: 'back', title: 'תמיכה בגב', description: 'הכרית תומכת בעמוד השדרה ומפחיתה לחץ על אזור הגב התחתון', position: { top: '26%', left: '72%' }, tooltipDirection: 'left' },
+  { id: 'hips', title: 'תמיכה באגן ובירכיים', description: 'יישור נכון של האגן מפחית כאבים ומשפר את איכות השינה', position: { top: '38%', left: '48%' }, tooltipDirection: 'right' },
+  { id: 'belly', title: 'תמיכה בבטן', description: 'תומכת בבטן בעדינות ומקלה על תחושת המשקל', position: { top: '32%', left: '58%' }, tooltipDirection: 'right' },
+  { id: 'knees', title: 'תמיכה בין הברכיים', description: 'שומרת על יישור נכון של הרגליים ומפחיתה לחץ על הברכיים', position: { top: '62%', left: '33%' }, tooltipDirection: 'right' },
+  { id: 'ankles', title: 'תמיכה בקרסוליים', description: 'מרימה את הרגליים במעט ועוזרת להפחית נפיחות', position: { top: '44%', left: '12%' }, tooltipDirection: 'right' },
 ];
 
 function InteractiveBodyMap() {
