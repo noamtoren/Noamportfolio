@@ -44,7 +44,7 @@ export function Home({ onProjectClick }: HomeProps) {
 
   return (
     <div className="absolute inset-0 overflow-auto bg-white pb-32">
-      <div className="max-w-6xl mx-auto px-6 md:px-12 pt-14 md:pt-20">
+      <div className="max-w-6xl mx-auto px-6 md:px-12 pt-7 md:pt-10">
         {/* Hero — compact, left-aligned, all sans-serif */}
         <section className="mb-24 md:mb-32">
           {/* Line 1: role + name inline */}
@@ -69,12 +69,12 @@ export function Home({ onProjectClick }: HomeProps) {
             <span className="text-neutral-900 font-semibold">full-time &amp; freelance</span>
           </p>
 
-          {/* Profile image — original size, with brand-tinted offset ring */}
+          {/* Profile image — slightly bigger than original, no ring */}
           <div className="rise-in mb-8" style={{ animationDelay: '200ms' }}>
             <img
               src={profileImage}
               alt="Noam Toren"
-              className="w-[72px] h-[72px] md:w-20 md:h-20 rounded-lg object-cover ring-2 ring-[#B8552E]/25 ring-offset-4 ring-offset-white"
+              className="w-[88px] h-[88px] md:w-24 md:h-24 rounded-lg object-cover"
               style={{ objectPosition: 'center 35%' }}
             />
           </div>
