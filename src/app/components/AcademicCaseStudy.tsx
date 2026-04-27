@@ -43,8 +43,10 @@ function PillarImages({ images }: { images: PillarImage[] }) {
   return (
     <div className="flex flex-wrap items-start justify-center gap-6">
       {images.map((img, i) => (
-        <div key={i} style={{ width: `${width}px` }}>
-          <p className="text-[11px] mb-1.5 leading-none text-[#1E1E1E]">{img.label}</p>
+        <div key={i} className="text-left" style={{ width: `${width}px` }}>
+          <p className="text-[11px] leading-[1.2] text-[#1E1E1E] mb-3 ml-0 pl-0">
+            {img.label}
+          </p>
           <ImageWithFallback src={img.src} alt={img.alt} className="block w-full h-auto rounded-md shadow-[0_6px_20px_rgba(19,19,19,0.08)]" />
         </div>
       ))}
