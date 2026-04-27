@@ -3,7 +3,6 @@ import { ArrowLeft, Search, User, ShoppingBag } from 'lucide-react';
 import { Footer } from '@/app/components/Footer';
 import { CaseNavFooter } from '@/app/components/CaseNavFooter';
 import { ImageWithFallback } from '@/app/components/figma/ImageWithFallback';
-import heroImage from '../../assets/bella-home-hires.png';
 import p1SolutionsImage from '../../assets/bella-p1-solutions-v2.png';
 import p1ShopImage from '../../assets/bella-p1-shop.png';
 import p2QuizIntroImage from '../../assets/bella-p2-quiz-intro-v2.png';
@@ -15,7 +14,6 @@ import p3NormalImage from '../../assets/bella-p3-normal-v2.png';
 import p4StoriesImage from '../../assets/bella-p4-stories.png';
 import p4ReviewsImage from '../../assets/bella-p4-reviews.png';
 import bodyMapBg from '../../assets/bella-bodymap-bg-v2.jpg';
-import cartModalImage from '../../assets/bella-cart-hires.png';
 
 interface BellaCaseStudyProps {
   onBack: () => void;
@@ -90,6 +88,33 @@ function Pillar({
   );
 }
 
+// ─────────────────── Pillar 1 — Solutions canvas with hover preview ──────────
+function Pillar1Showcase({ images }: { images: PillarImage[] }) {
+  const [hovered, setHovered] = useState(false);
+  return (
+    <div
+      className="relative w-full"
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
+      <PillarImages images={images} />
+      <div
+        className={`absolute bottom-0 right-0 w-64 px-4 py-3 rounded-xl border border-white/50 bg-white/40 backdrop-blur-md shadow-[0_8px_24px_rgba(43,42,40,0.18)] transition-all duration-300 ease-out pointer-events-none ${
+          hovered ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'
+        }`}
+        style={{ direction: 'rtl' }}
+      >
+        <p className="text-[12px] font-semibold text-[#131313] mb-1 leading-tight">
+          הציצי לפי מצב, לא לפי קטגוריה
+        </p>
+        <p className="text-[11px] text-[rgba(19,19,19,0.75)] leading-snug">
+          שינה, ישיבה, כאב, אחרי לידה — כל כרטיסיה ב־hover מציגה תקציר מותאם של מה שמשתפר בגוף.
+        </p>
+      </div>
+    </div>
+  );
+}
+
 // ─────────────────── Pillar 5 — Live Interactive Body Map ──────────────────
 // Hotspot positions are derived from the original Figma feature (node 283:599):
 // container 1100×618.75; back at left=655/top=65.75, belly 602/274.75,
@@ -106,8 +131,8 @@ const HOTSPOTS: Hotspot[] = [
   { id: 'back', title: 'תמיכה בגב', description: 'הכרית תומכת בעמוד השדרה ומפחיתה לחץ על אזור הגב התחתון', position: { top: '10.6%', left: '59.5%' }, tooltipDirection: 'right' },
   { id: 'hips', title: 'תמיכה באגן ובירכיים', description: 'יישור נכון של האגן מפחית כאבים ומשפר את איכות השינה', position: { top: '14.2%', left: '44.8%' }, tooltipDirection: 'right' },
   { id: 'belly', title: 'תמיכה בבטן', description: 'תומכת בבטן בעדינות ומקלה על תחושת המשקל', position: { top: '44.4%', left: '54.7%' }, tooltipDirection: 'right' },
-  { id: 'knees', title: 'תמיכה בין הברכיים', description: 'שומרת על יישור נכון של הרגליים ומפחיתה לחץ על הברכיים', position: { top: '56.9%', left: '29.1%' }, tooltipDirection: 'left' },
-  { id: 'ankles', title: 'תמיכה בקרסוליים', description: 'מרימה את הרגליים במעט ועוזרת להפחית נפיחות', position: { top: '21.5%', left: '13.4%' }, tooltipDirection: 'left' },
+  { id: 'knees', title: 'תמיכה בין הברכיים', description: 'שומרת על יישור נכון של הרגליים ומפחיתה לחץ על הברכיים', position: { top: '56.9%', left: '29.1%' }, tooltipDirection: 'right' },
+  { id: 'ankles', title: 'תמיכה בקרסוליים', description: 'מרימה את הרגליים במעט ועוזרת להפחית נפיחות', position: { top: '21.5%', left: '13.4%' }, tooltipDirection: 'right' },
 ];
 
 function InteractiveBodyMap() {
@@ -137,15 +162,19 @@ function InteractiveBodyMap() {
             onMouseEnter={() => setHovered(h.id)}
             onMouseLeave={() => setHovered(null)}
           >
-            {/* Pulsing rings */}
-            <span className="absolute inset-0 -m-3 rounded-full bg-white/60 animate-ping pointer-events-none" />
-            <span className="absolute inset-0 -m-2 rounded-full bg-white/40 pointer-events-none" />
+            {/* Soft steady halo */}
+            <span className="absolute inset-0 -m-1 rounded-full bg-white/25 pointer-events-none" />
+            {/* Slow gentle pulse — single ring, low contrast (uses Tailwind ping keyframe) */}
+            <span
+              className="absolute inset-0 -m-1 rounded-full bg-white/35 animate-ping pointer-events-none"
+              style={{ animationDuration: '2.8s', animationTimingFunction: 'cubic-bezier(0, 0, 0.2, 1)' }}
+            />
 
             {/* Hotspot dot */}
             <button
               type="button"
               aria-label={h.title}
-              className={`relative w-8 h-8 rounded-full border border-white/60 bg-white/90 backdrop-blur-sm shadow-[0_4px_6px_rgba(0,0,0,0.1),0_2px_4px_rgba(0,0,0,0.1)] flex items-center justify-center transition-transform duration-200 ${
+              className={`relative w-8 h-8 rounded-full border border-white/60 bg-white/90 backdrop-blur-sm shadow-[0_4px_6px_rgba(0,0,0,0.1),0_2px_4px_rgba(0,0,0,0.1)] flex items-center justify-center transition-transform duration-300 ease-out ${
                 isHovered ? 'scale-110' : 'hover:scale-110'
               }`}
             >
@@ -256,15 +285,19 @@ export function BellaCaseStudy({ onBack, onSelectProject }: BellaCaseStudyProps)
           </h2>
 
           <div className="space-y-16 md:space-y-20">
-            {/* Pillar 1 — Solution-first Browsing */}
+            {/* Pillar 1 — Solution-first Browsing (with hover preview card) */}
             <Pillar
               label="Pillar 01 — Solution-first Browsing"
               heading="Architecture organised around the body, not the SKU."
-              body="The homepage opens with the four physical states a pregnant body actually moves through — sleep, sitting, pain, postpartum — and routes each one into a curated shop. The shop itself preserves the same logic: filters are framed around lived needs (week of pregnancy, sleeping position, back pain) rather than abstract product taxonomy, so the user is buying a solution, not browsing a catalogue."
-              images={[
-                { src: p1SolutionsImage, alt: 'Home — Solutions by Need', label: 'Home — Solutions by Need' },
-                { src: p1ShopImage, alt: 'Shop — Filter by need', label: 'Shop — Filter by Need' },
-              ]}
+              body="The homepage opens with the four physical states a pregnant body actually moves through — sleep, sitting, pain, postpartum — and routes each one into a curated shop. The shop itself preserves the same logic: filters are framed around lived needs (week of pregnancy, sleeping position, back pain) rather than abstract product taxonomy, so the user is buying a solution, not browsing a catalogue. Hovering a solution card reveals a glass-frame preview of the matching outcome before any product is shown."
+              custom={
+                <Pillar1Showcase
+                  images={[
+                    { src: p1SolutionsImage, alt: 'Home — Solutions by Need', label: 'Home — Solutions by Need' },
+                    { src: p1ShopImage, alt: 'Shop — Filter by need', label: 'Shop — Filter by Need' },
+                  ]}
+                />
+              }
             />
 
             {/* Pillar 2 — Personalised Quiz Path: 3 static screens, SupplyNet style */}
@@ -342,27 +375,6 @@ export function BellaCaseStudy({ onBack, onSelectProject }: BellaCaseStudyProps)
           <p className="text-[11px] text-[rgba(19,19,19,0.4)] mt-4 leading-[1.5]">
             Figures reflect design scope shipped in Figma, not measured production results.
           </p>
-        </section>
-
-        <div className="mx-6 md:mx-12 border-t border-neutral-200" />
-
-        {/* Selected Screens — Home + Cart with product, hi-res */}
-        <section className="px-6 md:px-12 py-10 md:py-14">
-          <SectionLabel>Selected Screens</SectionLabel>
-          <h2 className="text-[22px] font-semibold tracking-[-0.5px] text-[#131313] leading-[1.3] mb-8 max-w-2xl">
-            The full-page tour.
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {[
-              { src: heroImage, label: 'Home — Above the Fold' },
-              { src: cartModalImage, label: 'Cart — With Items, Free-Shipping Threshold Met' },
-            ].map((s) => (
-              <div key={s.label} className="rounded-xl bg-[#ECEEF0] p-4 flex flex-col gap-3">
-                <p className="text-[11px] leading-none text-[#1E1E1E]">{s.label}</p>
-                <ImageWithFallback src={s.src} alt={s.label} className="block w-full h-auto rounded-md" />
-              </div>
-            ))}
-          </div>
         </section>
 
         <div className="mx-6 md:mx-12 border-t border-neutral-200" />
