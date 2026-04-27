@@ -145,17 +145,13 @@ export function Home({ onProjectClick }: HomeProps) {
                 <div
                   className={`aspect-[4/3] rounded-lg overflow-hidden ring-1 ring-transparent shadow-[0_0_0_rgba(0,0,0,0)] transition-all duration-[400ms] ease-out will-change-transform group-hover:-translate-y-2 group-hover:ring-black/[0.08] group-hover:shadow-[0_18px_40px_-12px_rgba(0,0,0,0.18)] ${
                     project.id === 'bella'
-                      ? 'bg-[#ECEEF0] flex items-center justify-center p-7 md:p-9'
+                      ? 'bg-[#ECEEF0] flex items-center justify-center p-6 md:p-8'
                       : 'bg-[#F2F0EC] flex items-center justify-center p-8'
                   }`}
                 >
                   {project.id === 'bella' ? (
-                    <div
-                      className="w-[82%] aspect-[3/2] bg-[#0d0d0d] rounded-[14px] p-[5px] shadow-[0_10px_24px_rgba(0,0,0,0.22),0_2px_6px_rgba(0,0,0,0.12)]"
-                    >
-                      <div className="relative w-full h-full rounded-[10px] overflow-hidden">
-                        <BellaCardAnimation />
-                      </div>
+                    <div className="w-[80%] aspect-[3/2] rounded-[10px] overflow-hidden shadow-[0_8px_22px_rgba(43,42,40,0.14),0_2px_6px_rgba(43,42,40,0.08)]">
+                      <BellaCardAnimation />
                     </div>
                   ) : (
                     <ImageWithFallback

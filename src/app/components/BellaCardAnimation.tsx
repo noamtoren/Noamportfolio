@@ -9,27 +9,27 @@ type Hotspot = {
   tooltipDirection: 'left' | 'right';
 };
 
-// Positions are percentages of the original 1536×1024 image (no crop, since the
-// inner screen is also 3:2). Re-anchored to the actual body parts in the photo.
+// Percentages of the original 1536×1024 photo. Inner screen is also 3:2,
+// so positions land directly on the body parts with no aspect-ratio reprojection.
 const HOTSPOTS: Hotspot[] = [
-  { id: 'back',    title: 'תמיכה בגב',       description: 'תמיכה בעמוד השדרה והגב התחתון',      position: { top: '31%', left: '70%' }, tooltipDirection: 'left'  },
-  { id: 'hips',    title: 'תמיכה באגן',      description: 'יישור נכון של האגן והירכיים',         position: { top: '36%', left: '50%' }, tooltipDirection: 'right' },
-  { id: 'belly',   title: 'תמיכה בבטן',      description: 'הקלה על תחושת המשקל',                 position: { top: '33%', left: '56%' }, tooltipDirection: 'left'  },
-  { id: 'knees',   title: 'תמיכה בברכיים',  description: 'יישור נכון בין הרגליים',              position: { top: '60%', left: '32%' }, tooltipDirection: 'right' },
-  { id: 'ankles',  title: 'תמיכה בקרסוליים', description: 'הפחתת נפיחות והרמה עדינה',            position: { top: '43%', left: '14%' }, tooltipDirection: 'right' },
+  { id: 'back',    title: 'תמיכה בגב',       description: 'עמוד השדרה והגב התחתון', position: { top: '31%', left: '70%' }, tooltipDirection: 'left'  },
+  { id: 'hips',    title: 'תמיכה באגן',      description: 'האגן והירכיים',           position: { top: '36%', left: '50%' }, tooltipDirection: 'right' },
+  { id: 'belly',   title: 'תמיכה בבטן',      description: 'הקלה על המשקל',           position: { top: '33%', left: '56%' }, tooltipDirection: 'left'  },
+  { id: 'knees',   title: 'תמיכה בברכיים',  description: 'יישור הרגליים',           position: { top: '60%', left: '32%' }, tooltipDirection: 'right' },
+  { id: 'ankles',  title: 'תמיכה בקרסוליים', description: 'הפחתת נפיחות',            position: { top: '43%', left: '14%' }, tooltipDirection: 'right' },
 ];
 
 type Phase = 'idle' | 'approach' | 'clicked' | 'release';
 
 const PHASE_DURATIONS: Record<Phase, number> = {
-  idle: 1400,
-  approach: 1000,
-  clicked: 1700,
+  idle: 1300,
+  approach: 950,
+  clicked: 1900,
   release: 850,
 };
 
-const ZOOM_BETWEEN = 1.18;
-const ZOOM_IN = 1.5;
+// Single zoom value: identity at rest, modest zoom-in on click.
+const ZOOM_IN = 1.3;
 
 const EASING = 'cubic-bezier(0.65, 0, 0.35, 1)';
 
@@ -64,7 +64,6 @@ export function BellaCardAnimation() {
   const [hotspotIdx, setHotspotIdx] = useState(0);
   const [clickPulse, setClickPulse] = useState(false);
 
-  // Phase machine
   useEffect(() => {
     const t = setTimeout(() => {
       if (phase === 'idle') setPhase('approach');
@@ -78,7 +77,7 @@ export function BellaCardAnimation() {
     return () => clearTimeout(t);
   }, [phase, hotspotIdx]);
 
-  // Click "press" pulse — fires at the start of clicked + release (= two distinct clicks per hotspot)
+  // Two distinct cursor "presses" — first opens the tooltip, second closes it
   useEffect(() => {
     if (phase === 'clicked' || phase === 'release') {
       setClickPulse(true);
@@ -88,24 +87,23 @@ export function BellaCardAnimation() {
   }, [phase]);
 
   const activeHotspot = HOTSPOTS[hotspotIdx];
+
+  // Scale: 1 everywhere except 'clicked' (zoom-in). No mid-pan zoom — origin only
+  // changes during approach (when scale === 1, so the change is visually invisible).
+  const scale = phase === 'clicked' ? ZOOM_IN : 1;
   const isShowingTooltip = phase === 'clicked';
-
-  const scale =
-    phase === 'idle' ? 1 : phase === 'clicked' ? ZOOM_IN : ZOOM_BETWEEN;
-
   const cursorTarget =
     phase === 'idle' ? { top: '50%', left: '48%' } : activeHotspot.position;
 
   return (
     <div className="relative w-full h-full overflow-hidden bg-[#f1eae2]">
-      {/* Camera — image + dots scale together; transform-origin pinned to active hotspot
-          so the active hotspot stays at its container-relative % through the zoom */}
+      {/* Camera — origin pinned to active hotspot, only scales (never pans) */}
       <div
         className="absolute inset-0"
         style={{
           transform: `scale(${scale})`,
           transformOrigin: `${activeHotspot.position.left} ${activeHotspot.position.top}`,
-          transition: `transform 850ms ${EASING}, transform-origin 850ms ${EASING}`,
+          transition: `transform 800ms ${EASING}, transform-origin 600ms ${EASING}`,
           willChange: 'transform, transform-origin',
         }}
       >
@@ -117,20 +115,28 @@ export function BellaCardAnimation() {
         />
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/[0.08] pointer-events-none" />
 
-        {/* Hotspots — inverse-scaled so they remain a constant on-screen size */}
+        {/* Hotspots + their tooltips. Each hotspot anchor is a zero-size point;
+            the dot is inverse-scaled (constant on-screen size) and the tooltip
+            scales with the camera (so the click "magnifies" it into legibility). */}
         {HOTSPOTS.map((h, i) => {
           const isActive = i === hotspotIdx && phase === 'clicked';
           return (
             <div
               key={h.id}
               className="absolute"
-              style={{ top: h.position.top, left: h.position.left }}
+              style={{
+                top: h.position.top,
+                left: h.position.left,
+                width: 0,
+                height: 0,
+              }}
             >
+              {/* Dot — inverse-scaled */}
               <div
                 className="relative"
                 style={{
                   transform: `translate(-50%, -50%) scale(${1 / scale})`,
-                  transition: `transform 850ms ${EASING}`,
+                  transition: `transform 800ms ${EASING}`,
                 }}
               >
                 {!isActive && (
@@ -149,46 +155,49 @@ export function BellaCardAnimation() {
                   }`}
                 />
 
-                <div className="relative w-[18px] h-[18px] rounded-full bg-gradient-to-b from-white to-[#f6f4f1] border border-white/75 shadow-[inset_0_-1px_2px_rgba(0,0,0,0.06),0_2px_5px_rgba(0,0,0,0.20)] flex items-center justify-center">
+                <div className="relative w-[16px] h-[16px] rounded-full bg-gradient-to-b from-white to-[#f6f4f1] border border-white/75 shadow-[inset_0_-1px_2px_rgba(0,0,0,0.06),0_2px_5px_rgba(0,0,0,0.20)] flex items-center justify-center">
                   <span
-                    className={`block w-[5px] h-[5px] rounded-full transition-colors duration-200 ${
+                    className={`block w-[4px] h-[4px] rounded-full transition-colors duration-200 ${
                       isActive ? 'bg-[#2b2a28]' : 'bg-[#2b2a28]/65'
                     }`}
                   />
                 </div>
               </div>
+
+              {/* Tooltip — inside the camera, so it scales with the zoom-in
+                  (small at rest, magnified at click → readable through the zoom) */}
+              <div
+                className={`absolute rounded-[8px] border border-white/55 bg-gradient-to-b from-white/65 to-white/45 backdrop-blur-md shadow-[0_4px_14px_rgba(43,42,40,0.22),0_1px_3px_rgba(43,42,40,0.10)] px-2 py-1.5 transition-[opacity,transform] duration-300 ease-out pointer-events-none ${
+                  isActive
+                    ? 'opacity-100'
+                    : 'opacity-0'
+                }`}
+                style={{
+                  top: '50%',
+                  width: '92px',
+                  ...(h.tooltipDirection === 'right'
+                    ? { left: '11px' }
+                    : { right: '11px' }),
+                  transform: `translateY(-50%) ${
+                    isActive
+                      ? 'translateX(0)'
+                      : h.tooltipDirection === 'right'
+                        ? 'translateX(-3px)'
+                        : 'translateX(3px)'
+                  }`,
+                  direction: 'rtl',
+                }}
+              >
+                <p className="text-[8.5px] font-semibold text-[#2b2a28] leading-tight tracking-tight mb-[2px]">
+                  {h.title}
+                </p>
+                <p className="text-[7.5px] text-[#2b2a28]/65 leading-[1.35]">
+                  {h.description}
+                </p>
+              </div>
             </div>
           );
         })}
-      </div>
-
-      {/* Glass tooltip — outside camera (screen-space) */}
-      <div
-        className={`absolute w-[132px] rounded-[10px] border border-white/55 bg-gradient-to-b from-white/65 to-white/45 backdrop-blur-xl shadow-[0_10px_28px_rgba(43,42,40,0.22),0_2px_6px_rgba(43,42,40,0.10)] px-3 py-2.5 transition-all duration-300 ease-out pointer-events-none z-30 ${
-          isShowingTooltip ? 'opacity-100' : 'opacity-0'
-        }`}
-        style={{
-          top: activeHotspot.position.top,
-          left:
-            activeHotspot.tooltipDirection === 'right'
-              ? `calc(${activeHotspot.position.left} + 18px)`
-              : `calc(${activeHotspot.position.left} - 150px)`,
-          transform: `translateY(-50%) ${
-            isShowingTooltip
-              ? 'translateX(0)'
-              : activeHotspot.tooltipDirection === 'right'
-                ? 'translateX(-6px)'
-                : 'translateX(6px)'
-          }`,
-          direction: 'rtl',
-        }}
-      >
-        <p className="text-[10.5px] font-semibold text-[#2b2a28] leading-tight tracking-tight mb-1">
-          {activeHotspot.title}
-        </p>
-        <p className="text-[9.5px] text-[#2b2a28]/65 leading-[1.45]">
-          {activeHotspot.description}
-        </p>
       </div>
 
       {/* Virtual cursor — screen-space; tip lands on active hotspot's % position */}
@@ -198,14 +207,13 @@ export function BellaCardAnimation() {
           top: cursorTarget.top,
           left: cursorTarget.left,
           transform: `translate(-3px, -2px) scale(${clickPulse ? 0.84 : 1})`,
-          transition: `top 850ms ${EASING}, left 850ms ${EASING}, transform 200ms ease-out`,
+          transition: `top 800ms ${EASING}, left 800ms ${EASING}, transform 200ms ease-out`,
           willChange: 'transform, top, left',
         }}
       >
         <CursorIcon />
       </div>
 
-      {/* Inner screen edge highlight */}
       <div className="absolute inset-0 pointer-events-none ring-1 ring-inset ring-white/15 z-50" />
     </div>
   );
