@@ -26,8 +26,8 @@ type Phase =
   | 'zoomOut'
   | 'results';
 
-const ZOOM = 2.5;
-const ZOOM_ORIGIN = { x: '18%', y: '30%' };
+const ZOOM = 1.8;
+const ZOOM_ORIGIN = { x: '24%', y: '30%' };
 
 const TYPING_MS = 70;
 
@@ -194,7 +194,7 @@ export function SupplyNetCardAnimation() {
     phase === 'results';
   const clickPulse = phase === 'click';
 
-  const cursorPos = cursorAtSearch ? { left: '14%', top: '30%' } : { left: '70%', top: '70%' };
+  const cursorPos = cursorAtSearch ? { left: '24%', top: '30%' } : { left: '70%', top: '70%' };
 
   const renderTitle = (
     <div className="relative leading-tight">
@@ -266,7 +266,7 @@ export function SupplyNetCardAnimation() {
         </div>
 
         {/* Search row */}
-        <div className="px-2 py-1.5 bg-[#F5F2EE] flex-shrink-0">
+        <div className="px-2 py-1.5 bg-[#ECEEF0] flex-shrink-0">
           <div className="flex items-center gap-1">
             {/* Search input */}
             <div
