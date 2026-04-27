@@ -74,7 +74,7 @@ export function Home({ onProjectClick }: HomeProps) {
             <img
               src={profileImage}
               alt="Noam Toren"
-              className="w-[88px] h-[88px] md:w-24 md:h-24 rounded-lg object-cover"
+              className="w-[80px] h-[80px] md:w-[88px] md:h-[88px] rounded-lg object-cover"
               style={{ objectPosition: 'center 35%' }}
             />
           </div>
