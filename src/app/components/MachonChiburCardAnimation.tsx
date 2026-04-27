@@ -3,15 +3,20 @@ import intakeQ5 from '../../assets/machon-intake-mid-q5-3x2.png';
 import intakeQ6 from '../../assets/machon-intake-mid-q6-3x2.png';
 import therapistSelection from '../../assets/machon-therapist-selection.png';
 
-// Card-% positions on the cropped 3:2 intake PNG (1024×682):
-//   Card spans roughly x=30-72%; options at y=45-67%
-//   Continue/Finish button center: (66.2%, 75.2%)
-//   "אפשר לדלג" link sits between Continue and Back, around (53%, 75.2%)
+// Card-% positions on the cropped 3:2 intake PNG (1024×682).
+// Radio dot column is at x≈67.5% (RTL right side of each option row).
+// Option vertical centers (sampled from PNG): 45.2 / 52.5 / 59.8 / 67.2
 const INTAKE = {
-  optionA: { x: 49.8, y: 60.1 },
-  optionB: { x: 49.8, y: 45.5 },
+  optionsX: 67.5,
+  optionYs: [45.2, 52.5, 59.8, 67.2] as const,
+  // Cursor lands at the row's vertical center; click feedback toggles the dot
+  optionA: { x: 49.8, y: 59.8 },  // Q5 picks option idx=2
+  optionB: { x: 49.8, y: 45.2 },  // Q6 picks option idx=0
   cta:     { x: 66.2, y: 75.2 },
 };
+// Which option each click selects (0-indexed)
+const Q5_SELECTED_IDX = 2;
+const Q6_SELECTED_IDX = 0;
 
 // Therapist-selection (full 790×1024 PNG, displayed scrolling vertically).
 // Y-positions in the FULL image (% of image height):
@@ -33,9 +38,7 @@ type Phase =
   | 'q5ToOption' | 'q5ClickOption' | 'q5ToCta' | 'q5ClickCta'
   | 'q6Show' | 'q6ToOption' | 'q6ClickOption' | 'q6ToCta' | 'q6ClickCta'
   | 'loading'
-  | 'selStart'
-  | 'selScrollDown1' | 'selScrollDown2' | 'selPauseAtBottom'
-  | 'selScrollUp1' | 'selScrollUp2'
+  | 'selStart' | 'selScrollDown' | 'selScrollUp'
   | 'selFocusCard1' | 'selZoomIn' | 'selPanLeft' | 'selClickButton' | 'selZoomOut'
   | 'chatTherTyping1' | 'chatTherMsg1'
   | 'chatUserTyping'  | 'chatUserMsg1'
@@ -49,11 +52,8 @@ const PHASE_DURATIONS: Record<Phase, number> = {
   q6ToOption: 700,    q6ClickOption: 200,    q6ToCta: 600,    q6ClickCta: 200,
   loading: 1400,
   selStart: 500,
-  selScrollDown1: 1700,
-  selScrollDown2: 1700,
-  selPauseAtBottom: 700,
-  selScrollUp1: 1500,
-  selScrollUp2: 1500,
+  selScrollDown: 1300,
+  selScrollUp: 1300,
   selFocusCard1: 700,
   selZoomIn: 750,
   selPanLeft: 2200,
@@ -73,9 +73,7 @@ const STEPS: Phase[] = [
   'q5ToOption', 'q5ClickOption', 'q5ToCta', 'q5ClickCta',
   'q6Show', 'q6ToOption', 'q6ClickOption', 'q6ToCta', 'q6ClickCta',
   'loading',
-  'selStart',
-  'selScrollDown1', 'selScrollDown2', 'selPauseAtBottom',
-  'selScrollUp1', 'selScrollUp2',
+  'selStart', 'selScrollDown', 'selScrollUp',
   'selFocusCard1', 'selZoomIn', 'selPanLeft', 'selClickButton', 'selZoomOut',
   'chatTherTyping1', 'chatTherMsg1',
   'chatUserTyping', 'chatUserMsg1',
@@ -133,13 +131,15 @@ function LoadingScreen() {
 function TherapistTypingBubble() {
   return (
     <div className="flex justify-start">
-      <div className="px-2 py-1 rounded-md bg-white shadow-[0_1px_2px_rgba(0,0,0,0.04)]">
-        <span className="inline-flex items-center gap-[1.5px]">
+      <div className="px-1.5 py-1 rounded-md bg-white shadow-[0_1px_2px_rgba(0,0,0,0.04)]">
+        <span className="inline-flex items-center gap-[1px]">
           {[0, 1, 2].map((i) => (
             <span
               key={i}
-              className="w-[2.4px] h-[2.4px] rounded-full bg-[#5a5e57]"
+              className="rounded-full bg-[#5a5e57]"
               style={{
+                width: '1.4px',
+                height: '1.4px',
                 animation: 'machonTypingDot 1.1s ease-in-out infinite',
                 animationDelay: `${i * 0.16}s`,
                 display: 'block',
@@ -147,6 +147,35 @@ function TherapistTypingBubble() {
             />
           ))}
         </span>
+      </div>
+    </div>
+  );
+}
+
+function RadioOverlay({ x, y, selected }: { x: number; y: number; selected: boolean }) {
+  return (
+    <div
+      className="absolute"
+      style={{
+        left: `${x}%`,
+        top: `${y}%`,
+        width: '1.5%',
+        height: '2.3%',
+        transform: 'translate(-50%, -50%)',
+      }}
+    >
+      <div
+        className="w-full h-full rounded-full bg-white"
+        style={{
+          border: `0.6px solid ${selected ? '#3d6647' : '#cdd0c8'}`,
+          boxSizing: 'border-box',
+          padding: '20%',
+          display: 'flex',
+        }}
+      >
+        {selected && (
+          <div className="w-full h-full rounded-full" style={{ backgroundColor: '#3d6647' }} />
+        )}
       </div>
     </div>
   );
@@ -289,6 +318,8 @@ export function MachonChiburCardAnimation() {
   const [userTypedLen, setUserTypedLen] = useState(0);
   const [scrollPct, setScrollPct] = useState(0);
   const [panPct, setPanPct] = useState(0);
+  const [q5Selected, setQ5Selected] = useState<number | null>(null);
+  const [q6Selected, setQ6Selected] = useState<number | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -320,13 +351,18 @@ export function MachonChiburCardAnimation() {
             setUserTypedLen(0);
             setScrollPct(0);
             setPanPct(0);
-          } else if (p === 'selScrollDown1') {
-            setScrollPct(22);
-          } else if (p === 'selScrollDown2') {
-            setScrollPct(45);
-          } else if (p === 'selScrollUp1') {
-            setScrollPct(22);
-          } else if (p === 'selScrollUp2') {
+            setQ5Selected(null);
+            setQ6Selected(null);
+          } else if (p === 'q5ClickOption') {
+            setQ5Selected(Q5_SELECTED_IDX);
+          } else if (p === 'q6Show') {
+            // New question — clear old selection
+            setQ6Selected(null);
+          } else if (p === 'q6ClickOption') {
+            setQ6Selected(Q6_SELECTED_IDX);
+          } else if (p === 'selScrollDown') {
+            setScrollPct(8);
+          } else if (p === 'selScrollUp') {
             setScrollPct(0);
           } else if (p === 'selPanLeft') {
             setPanPct(100);
@@ -355,9 +391,7 @@ export function MachonChiburCardAnimation() {
   const showQ6 = phase === 'q6Show' || phase === 'q6ToOption' || phase === 'q6ClickOption' || phase === 'q6ToCta' || phase === 'q6ClickCta';
   const showLoading = phase === 'loading';
   const showSel =
-    phase === 'selStart' ||
-    phase === 'selScrollDown1' || phase === 'selScrollDown2' || phase === 'selPauseAtBottom' ||
-    phase === 'selScrollUp1' || phase === 'selScrollUp2' ||
+    phase === 'selStart' || phase === 'selScrollDown' || phase === 'selScrollUp' ||
     phase === 'selFocusCard1' || phase === 'selZoomIn' || phase === 'selPanLeft' ||
     phase === 'selClickButton' || phase === 'selZoomOut';
   const showChat = phase.startsWith('chat');
@@ -385,8 +419,7 @@ export function MachonChiburCardAnimation() {
   else if (phase === 'q6ToCta' || phase === 'q6ClickCta') cursorTarget = INTAKE.cta;
   // Therapist exploration: cursor floats at viewport center (in container coords),
   // letting the page scroll under it.
-  else if (phase === 'selStart' || phase === 'selScrollDown1' || phase === 'selScrollDown2' ||
-           phase === 'selPauseAtBottom' || phase === 'selScrollUp1' || phase === 'selScrollUp2') {
+  else if (phase === 'selStart' || phase === 'selScrollDown' || phase === 'selScrollUp') {
     cursorTarget = { x: 50, y: 50 }; // container coords (middle of viewport)
   }
   else if (phase === 'selFocusCard1' || phase === 'selZoomIn' || phase === 'selPanLeft') {
@@ -433,6 +466,12 @@ export function MachonChiburCardAnimation() {
           style={{ opacity: showQ5 ? 1 : 0, transition: 'opacity 320ms ease-out' }}
         />
 
+        {/* Q5 radio overlays — wipe the PNG's pre-selected option, then show
+            our own selection on click */}
+        {showQ5 && INTAKE.optionYs.map((y, i) => (
+          <RadioOverlay key={`q5-${i}`} x={INTAKE.optionsX} y={y} selected={q5Selected === i} />
+        ))}
+
         {/* Q6 intake */}
         <img
           src={intakeQ6}
@@ -441,6 +480,11 @@ export function MachonChiburCardAnimation() {
           draggable={false}
           style={{ opacity: showQ6 ? 1 : 0, transition: 'opacity 320ms ease-out' }}
         />
+
+        {/* Q6 radio overlays */}
+        {showQ6 && INTAKE.optionYs.map((y, i) => (
+          <RadioOverlay key={`q6-${i}`} x={INTAKE.optionsX} y={y} selected={q6Selected === i} />
+        ))}
 
         {/* Q6 overlay — wipe out the original "המשך" + "אפשר לדלג" + "חזור" row
             and render a single full-width "סיים שאלון" button instead. */}
@@ -502,7 +546,7 @@ export function MachonChiburCardAnimation() {
             draggable={false}
             style={{
               transform: `translateY(${-scrollPct * IMG_OVER_CONT}%)`,
-              transition: `transform ${PHASE_DURATIONS.selScrollDown1}ms cubic-bezier(0.45, 0, 0.55, 1)`,
+              transition: `transform ${PHASE_DURATIONS.selScrollDown}ms cubic-bezier(0.45, 0, 0.55, 1)`,
               willChange: 'transform',
             }}
           />
