@@ -150,7 +150,7 @@ export function Home({ onProjectClick }: HomeProps) {
                   <span className="text-neutral-900 font-semibold">
                     {project.title}
                   </span>
-                  <span className="text-neutral-500"> {project.category}</span>
+                  <span className="text-neutral-400"> {project.category}</span>
                 </p>
 
                 {/* Mockup — subtle scale-up on hover, no shadow */}
@@ -192,12 +192,10 @@ export function Home({ onProjectClick }: HomeProps) {
                 {/* CTA row — fades in on hover, reserves space so layout never shifts */}
                 <div className="h-[18px] mt-3 overflow-hidden">
                   <p
-                    className="text-[12px] tracking-[0.02em] text-neutral-600 opacity-0 -translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-[opacity,transform] duration-[600ms] ease-[cubic-bezier(0.22,1,0.36,1)] flex items-center gap-1.5 leading-none"
+                    className="text-sm md:text-[15px] text-[#B8552E] font-semibold opacity-0 -translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-[opacity,transform] duration-[600ms] ease-[cubic-bezier(0.22,1,0.36,1)] flex items-center gap-1.5 leading-none"
                   >
-                    <span className="italic" style={{ fontFamily: "'Instrument Serif', Georgia, serif", fontSize: '14px' }}>
-                      Read the case study
-                    </span>
-                    <span className="text-[#B8552E] transition-transform duration-300 group-hover:translate-x-0.5">→</span>
+                    <span>View project</span>
+                    <span className="transition-transform duration-300 group-hover:translate-x-0.5">→</span>
                   </p>
                 </div>
               </div>
