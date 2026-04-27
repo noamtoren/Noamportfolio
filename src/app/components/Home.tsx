@@ -52,44 +52,36 @@ export function Home({ onProjectClick }: HomeProps) {
 
   return (
     <div className="absolute inset-0 overflow-auto bg-white pb-32">
-      <div className="max-w-[1080px] mx-auto px-6 md:px-12 pt-7 md:pt-10">
-        {/* Hero — compact, left-aligned, all sans-serif */}
-        <section className="mb-24 md:mb-32">
-          {/* Line 1: role + name inline */}
+      <div className="max-w-[1080px] mx-auto px-6 md:px-12 pt-8 md:pt-10">
+        {/* Hero — gestalt proximity: meta / identity / action */}
+        <section className="mb-20 md:mb-24">
+          {/* Group 1 — meta labels (tight) */}
           <p
-            className="rise-in text-sm md:text-[15px] leading-relaxed"
+            className="rise-in text-[14px] leading-[1.6]"
             style={{ animationDelay: '0ms' }}
           >
             <span className="text-neutral-400">UI/UX Designer </span>
-            <span className="text-neutral-900 font-semibold">Noam Toren</span>
+            <span className="text-neutral-900">Noam Toren</span>
           </p>
-
-          {/* Line 2: availability + live status dot */}
           <p
-            className="rise-in text-sm md:text-[15px] leading-relaxed mb-10 inline-flex items-center gap-2"
+            className="rise-in text-[14px] leading-[1.6]"
             style={{ animationDelay: '100ms' }}
           >
-            <span className="relative flex w-[7px] h-[7px]">
-              <span className="absolute inset-0 rounded-full bg-emerald-500 opacity-60 animate-ping" />
-              <span className="relative w-[7px] h-[7px] rounded-full bg-emerald-500" />
-            </span>
             <span className="text-neutral-400">Open for </span>
-            <span className="text-neutral-900 font-semibold">full-time &amp; freelance</span>
+            <span className="text-neutral-900">full-time &amp; freelance</span>
           </p>
 
-          {/* Profile image — slightly bigger than original, no ring */}
-          <div className="rise-in mb-8" style={{ animationDelay: '200ms' }}>
+          {/* Group 2 — identity (avatar + intro tight together) */}
+          <div className="rise-in mt-9 md:mt-12 mb-4" style={{ animationDelay: '200ms' }}>
             <img
               src={profileImage}
               alt="Noam Toren"
-              className="w-[80px] h-[80px] md:w-[88px] md:h-[88px] rounded-lg object-cover"
+              className="w-[70px] h-[70px] md:w-[76px] md:h-[76px] rounded-[8px] object-cover"
               style={{ objectPosition: 'center 35%' }}
             />
           </div>
-
-          {/* Intro paragraph — regular sans with bold emphasis, no serif */}
           <p
-            className="rise-in text-lg md:text-[22px] leading-[1.45] text-neutral-900 max-w-3xl mb-10"
+            className="rise-in text-[19px] md:text-[20px] leading-[1.5] text-neutral-900 max-w-[760px] mb-8 md:mb-10"
             style={{ animationDelay: '300ms' }}
           >
             Hey, I'm Noam! A UI/UX designer who
@@ -97,9 +89,9 @@ export function Home({ onProjectClick }: HomeProps) {
             {' '}digital products, from first idea to working interface.
           </p>
 
-          {/* Social links — quiet grey text row, inside hero block */}
+          {/* Group 3 — action (social) */}
           <div
-            className="rise-in flex flex-wrap items-center gap-x-6 gap-y-2 text-sm"
+            className="rise-in flex flex-wrap items-center gap-x-7 gap-y-2 text-[14px]"
             style={{ animationDelay: '450ms' }}
           >
             <a
@@ -146,8 +138,8 @@ export function Home({ onProjectClick }: HomeProps) {
                 style={{ animationDelay: `${600 + index * 100}ms` }}
               >
                 {/* Inline title + category */}
-                <p className="text-sm md:text-[15px] mb-3">
-                  <span className="text-neutral-900 font-semibold">
+                <p className="text-[14px] mb-3">
+                  <span className="text-neutral-900">
                     {project.title}
                   </span>
                   <span className="text-neutral-400"> {project.category}</span>
@@ -186,13 +178,10 @@ export function Home({ onProjectClick }: HomeProps) {
                   )}
                 </div>
 
-                {/* Thin underline — brand-orange, draws in smoothly on hover */}
-                <div className="h-px w-full origin-left scale-x-0 bg-[#B8552E] transition-transform duration-[700ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-x-100 mt-3" />
-
                 {/* CTA row — fades in on hover, reserves space so layout never shifts */}
-                <div className="h-[18px] mt-3 overflow-hidden">
+                <div className="h-[16px] mt-4 overflow-hidden">
                   <p
-                    className="text-sm md:text-[15px] text-[#B8552E] font-semibold opacity-0 -translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-[opacity,transform] duration-[600ms] ease-[cubic-bezier(0.22,1,0.36,1)] flex items-center gap-1.5 leading-none"
+                    className="text-[14px] text-[#B8552E] opacity-0 -translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-[opacity,transform] duration-[600ms] ease-[cubic-bezier(0.22,1,0.36,1)] flex items-center gap-1.5 leading-none"
                   >
                     <span>View project</span>
                     <span className="transition-transform duration-300 group-hover:translate-x-0.5">→</span>
