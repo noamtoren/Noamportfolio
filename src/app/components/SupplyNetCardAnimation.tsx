@@ -1,19 +1,40 @@
 import { useEffect, useState } from 'react';
+import searchEmptyState from '../../assets/supplynet-search-empty.png';
+import searchResultsState from '../../assets/supplynet-search-results.png';
 
 const QUERY = 'sprinkler systems';
 
-type Row = { unit: string; total: string; flex: string | null; groupBuy: 'join' | 'start' };
+// All coordinates are % of the empty PNG (1532×1024, displayed object-cover top).
+// Zoom origin is the start of the input so the typed text grows away from it
+// (no clipping on the right). The cursor click lands on the same point so it
+// stays on the input after zoom.
+const SEARCH_INPUT = {
+  clickX: 16,
+  clickY: 42,
+  // White mask that covers the "Search for products" placeholder
+  maskLeft: 11.4,
+  maskTop: 40.4,
+  maskWidth: 30,
+  maskHeight: 3.7,
+  // Where the typed text starts (offset within the mask, after the search icon)
+  textPaddingLeft: 2.6,
+};
 
-const ROWS: Row[] = [
-  { unit: '$20.00', total: '$4,000.00', flex: null,        groupBuy: 'start' },
-  { unit: '$18.00', total: '$3,600.00', flex: null,        groupBuy: 'start' },
-  { unit: '$25.00', total: '$5,000.00', flex: '$4,500.00', groupBuy: 'join'  },
-  { unit: '$20.00', total: '$4,000.00', flex: null,        groupBuy: 'start' },
-  { unit: '$13.00', total: '$2,600.00', flex: '$2,100.00', groupBuy: 'join'  },
-  { unit: '$20.00', total: '$4,000.00', flex: '$3,500.00', groupBuy: 'join'  },
-  { unit: '$22.00', total: '$4,400.00', flex: null,        groupBuy: 'start' },
-  { unit: '$24.00', total: '$4,800.00', flex: '$4,300.00', groupBuy: 'join'  },
-];
+const ZOOM = 3;
+const TYPING_MS = 75;
+
+const PHASE_DURATIONS = {
+  idle: 900,
+  cursorMove: 750,
+  click: 180,
+  focused: 280,
+  zoomIn: 700,
+  pauseAfterTyping: 500,
+  zoomOut: 700,
+  results: 2400,
+};
+
+const EASING = 'cubic-bezier(0.65, 0, 0.35, 1)';
 
 type Phase =
   | 'idle'
@@ -26,27 +47,9 @@ type Phase =
   | 'zoomOut'
   | 'results';
 
-const ZOOM = 1.8;
-const ZOOM_ORIGIN = { x: '20%', y: '34%' };
-
-const TYPING_MS = 70;
-
-const PHASE_DURATIONS = {
-  idle: 1000,
-  cursorMove: 800,
-  click: 200,
-  focused: 280,
-  zoomIn: 650,
-  pauseAfterTyping: 450,
-  zoomOut: 650,
-  results: 2400,
-};
-
-const EASING = 'cubic-bezier(0.65, 0, 0.35, 1)';
-
 function CursorIcon() {
   return (
-    <svg width="16" height="19" viewBox="0 0 22 26" xmlns="http://www.w3.org/2000/svg" style={{ display: 'block' }}>
+    <svg width="18" height="22" viewBox="0 0 22 26" xmlns="http://www.w3.org/2000/svg" style={{ display: 'block' }}>
       <defs>
         <filter id="supplyCursorShadow" x="-30%" y="-30%" width="160%" height="160%">
           <feDropShadow dx="0" dy="1.5" stdDeviation="1.4" floodColor="#000" floodOpacity="0.32" />
@@ -61,47 +64,6 @@ function CursorIcon() {
         filter="url(#supplyCursorShadow)"
       />
     </svg>
-  );
-}
-
-const SearchIcon = ({ size = 7 }: { size?: number }) => (
-  <svg width={size} height={size} viewBox="0 0 16 16" fill="none">
-    <circle cx="7" cy="7" r="5" stroke="#131313" strokeWidth="1.4" strokeOpacity="0.55" />
-    <path d="m11 11 3 3" stroke="#131313" strokeWidth="1.4" strokeLinecap="round" strokeOpacity="0.55" />
-  </svg>
-);
-
-const FilterIcon = ({ size = 6 }: { size?: number }) => (
-  <svg width={size} height={size} viewBox="0 0 16 16" fill="none">
-    <path d="M3 5h10M5 9h6M7 13h2" stroke="#131313" strokeWidth="1.6" strokeLinecap="round" />
-  </svg>
-);
-
-const PlusIcon = ({ size = 5, color = 'white' }: { size?: number; color?: string }) => (
-  <svg width={size} height={size} viewBox="0 0 16 16" fill="none">
-    <path d="M8 3v10M3 8h10" stroke={color} strokeWidth="1.8" strokeLinecap="round" />
-  </svg>
-);
-
-const DownloadIcon = ({ size = 5 }: { size?: number }) => (
-  <svg width={size} height={size} viewBox="0 0 16 16" fill="none">
-    <path d="M8 2v8M5 7l3 3 3-3M3 13h10" stroke="#131313" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
-
-function Caret() {
-  return (
-    <span
-      style={{
-        display: 'inline-block',
-        width: '0.7px',
-        height: '0.85em',
-        background: '#131313',
-        marginLeft: '0.5px',
-        verticalAlign: 'middle',
-        animation: 'supplyNetCaret 0.85s steps(2) infinite',
-      }}
-    />
   );
 }
 
@@ -169,195 +131,98 @@ export function SupplyNetCardAnimation() {
     };
   }, []);
 
-  const isInputFocused =
+  const isZoomed = phase === 'zoomIn' || phase === 'typing' || phase === 'pauseAfterTyping';
+  const scale = isZoomed ? ZOOM : 1;
+  const showResults = phase === 'zoomOut' || phase === 'results';
+  // Mask covers the placeholder from click onward, hidden once we cross-fade
+  // to the results PNG (which already has the typed query baked in).
+  const showMask =
     phase === 'click' ||
     phase === 'focused' ||
     phase === 'zoomIn' ||
     phase === 'typing' ||
     phase === 'pauseAfterTyping';
-  const isZoomed = phase === 'zoomIn' || phase === 'typing' || phase === 'pauseAfterTyping';
-  const scale = isZoomed ? ZOOM : 1;
-  const showResults = phase === 'zoomOut' || phase === 'results';
   const showCaret =
-    phase === 'focused' ||
-    phase === 'zoomIn' ||
-    phase === 'typing' ||
-    phase === 'pauseAfterTyping';
+    phase === 'focused' || phase === 'zoomIn' || phase === 'typing';
   const cursorAtSearch = phase !== 'idle';
   const cursorVisible =
     phase === 'idle' ||
     phase === 'cursorMove' ||
     phase === 'click' ||
-    phase === 'focused' ||
-    phase === 'zoomOut' ||
-    phase === 'results';
+    phase === 'focused';
   const clickPulse = phase === 'click';
 
   const cursorPos = cursorAtSearch
-    ? { left: '20%', top: '34%' }
+    ? { left: `${SEARCH_INPUT.clickX}%`, top: `${SEARCH_INPUT.clickY}%` }
     : { left: '70%', top: '70%' };
 
   return (
     <div className="relative w-full h-full bg-white overflow-hidden" dir="ltr">
+      {/* Camera — scales toward the start of the search input */}
       <div
-        className="absolute inset-0 flex flex-col"
+        className="absolute inset-0"
         style={{
           transform: `scale(${scale})`,
-          transformOrigin: `${ZOOM_ORIGIN.x} ${ZOOM_ORIGIN.y}`,
+          transformOrigin: `${SEARCH_INPUT.clickX}% ${SEARCH_INPUT.clickY}%`,
           transition: `transform ${PHASE_DURATIONS.zoomIn}ms ${EASING}`,
           willChange: 'transform',
         }}
       >
-        {/* Top nav — no border in the design */}
-        <div className="flex items-center justify-between px-3 pt-2 pb-2 flex-shrink-0">
-          <span className="text-[5.5px] tracking-[0.22em] font-semibold text-[#131313]">SUPPLY NET</span>
-          <div className="flex items-center gap-3">
-            <span className="text-[5.5px] text-[#131313] font-medium">Home</span>
-            <span className="text-[5.5px] text-[#131313]/40">projects</span>
-            <span className="text-[5.5px] text-[#131313]/40">About Us</span>
-            <span className="text-[5.5px] text-[#131313]/40">Help</span>
-          </div>
-          <span className="text-[5.5px] text-[#131313]/40">My Account</span>
-        </div>
-
-        {/* Title row */}
-        <div className="px-3 pt-2 pb-2 flex items-start justify-between flex-shrink-0">
-          <div className="relative leading-tight">
-            <div
-              style={{
-                opacity: showResults ? 0 : 1,
-                transition: 'opacity 280ms ease-out',
-              }}
-            >
-              <h2 className="text-[15px] font-semibold tracking-[-0.3px] text-[#131313] whitespace-nowrap leading-[1.05]">
-                What are you looking for ?
-              </h2>
-              <p className="text-[7.5px] text-[#A0A6B8] mt-1">Find the best suppliers</p>
-            </div>
-            <h2
-              className="absolute top-0 left-0 text-[15px] font-semibold tracking-[-0.3px] text-[#131313] whitespace-nowrap leading-[1.05]"
-              style={{
-                opacity: showResults ? 1 : 0,
-                transition: 'opacity 280ms ease-out',
-              }}
-            >
-              {QUERY}
-            </h2>
-          </div>
-          <div className="flex items-center gap-1.5 mt-0.5">
-            <span className="bg-[#131313] text-white text-[5.5px] font-medium px-2 py-1.5 rounded-[4px] flex items-center gap-1 leading-none">
-              <PlusIcon size={5} /> Add a file
-            </span>
-            <span className="border border-[#131313]/12 text-[#131313] text-[5.5px] font-medium px-2 py-1.5 rounded-[4px] flex items-center gap-1 leading-none">
-              <DownloadIcon size={5} /> Download PDF Report
-            </span>
-          </div>
-        </div>
-
-        {/* Tabs */}
-        <div className="px-3 flex-shrink-0">
-          <div className="flex items-end gap-3 border-b border-black/[0.07]">
-            <span className="text-[6.5px] font-medium text-[#131313] py-1.5 border-b-[1.4px] border-[#131313] -mb-px">Overview</span>
-            <span className="text-[6.5px] text-[#131313]/40 py-1.5">History</span>
-            <span className="text-[6.5px] text-[#131313]/40 py-1.5">Buying group</span>
-          </div>
-        </div>
-
-        {/* Search row */}
-        <div className="px-3 py-2 bg-[#ECEEF0] flex-shrink-0">
-          <div className="flex items-center gap-2">
-            {/* Search input */}
-            <div
-              className={`flex items-center gap-1 bg-white px-1.5 py-1.5 rounded-[3px] transition-shadow duration-150 ${
-                isInputFocused
-                  ? 'shadow-[0_0_0_1.5px_rgba(19,19,19,0.35),0_0_0_3px_rgba(19,19,19,0.06)]'
-                  : 'shadow-none'
-              }`}
-              style={{ width: '36%' }}
-            >
-              <SearchIcon size={6} />
-              <span className="text-[6.5px] leading-none text-[#131313] flex items-center min-h-[6.5px] flex-1 overflow-hidden whitespace-nowrap">
-                {!isInputFocused && typedLen === 0 && !showResults ? (
-                  <span className="text-[#131313]/30">Search for products</span>
-                ) : (
-                  <>
-                    <span>{showResults ? QUERY : QUERY.slice(0, typedLen)}</span>
-                    {showCaret && <Caret />}
-                  </>
-                )}
-              </span>
-            </div>
-
-            {/* Quantity */}
-            <div className="bg-white px-1.5 py-1 rounded-[3px] flex flex-col" style={{ width: '13%' }}>
-              <span className="text-[4.5px] text-[#A0A6B8] leading-none mb-[1px] truncate">Quantity</span>
-              <span className="text-[6.5px] leading-none truncate">
-                {showResults ? <span className="text-[#131313]">200</span> : <span className="text-[#A0A6B8]">Number</span>}
-              </span>
-            </div>
-
-            {/* Date */}
-            <div className="bg-white px-1.5 py-1 rounded-[3px] flex flex-col" style={{ width: '15%' }}>
-              <span className="text-[4.5px] text-[#A0A6B8] leading-none mb-[1px] truncate">Required delivery date</span>
-              <span className="text-[6.5px] leading-none truncate">
-                {showResults ? <span className="text-[#131313]">12/30/2025</span> : <span className="text-[#A0A6B8]">mm/dd/yyyy</span>}
-              </span>
-            </div>
-
-            {/* Spacer */}
-            <div className="flex-1" />
-
-            {/* Filter */}
-            <div className="flex items-center gap-1 bg-white border border-[#131313]/10 px-2 py-1.5 rounded-[3px] leading-none">
-              <FilterIcon size={5} />
-              <span className="text-[6.5px] text-[#131313] leading-none">Filter</span>
-            </div>
-          </div>
-        </div>
-
-        {/* Results table */}
-        <div
-          className="flex-1 overflow-hidden min-h-0 px-3"
+        <img
+          src={searchEmptyState}
+          alt="Supply Net — empty state"
+          className="absolute inset-0 w-full h-full object-cover object-top select-none"
+          draggable={false}
+        />
+        <img
+          src={searchResultsState}
+          alt="Supply Net — results state"
+          className="absolute inset-0 w-full h-full object-cover object-top select-none"
+          draggable={false}
           style={{
             opacity: showResults ? 1 : 0,
-            transition: 'opacity 380ms ease-out',
+            transition: 'opacity 320ms ease-out',
           }}
-        >
-          <div className="grid grid-cols-[1fr_1.2fr_0.7fr_0.85fr_0.85fr_0.95fr] gap-1 py-1 text-[4.5px] uppercase tracking-[0.1em] text-[#A0A6B8] font-medium">
-            <span>SUPPLIERS</span>
-            <span>MAIL</span>
-            <span>UNIT PRICE</span>
-            <span>TOTAL PRICE</span>
-            <span>FLEXIBLE PRICE</span>
-            <span className="text-right">BUYING GROUP</span>
+        />
+
+        {/* White mask + typed text — covers the placeholder when the input
+            "gets focus" so the original placeholder is gone, and we type our
+            own query in its place. */}
+        {showMask && (
+          <div
+            className="absolute bg-white flex items-center"
+            style={{
+              left: `${SEARCH_INPUT.maskLeft}%`,
+              top: `${SEARCH_INPUT.maskTop}%`,
+              width: `${SEARCH_INPUT.maskWidth}%`,
+              height: `${SEARCH_INPUT.maskHeight}%`,
+              paddingLeft: `${SEARCH_INPUT.textPaddingLeft}%`,
+              fontSize: '5px',
+              lineHeight: 1,
+              color: '#131313',
+              fontFamily: 'inherit',
+            }}
+          >
+            <span>{QUERY.slice(0, typedLen)}</span>
+            {showCaret && (
+              <span
+                style={{
+                  display: 'inline-block',
+                  width: '0.7px',
+                  height: '0.85em',
+                  background: '#131313',
+                  marginLeft: '0.3px',
+                  verticalAlign: 'middle',
+                  animation: 'supplyNetCaret 0.85s steps(2) infinite',
+                }}
+              />
+            )}
           </div>
-          {ROWS.map((r, i) => (
-            <div
-              key={i}
-              className="grid grid-cols-[1fr_1.2fr_0.7fr_0.85fr_0.85fr_0.95fr] gap-1 py-[3px] border-t border-black/[0.04] items-center"
-            >
-              <span className="text-[5.5px] text-[#131313]">Business Name</span>
-              <span className="text-[5.5px] text-[#131313]/70 truncate">example@email.com</span>
-              <span className="text-[5.5px] text-[#131313] tabular-nums">{r.unit}</span>
-              <span className="text-[5.5px] text-[#131313] tabular-nums">{r.total}</span>
-              <span className="text-[5.5px] text-[#131313] tabular-nums">{r.flex || '-'}</span>
-              <div className="flex justify-end">
-                {r.groupBuy === 'join' ? (
-                  <span className="text-[4.5px] font-medium bg-[#131313] text-white px-1.5 py-[3px] rounded-[3px] inline-flex items-center gap-0.5 leading-none whitespace-nowrap">
-                    Join a group buy <span className="text-[5.5px] leading-none">→</span>
-                  </span>
-                ) : (
-                  <span className="text-[4.5px] font-medium bg-[#ECEEF0] text-[#131313]/40 px-1.5 py-[3px] rounded-[3px] leading-none whitespace-nowrap">
-                    Start a group buy
-                  </span>
-                )}
-              </div>
-            </div>
-          ))}
-        </div>
+        )}
       </div>
 
-      {/* Cursor */}
+      {/* Cursor — screen space, sits at the zoom origin so it stays glued to
+          the input regardless of scale. */}
       <div
         className="absolute z-40 pointer-events-none"
         style={{
