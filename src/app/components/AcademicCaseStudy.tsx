@@ -45,7 +45,7 @@ function PillarImages({ images }: { images: PillarImage[] }) {
       {images.map((img, i) => (
         <div key={i} style={{ width: `${width}px` }}>
           <p className="text-[11px] mb-1.5 leading-none text-[#1E1E1E]">{img.label}</p>
-          <ImageWithFallback src={img.src} alt={img.alt} className="block w-full h-auto" />
+          <ImageWithFallback src={img.src} alt={img.alt} className="block w-full h-auto rounded-md shadow-[0_6px_20px_rgba(19,19,19,0.08)]" />
         </div>
       ))}
     </div>
