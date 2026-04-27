@@ -3,55 +3,85 @@ import deepbreathHome from '../../assets/deepbreath-home.png';
 import deepbreathDashboard from '../../assets/deepbreath-dashboard.png';
 
 // Home PNG: 555×1024 (aspect 0.542). In 3:2 container scaled to width:
-//   image height = container_w / 0.542 = 1.846 × container_w
+//   image height = container_w / 0.542 ≈ 1.846 × container_w
 //   container height = 0.667 × container_w
-//   image overflows vertically; visible portion = 36.1% of image height
-const HOME_RATIO = (1024 / 555) / (2 / 3); // 2.769
-const HOME_VISIBLE = 100 / HOME_RATIO;     // 36.1
+//   ratio = 2.769 (image_h / container_h). Visible at any time = 36.1% of image.
+const HOME_RATIO = (1024 / 555) / (2 / 3);
+const HOME_VISIBLE = 100 / HOME_RATIO;
 
-// Dashboard PNG: 310×1024 (aspect 0.303). Even taller relative to width.
-const DASH_RATIO = (1024 / 310) / (2 / 3); // 4.952
-const DASH_VISIBLE = 100 / DASH_RATIO;     // 20.2
+// Dashboard PNG: 310×1024 (aspect 0.303). Even taller per width.
+//   ratio = 4.952. Visible = 20.2% of image at any time.
+const DASH_RATIO = (1024 / 310) / (2 / 3);
+const DASH_VISIBLE = 100 / DASH_RATIO;
 
-// Cards row on home, in image y%: section "השאלון בידיים שלך" sits roughly at y=40-50%
-const HOME_CARDS_Y = 30; // scrollPct that puts the cards row near top-center of viewport
-const DASH_SCROLL_TARGET = 14; // small downward nudge on the dashboard
+// Visual targets (image y%) sampled visually from the PNGs:
+//   HOME — Dashboard card sits in the welcome section just below hero (≈ 32%).
+//          Section 3 ("השליטה בידיים שלך") is the third stripe down (≈ 55%).
+//   DASHBOARD — "בית" nav link is in the top header (≈ 2%). The page bottom
+//          (just above footer) is around y≈82%.
+const HOME_DASH_CARD_IMG_Y = 32;
+const HOME_SECTION3_IMG_Y = 55;
+const DASH_HOME_NAV_IMG_Y = 2.5;
+const DASH_END_IMG_Y = 80;
+
+// Convert image y% to container y% given current scrollPct
+function imgToCardY(imgY: number, scrollPct: number, visiblePct: number): number {
+  return ((imgY - scrollPct) / visiblePct) * 100;
+}
 
 const EASING = 'cubic-bezier(0.45, 0, 0.55, 1)';
 
 type Phase =
   | 'idle'
-  | 'scrollToCards'
+  | 'scrollToSection3'
   | 'cursorEnterCarousel'
   | 'cursorPanLeft'
-  | 'cursorClickCard'
+  | 'scrollBackToTop'
+  | 'cursorToDashCard'
+  | 'clickDashCard'
   | 'crossfadeToDash'
   | 'dashIdle'
   | 'dashScrollDown'
-  | 'dashHold';
+  | 'dashHold'
+  | 'dashScrollUp'
+  | 'cursorToHomeNav'
+  | 'clickHomeNav'
+  | 'crossfadeToHome';
 
 const PHASE_DURATIONS: Record<Phase, number> = {
-  idle: 1100,
-  scrollToCards: 1700,
+  idle: 1000,
+  scrollToSection3: 1700,
   cursorEnterCarousel: 700,
-  cursorPanLeft: 1700,
-  cursorClickCard: 220,
+  cursorPanLeft: 1500,
+  scrollBackToTop: 1700,
+  cursorToDashCard: 700,
+  clickDashCard: 220,
   crossfadeToDash: 480,
-  dashIdle: 900,
-  dashScrollDown: 1700,
-  dashHold: 1500,
+  dashIdle: 800,
+  dashScrollDown: 2200,
+  dashHold: 900,
+  dashScrollUp: 2000,
+  cursorToHomeNav: 700,
+  clickHomeNav: 220,
+  crossfadeToHome: 480,
 };
 
 const STEPS: Phase[] = [
   'idle',
-  'scrollToCards',
+  'scrollToSection3',
   'cursorEnterCarousel',
   'cursorPanLeft',
-  'cursorClickCard',
+  'scrollBackToTop',
+  'cursorToDashCard',
+  'clickDashCard',
   'crossfadeToDash',
   'dashIdle',
   'dashScrollDown',
   'dashHold',
+  'dashScrollUp',
+  'cursorToHomeNav',
+  'clickHomeNav',
+  'crossfadeToHome',
 ];
 
 function CursorIcon() {
@@ -76,9 +106,8 @@ function CursorIcon() {
 
 export function DeepBreathCardAnimation() {
   const [phase, setPhase] = useState<Phase>('idle');
-  const [homeScrollPct, setHomeScrollPct] = useState(0);
-  const [dashScrollPct, setDashScrollPct] = useState(0);
-  // Horizontal carousel pan: 0 = right (RTL start), 100 = left (RTL end)
+  const [homeScroll, setHomeScroll] = useState(0);
+  const [dashScroll, setDashScroll] = useState(0);
   const [carouselPan, setCarouselPan] = useState(0);
 
   useEffect(() => {
@@ -95,16 +124,22 @@ export function DeepBreathCardAnimation() {
         for (const p of STEPS) {
           if (cancelled) return;
           setPhase(p);
-          if (p === 'idle') {
-            setHomeScrollPct(0);
-            setDashScrollPct(0);
+          // Phase-specific state changes
+          if (p === 'idle' || p === 'crossfadeToHome') {
+            setHomeScroll(0);
+            setDashScroll(0);
             setCarouselPan(0);
-          } else if (p === 'scrollToCards') {
-            setHomeScrollPct(HOME_CARDS_Y);
+          } else if (p === 'scrollToSection3') {
+            setHomeScroll(HOME_SECTION3_IMG_Y - HOME_VISIBLE / 2);
           } else if (p === 'cursorPanLeft') {
-            setCarouselPan(100);
+            setCarouselPan(60);
+          } else if (p === 'scrollBackToTop') {
+            setHomeScroll(0);
+            setCarouselPan(0);
           } else if (p === 'dashScrollDown') {
-            setDashScrollPct(DASH_SCROLL_TARGET);
+            setDashScroll(DASH_END_IMG_Y - DASH_VISIBLE);
+          } else if (p === 'dashScrollUp') {
+            setDashScroll(0);
           }
           await wait(PHASE_DURATIONS[p]);
         }
@@ -117,29 +152,41 @@ export function DeepBreathCardAnimation() {
     };
   }, []);
 
-  const showHome = phase === 'idle' || phase === 'scrollToCards' ||
-                   phase === 'cursorEnterCarousel' || phase === 'cursorPanLeft' ||
-                   phase === 'cursorClickCard';
-  const showDash = phase === 'crossfadeToDash' || phase === 'dashIdle' ||
-                   phase === 'dashScrollDown' || phase === 'dashHold';
+  const onHome = phase === 'idle' || phase === 'scrollToSection3' ||
+                 phase === 'cursorEnterCarousel' || phase === 'cursorPanLeft' ||
+                 phase === 'scrollBackToTop' || phase === 'cursorToDashCard' ||
+                 phase === 'clickDashCard' || phase === 'crossfadeToHome';
+  const onDash = phase === 'crossfadeToDash' || phase === 'dashIdle' ||
+                 phase === 'dashScrollDown' || phase === 'dashHold' ||
+                 phase === 'dashScrollUp' || phase === 'cursorToHomeNav' ||
+                 phase === 'clickHomeNav';
 
   // Cursor target — in CONTAINER coords (% of card)
-  // For RTL carousel: start at right edge (x≈90%), pan to left edge (x≈10%)
-  const carouselCursorX = 90 - carouselPan * 0.8;       // 90 → 10
-  const carouselCursorY = 50;                            // middle of card row in viewport
-  const dashboardCardX = 16;                             // approximate "Dashboard" card x in carousel after pan
+  // Carousel cursor: enters from right (x=88%) and pans leftward
+  const carouselCursorX = 88 - carouselPan * 0.6; // 88 → 28
+  // Section 3 carousel row in viewport: image y=55% with current home scroll
+  const carouselCursorY = imgToCardY(HOME_SECTION3_IMG_Y, homeScroll, HOME_VISIBLE);
+  // Dashboard card on home: image y=32% at home top (scroll=0): container y=imgToCardY(32, 0, 36.1)
+  const dashCardCardY = imgToCardY(HOME_DASH_CARD_IMG_Y, homeScroll, HOME_VISIBLE);
+  // "Home" nav on dashboard: image y=2.5% at dash top (scroll=0)
+  const homeNavCardY = imgToCardY(DASH_HOME_NAV_IMG_Y, dashScroll, DASH_VISIBLE);
 
   let cursorTarget: { x: number; y: number } | null = null;
-  if (phase === 'idle' || phase === 'scrollToCards') {
+  if (phase === 'idle' || phase === 'scrollToSection3' || phase === 'scrollBackToTop') {
     cursorTarget = { x: 50, y: 50 };
   } else if (phase === 'cursorEnterCarousel' || phase === 'cursorPanLeft') {
     cursorTarget = { x: carouselCursorX, y: carouselCursorY };
-  } else if (phase === 'cursorClickCard') {
-    cursorTarget = { x: dashboardCardX, y: carouselCursorY };
+  } else if (phase === 'cursorToDashCard' || phase === 'clickDashCard') {
+    cursorTarget = { x: 50, y: dashCardCardY };
+  } else if (phase === 'dashIdle' || phase === 'dashScrollDown' ||
+             phase === 'dashHold' || phase === 'dashScrollUp') {
+    cursorTarget = { x: 50, y: 50 };
+  } else if (phase === 'cursorToHomeNav' || phase === 'clickHomeNav') {
+    cursorTarget = { x: 70, y: homeNavCardY };
   }
 
   const cursorVisible = cursorTarget !== null;
-  const clickPulse = phase === 'cursorClickCard';
+  const clickPulse = phase === 'clickDashCard' || phase === 'clickHomeNav';
 
   const cursorPos = cursorTarget
     ? { left: `${cursorTarget.x}%`, top: `${cursorTarget.y}%` }
@@ -147,10 +194,10 @@ export function DeepBreathCardAnimation() {
 
   return (
     <div className="relative w-full h-full bg-white overflow-hidden" dir="ltr">
-      {/* Home — full image scrolling vertically */}
+      {/* Home page */}
       <div
         className="absolute inset-0 overflow-hidden"
-        style={{ opacity: showHome ? 1 : 0, transition: `opacity ${PHASE_DURATIONS.crossfadeToDash}ms ease-out` }}
+        style={{ opacity: onHome ? 1 : 0, transition: `opacity ${PHASE_DURATIONS.crossfadeToDash}ms ease-out` }}
       >
         <img
           src={deepbreathHome}
@@ -158,8 +205,8 @@ export function DeepBreathCardAnimation() {
           className="absolute inset-x-0 top-0 w-full select-none"
           draggable={false}
           style={{
-            transform: `translateY(${-homeScrollPct * HOME_RATIO}%)`,
-            transition: `transform ${PHASE_DURATIONS.scrollToCards}ms ${EASING}`,
+            transform: `translateY(${-homeScroll * HOME_RATIO}%)`,
+            transition: `transform ${PHASE_DURATIONS.scrollToSection3}ms ${EASING}`,
             willChange: 'transform',
           }}
         />
@@ -168,7 +215,7 @@ export function DeepBreathCardAnimation() {
       {/* Dashboard */}
       <div
         className="absolute inset-0 overflow-hidden"
-        style={{ opacity: showDash ? 1 : 0, transition: `opacity ${PHASE_DURATIONS.crossfadeToDash}ms ease-out` }}
+        style={{ opacity: onDash ? 1 : 0, transition: `opacity ${PHASE_DURATIONS.crossfadeToDash}ms ease-out` }}
       >
         <img
           src={deepbreathDashboard}
@@ -176,7 +223,7 @@ export function DeepBreathCardAnimation() {
           className="absolute inset-x-0 top-0 w-full select-none"
           draggable={false}
           style={{
-            transform: `translateY(${-dashScrollPct * DASH_RATIO}%)`,
+            transform: `translateY(${-dashScroll * DASH_RATIO}%)`,
             transition: `transform ${PHASE_DURATIONS.dashScrollDown}ms ${EASING}`,
             willChange: 'transform',
           }}
