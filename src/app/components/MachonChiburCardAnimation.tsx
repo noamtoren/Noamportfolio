@@ -152,6 +152,30 @@ function TherapistTypingBubble() {
   );
 }
 
+// Wipes the green selection border the PNG bakes into option 2 by drawing
+// four thin white strips exactly over each edge of that option box.
+// Border bounds in the cropped 1024×682 image:
+//   x = 311–712 (30.4%–69.6%); y = 342–380 (50.1%–55.7%)
+function Option2BorderWipe() {
+  const stripeColor = 'white';
+  const left = 30.0, right = 69.9, top = 49.7, bottom = 56.0;
+  const w = right - left;       // 39.9%
+  const h = bottom - top;        // 6.3%
+  const stripe = 0.9;            // thickness
+  return (
+    <>
+      {/* top */}
+      <div className="absolute" style={{ left: `${left}%`, top: `${top}%`, width: `${w}%`, height: `${stripe}%`, background: stripeColor }} />
+      {/* bottom */}
+      <div className="absolute" style={{ left: `${left}%`, top: `${bottom - stripe}%`, width: `${w}%`, height: `${stripe}%`, background: stripeColor }} />
+      {/* left (RTL: this is the right edge of the option in reading order) */}
+      <div className="absolute" style={{ left: `${left}%`, top: `${top}%`, width: `${stripe}%`, height: `${h}%`, background: stripeColor }} />
+      {/* right */}
+      <div className="absolute" style={{ left: `${right - stripe}%`, top: `${top}%`, width: `${stripe}%`, height: `${h}%`, background: stripeColor }} />
+    </>
+  );
+}
+
 function RadioOverlay({ x, y, selected }: { x: number; y: number; selected: boolean }) {
   return (
     <div
@@ -466,8 +490,8 @@ export function MachonChiburCardAnimation() {
           style={{ opacity: showQ5 ? 1 : 0, transition: 'opacity 320ms ease-out' }}
         />
 
-        {/* Q5 radio overlays — wipe the PNG's pre-selected option, then show
-            our own selection on click */}
+        {/* Q5 — wipe pre-selected option 2 border, render dynamic radios */}
+        {showQ5 && <Option2BorderWipe />}
         {showQ5 && INTAKE.optionYs.map((y, i) => (
           <RadioOverlay key={`q5-${i}`} x={INTAKE.optionsX} y={y} selected={q5Selected === i} />
         ))}
@@ -481,7 +505,8 @@ export function MachonChiburCardAnimation() {
           style={{ opacity: showQ6 ? 1 : 0, transition: 'opacity 320ms ease-out' }}
         />
 
-        {/* Q6 radio overlays */}
+        {/* Q6 — same wipe + radios */}
+        {showQ6 && <Option2BorderWipe />}
         {showQ6 && INTAKE.optionYs.map((y, i) => (
           <RadioOverlay key={`q6-${i}`} x={INTAKE.optionsX} y={y} selected={q6Selected === i} />
         ))}
