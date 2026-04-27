@@ -104,15 +104,12 @@ type Hotspot = {
   tooltipDirection: 'left' | 'right';
 };
 
-// Positions reprojected from the original 1536×1024 image (also used in the home
-// card) into this case study's 16:9 frame. Conversion: case_y = (orig_y - 7.79)
-// / 84.4 * 100; X stays unchanged because the image fills width without crop.
 const HOTSPOTS: Hotspot[] = [
-  { id: 'back', title: 'תמיכה בגב', description: 'הכרית תומכת בעמוד השדרה ומפחיתה לחץ על אזור הגב התחתון', position: { top: '27%', left: '76%' }, tooltipDirection: 'left' },
-  { id: 'hips', title: 'תמיכה באגן ובירכיים', description: 'יישור נכון של האגן מפחית כאבים ומשפר את איכות השינה', position: { top: '42%', left: '46%' }, tooltipDirection: 'right' },
-  { id: 'belly', title: 'תמיכה בבטן', description: 'תומכת בבטן בעדינות ומקלה על תחושת המשקל', position: { top: '32%', left: '60%' }, tooltipDirection: 'left' },
-  { id: 'knees', title: 'תמיכה בין הברכיים', description: 'שומרת על יישור נכון של הרגליים ומפחיתה לחץ על הברכיים', position: { top: '58%', left: '28%' }, tooltipDirection: 'right' },
-  { id: 'ankles', title: 'תמיכה בקרסוליים', description: 'מרימה את הרגליים במעט ועוזרת להפחית נפיחות', position: { top: '62%', left: '17%' }, tooltipDirection: 'right' },
+  { id: 'back', title: 'תמיכה בגב', description: 'הכרית תומכת בעמוד השדרה ומפחיתה לחץ על אזור הגב התחתון', position: { top: '10.6%', left: '59.5%' }, tooltipDirection: 'right' },
+  { id: 'hips', title: 'תמיכה באגן ובירכיים', description: 'יישור נכון של האגן מפחית כאבים ומשפר את איכות השינה', position: { top: '14.2%', left: '44.8%' }, tooltipDirection: 'right' },
+  { id: 'belly', title: 'תמיכה בבטן', description: 'תומכת בבטן בעדינות ומקלה על תחושת המשקל', position: { top: '44.4%', left: '54.7%' }, tooltipDirection: 'right' },
+  { id: 'knees', title: 'תמיכה בין הברכיים', description: 'שומרת על יישור נכון של הרגליים ומפחיתה לחץ על הברכיים', position: { top: '56.9%', left: '29.1%' }, tooltipDirection: 'right' },
+  { id: 'ankles', title: 'תמיכה בקרסוליים', description: 'מרימה את הרגליים במעט ועוזרת להפחית נפיחות', position: { top: '21.5%', left: '13.4%' }, tooltipDirection: 'right' },
 ];
 
 function InteractiveBodyMap() {
