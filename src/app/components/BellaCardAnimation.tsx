@@ -14,11 +14,11 @@ type Hotspot = {
 // belly skin between bra and underwear, knees = between bent knees, ankles = pillow
 // at left curl by feet.
 const HOTSPOTS: Hotspot[] = [
-  { id: 'back',    title: 'תמיכה בגב',       description: 'תמיכה בעמוד השדרה ובאזור הגב התחתון', position: { top: '30%', left: '72%' }, tooltipDirection: 'left'  },
-  { id: 'hips',    title: 'תמיכה באגן',      description: 'יישור נכון של האגן והירכיים',          position: { top: '40%', left: '48%' }, tooltipDirection: 'right' },
-  { id: 'belly',   title: 'תמיכה בבטן',      description: 'הקלה על תחושת המשקל',                  position: { top: '35%', left: '58%' }, tooltipDirection: 'left'  },
-  { id: 'knees',   title: 'תמיכה בברכיים',  description: 'יישור נכון בין הרגליים',               position: { top: '60%', left: '33%' }, tooltipDirection: 'right' },
-  { id: 'ankles',  title: 'תמיכה בקרסוליים', description: 'הפחתת נפיחות והרמה עדינה',            position: { top: '45%', left: '12%' }, tooltipDirection: 'right' },
+  { id: 'back',    title: 'תמיכה בגב',       description: 'תמיכה בעמוד השדרה ובאזור הגב התחתון', position: { top: '27%', left: '76%' }, tooltipDirection: 'left'  },
+  { id: 'hips',    title: 'תמיכה באגן',      description: 'יישור נכון של האגן והירכיים',          position: { top: '42%', left: '46%' }, tooltipDirection: 'right' },
+  { id: 'belly',   title: 'תמיכה בבטן',      description: 'הקלה על תחושת המשקל',                  position: { top: '32%', left: '60%' }, tooltipDirection: 'left'  },
+  { id: 'knees',   title: 'תמיכה בברכיים',  description: 'יישור נכון בין הרגליים',               position: { top: '58%', left: '28%' }, tooltipDirection: 'right' },
+  { id: 'ankles',  title: 'תמיכה בקרסוליים', description: 'הפחתת נפיחות והרמה עדינה',            position: { top: '62%', left: '17%' }, tooltipDirection: 'right' },
 ];
 
 type Phase = 'idle' | 'approach' | 'clicked' | 'release';
