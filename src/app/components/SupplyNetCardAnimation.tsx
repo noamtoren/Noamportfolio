@@ -9,18 +9,18 @@ const QUERY = 'sprinkler systems';
 // (no clipping on the right). The cursor click lands on the same point so it
 // stays on the input after zoom.
 const SEARCH_INPUT = {
-  clickX: 16,
-  clickY: 42,
+  clickX: 14,
+  clickY: 58,
   // White mask that covers the "Search for products" placeholder
-  maskLeft: 11.4,
-  maskTop: 40.4,
+  maskLeft: 11.5,
+  maskTop: 56.4,
   maskWidth: 30,
-  maskHeight: 3.7,
+  maskHeight: 3.5,
   // Where the typed text starts (offset within the mask, after the search icon)
-  textPaddingLeft: 2.6,
+  textPaddingLeft: 1.5,
 };
 
-const ZOOM = 3;
+const ZOOM = 2.7;
 const TYPING_MS = 75;
 
 const PHASE_DURATIONS = {
