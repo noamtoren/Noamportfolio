@@ -20,24 +20,32 @@ export function Home({ onProjectClick }: HomeProps) {
       id: 'supply-net',
       title: 'Supply Net',
       category: 'B2B AI Procurement',
+      year: '2025',
+      meta: 'UX · UI · Brand',
       image: supplyNetHero,
     },
     {
       id: 'bella',
       title: 'Bella',
       category: 'Maternal E-Commerce',
+      year: '2025',
+      meta: 'UX · UI · Editorial',
       image: bellaMockup,
     },
     {
       id: 'machon-chibur',
       title: 'Machon Chibur',
       category: 'Therapeutic Web Platform',
+      year: '2024',
+      meta: 'UX · UI · Research',
       image: machonChiburHero,
     },
     {
       id: 'academic',
       title: 'Deep Breath',
       category: 'Smoking Cessation Platform',
+      year: '2024',
+      meta: 'UX · UI · Strategy',
       image: deepBreathHero,
     },
   ];
@@ -137,20 +145,28 @@ export function Home({ onProjectClick }: HomeProps) {
                 className="rise-in group cursor-pointer"
                 style={{ animationDelay: `${600 + index * 100}ms` }}
               >
-                {/* Inline title + category */}
-                <p className="text-sm md:text-[15px] mb-3">
-                  <span className="text-neutral-900 font-semibold">
-                    {project.title}
-                  </span>
-                  <span className="text-neutral-400"> {project.category}</span>
-                </p>
+                {/* Title row — title + category on the left, editorial index on the right */}
+                <div className="flex items-baseline justify-between mb-3 gap-4">
+                  <p className="text-sm md:text-[15px]">
+                    <span className="text-neutral-900 font-semibold">
+                      {project.title}
+                    </span>
+                    <span className="text-neutral-400"> {project.category}</span>
+                  </p>
+                  <p
+                    className="text-[18px] md:text-[20px] italic text-neutral-900 opacity-0 group-hover:opacity-50 transition-opacity duration-[500ms] leading-none"
+                    style={{ fontFamily: "'Instrument Serif', Georgia, serif" }}
+                  >
+                    {String(index + 1).padStart(2, '0')}
+                  </p>
+                </div>
 
                 {/* Thin underline fills card width on hover */}
                 <div className="h-px w-full origin-left scale-x-0 bg-neutral-900 transition-transform duration-[500ms] ease-out group-hover:scale-x-100 mb-3" />
 
-                {/* Mockup — soft shadow + tiny lift on hover */}
+                {/* Mockup — subtle scale-up + warm directional shadow on hover */}
                 <div
-                  className={`aspect-[4/3] rounded-lg overflow-hidden ring-1 ring-transparent shadow-[0_0_0_rgba(0,0,0,0)] transition-all duration-[400ms] ease-out will-change-transform group-hover:-translate-y-2 group-hover:ring-black/[0.08] group-hover:shadow-[0_18px_40px_-12px_rgba(0,0,0,0.18)] ${
+                  className={`aspect-[4/3] rounded-lg overflow-hidden transition-all duration-[500ms] ease-out will-change-transform group-hover:scale-[1.01] group-hover:shadow-[0_28px_60px_-24px_rgba(184,85,46,0.22),0_8px_18px_-12px_rgba(43,42,40,0.14)] ${
                     project.id === 'bella' || project.id === 'supply-net' || project.id === 'machon-chibur' || project.id === 'academic'
                       ? 'bg-[#ECEEF0] flex items-center justify-center p-6 md:p-8'
                       : 'bg-[#F2F0EC] flex items-center justify-center p-8'
@@ -179,6 +195,22 @@ export function Home({ onProjectClick }: HomeProps) {
                       className="w-full h-full object-contain"
                     />
                   )}
+                </div>
+
+                {/* Editorial caption row — fades in on hover, reserves space so layout never shifts */}
+                <div className="h-[18px] mt-3 overflow-hidden">
+                  <p
+                    className="text-[12px] tracking-[0.04em] text-neutral-500 opacity-0 -translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-[opacity,transform] duration-[500ms] ease-out flex items-center gap-2 leading-none"
+                  >
+                    <span
+                      className="text-neutral-900 italic text-[14px]"
+                      style={{ fontFamily: "'Instrument Serif', Georgia, serif" }}
+                    >
+                      {project.year}
+                    </span>
+                    <span className="text-neutral-300">—</span>
+                    <span>{project.meta}</span>
+                  </p>
                 </div>
               </div>
             ))}
