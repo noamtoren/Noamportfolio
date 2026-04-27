@@ -142,39 +142,40 @@ export function BellaCardAnimation() {
                   opacity: dotOpacity,
                 }}
               >
-                {/* Soft halo + slow pulse, hidden on the active dot during click */}
+                {/* Single soft pulse — only on inactive dots; gentle scale-out fade */}
                 {!isActive && (
-                  <>
-                    <span className="absolute inset-0 -m-0.5 rounded-full bg-white/25 pointer-events-none" />
-                    <span
-                      className="absolute inset-0 -m-0.5 rounded-full bg-white/35 animate-ping pointer-events-none"
-                      style={{ animationDuration: '2.8s', animationTimingFunction: 'cubic-bezier(0, 0, 0.2, 1)' }}
-                    />
-                  </>
+                  <span
+                    className="absolute top-1/2 left-1/2 w-3.5 h-3.5 rounded-full bg-white pointer-events-none"
+                    style={{
+                      transform: 'translate(-50%, -50%)',
+                      animation: 'bellaHotspotPulse 2.6s ease-out infinite',
+                    }}
+                  />
                 )}
 
                 <div
-                  className={`relative w-4 h-4 rounded-full border border-white/60 bg-white/90 backdrop-blur-sm shadow-[0_2px_4px_rgba(0,0,0,0.12),0_1px_2px_rgba(0,0,0,0.08)] flex items-center justify-center transition-transform duration-300 ease-out ${
+                  className={`relative w-3.5 h-3.5 rounded-full bg-white shadow-[0_2px_4px_rgba(0,0,0,0.22),0_0_0_1px_rgba(0,0,0,0.06)] flex items-center justify-center transition-transform duration-300 ease-out ${
                     isActive ? 'scale-110' : ''
                   }`}
                 >
-                  <span className="block w-1 h-1 rounded-full bg-[#2b2a28]/70" />
+                  <span className="block w-[3px] h-[3px] rounded-full bg-[#2b2a28]" />
                 </div>
               </div>
 
-              {/* Glass tooltip — scales with camera (becomes readable on zoom) */}
+              {/* Tooltip — solid white card; scales with camera so the click magnifies
+                  it into legibility. No backdrop-blur (looks fuzzy at small size). */}
               <div
                 className={`absolute top-1/2 -translate-y-1/2 ${
-                  h.tooltipDirection === 'right' ? 'left-6' : 'right-6'
-                } w-28 px-2 py-1.5 rounded-md border border-white/50 bg-white/40 backdrop-blur-md shadow-[0_4px_12px_rgba(43,42,40,0.18)] transition-all duration-200 pointer-events-none ${
+                  h.tooltipDirection === 'right' ? 'left-5' : 'right-5'
+                } w-32 px-2.5 py-2 rounded-md bg-white shadow-[0_6px_16px_rgba(43,42,40,0.18),0_0_0_1px_rgba(0,0,0,0.04)] transition-all duration-200 pointer-events-none ${
                   isActive ? 'opacity-100 translate-x-0' : `opacity-0 ${h.tooltipDirection === 'right' ? '-translate-x-1' : 'translate-x-1'}`
                 }`}
                 style={{ direction: 'rtl' }}
               >
-                <p className="text-[8px] font-semibold text-[#131313] mb-0.5 leading-tight">
+                <p className="text-[10px] font-semibold text-[#131313] mb-0.5 leading-tight">
                   {h.title}
                 </p>
-                <p className="text-[7px] text-[rgba(19,19,19,0.75)] leading-snug">
+                <p className="text-[9px] text-[rgba(19,19,19,0.7)] leading-snug">
                   {h.description}
                 </p>
               </div>
