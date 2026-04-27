@@ -2,6 +2,7 @@ import { Footer } from '@/app/components/Footer';
 import { ImageWithFallback } from '@/app/components/figma/ImageWithFallback';
 import { BellaCardAnimation } from '@/app/components/BellaCardAnimation';
 import { SupplyNetCardAnimation } from '@/app/components/SupplyNetCardAnimation';
+import { MachonChiburCardAnimation } from '@/app/components/MachonChiburCardAnimation';
 import profileImage from '../../assets/99a913ce6253b1dc7d05b1c7995c57d8d1596876.png';
 import bellaMockup from '../../assets/f4d14d9769234e371e3b2c43f272901073d360c7.png';
 import supplyNetHero from '../../assets/57b61d37a32011c4d800094d142fc794b97687b4.png';
@@ -145,7 +146,7 @@ export function Home({ onProjectClick }: HomeProps) {
                 {/* Mockup — soft shadow + tiny lift on hover */}
                 <div
                   className={`aspect-[4/3] rounded-lg overflow-hidden ring-1 ring-transparent shadow-[0_0_0_rgba(0,0,0,0)] transition-all duration-[400ms] ease-out will-change-transform group-hover:-translate-y-2 group-hover:ring-black/[0.08] group-hover:shadow-[0_18px_40px_-12px_rgba(0,0,0,0.18)] ${
-                    project.id === 'bella' || project.id === 'supply-net'
+                    project.id === 'bella' || project.id === 'supply-net' || project.id === 'machon-chibur'
                       ? 'bg-[#ECEEF0] flex items-center justify-center p-6 md:p-8'
                       : 'bg-[#F2F0EC] flex items-center justify-center p-8'
                   }`}
@@ -157,6 +158,10 @@ export function Home({ onProjectClick }: HomeProps) {
                   ) : project.id === 'supply-net' ? (
                     <div className="w-[80%] aspect-[3/2] rounded-[10px] overflow-hidden shadow-[0_8px_22px_rgba(43,42,40,0.14),0_2px_6px_rgba(43,42,40,0.08)]">
                       <SupplyNetCardAnimation />
+                    </div>
+                  ) : project.id === 'machon-chibur' ? (
+                    <div className="w-[80%] aspect-[3/2] rounded-[10px] overflow-hidden shadow-[0_8px_22px_rgba(43,42,40,0.14),0_2px_6px_rgba(43,42,40,0.08)]">
+                      <MachonChiburCardAnimation />
                     </div>
                   ) : (
                     <ImageWithFallback
