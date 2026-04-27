@@ -154,7 +154,7 @@ export function About() {
 
           {/* Editorial headline — Playfair Display italic, masculine Italian-newspaper feel */}
           <h2
-            className="text-[34px] md:text-[44px] leading-[1.05] tracking-tight mt-10 md:mt-12 mb-5 md:mb-6"
+            className="text-[24px] md:text-[30px] leading-[1.1] tracking-tight mt-10 md:mt-12 mb-4 md:mb-5"
             style={{
               fontFamily: "'Playfair Display', 'Cormorant Garamond', Georgia, serif",
               fontStyle: 'italic',
