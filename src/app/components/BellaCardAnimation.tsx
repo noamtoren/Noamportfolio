@@ -12,11 +12,11 @@ type Hotspot = {
 // Percentages of the original 1536×1024 photo. Inner screen is also 3:2,
 // so positions land directly on the body parts with no aspect-ratio reprojection.
 const HOTSPOTS: Hotspot[] = [
-  { id: 'back',    title: 'תמיכה בגב',       description: 'עמוד השדרה והגב התחתון', position: { top: '31%', left: '70%' }, tooltipDirection: 'left'  },
-  { id: 'hips',    title: 'תמיכה באגן',      description: 'האגן והירכיים',           position: { top: '36%', left: '50%' }, tooltipDirection: 'right' },
-  { id: 'belly',   title: 'תמיכה בבטן',      description: 'הקלה על המשקל',           position: { top: '33%', left: '56%' }, tooltipDirection: 'left'  },
-  { id: 'knees',   title: 'תמיכה בברכיים',  description: 'יישור הרגליים',           position: { top: '60%', left: '32%' }, tooltipDirection: 'right' },
-  { id: 'ankles',  title: 'תמיכה בקרסוליים', description: 'הפחתת נפיחות',            position: { top: '43%', left: '14%' }, tooltipDirection: 'right' },
+  { id: 'back',    title: 'תמיכה בגב',       description: 'תמיכה בעמוד השדרה ובאזור הגב התחתון', position: { top: '27%', left: '70%' }, tooltipDirection: 'left'  },
+  { id: 'hips',    title: 'תמיכה באגן',      description: 'יישור נכון של האגן והירכיים',          position: { top: '36%', left: '50%' }, tooltipDirection: 'right' },
+  { id: 'belly',   title: 'תמיכה בבטן',      description: 'הקלה על תחושת המשקל',                  position: { top: '32%', left: '58%' }, tooltipDirection: 'left'  },
+  { id: 'knees',   title: 'תמיכה בברכיים',  description: 'יישור נכון בין הרגליים',               position: { top: '60%', left: '32%' }, tooltipDirection: 'right' },
+  { id: 'ankles',  title: 'תמיכה בקרסוליים', description: 'הפחתת נפיחות והרמה עדינה',            position: { top: '43%', left: '14%' }, tooltipDirection: 'right' },
 ];
 
 type Phase = 'idle' | 'approach' | 'clicked' | 'release';
@@ -141,7 +141,7 @@ export function BellaCardAnimation() {
               >
                 {!isActive && (
                   <span
-                    className="absolute -inset-[3px] rounded-full bg-white/30 animate-ping pointer-events-none"
+                    className="absolute -inset-[3px] rounded-full bg-white/45 animate-ping pointer-events-none"
                     style={{
                       animationDuration: '3.2s',
                       animationTimingFunction: 'cubic-bezier(0,0,0.2,1)',
@@ -149,35 +149,27 @@ export function BellaCardAnimation() {
                   />
                 )}
 
-                <span
-                  className={`absolute -inset-[5px] rounded-full border border-[#2b2a28]/35 transition-all duration-300 ease-out ${
-                    isActive ? 'opacity-100 scale-100' : 'opacity-0 scale-50'
-                  }`}
-                />
-
-                <div className="relative w-[16px] h-[16px] rounded-full bg-gradient-to-b from-white to-[#f6f4f1] border border-white/75 shadow-[inset_0_-1px_2px_rgba(0,0,0,0.06),0_2px_5px_rgba(0,0,0,0.20)] flex items-center justify-center">
+                <div className="relative w-[16px] h-[16px] rounded-full bg-white border border-white/80 shadow-[inset_0_-1px_2px_rgba(0,0,0,0.08),0_2px_6px_rgba(0,0,0,0.25)] flex items-center justify-center">
                   <span
                     className={`block w-[4px] h-[4px] rounded-full transition-colors duration-200 ${
-                      isActive ? 'bg-[#2b2a28]' : 'bg-[#2b2a28]/65'
+                      isActive ? 'bg-[#2b2a28]' : 'bg-[#2b2a28]/70'
                     }`}
                   />
                 </div>
               </div>
 
-              {/* Tooltip — inside the camera, so it scales with the zoom-in
-                  (small at rest, magnified at click → readable through the zoom) */}
+              {/* Tooltip — inside the camera, so it scales with the zoom-in.
+                  Offset (24px) keeps it clear of the hotspot dot at any zoom level. */}
               <div
-                className={`absolute rounded-[8px] border border-white/55 bg-gradient-to-b from-white/65 to-white/45 backdrop-blur-md shadow-[0_4px_14px_rgba(43,42,40,0.22),0_1px_3px_rgba(43,42,40,0.10)] px-2 py-1.5 transition-[opacity,transform] duration-300 ease-out pointer-events-none ${
-                  isActive
-                    ? 'opacity-100'
-                    : 'opacity-0'
+                className={`absolute rounded-[8px] border border-white/55 bg-gradient-to-b from-white/70 to-white/50 backdrop-blur-md shadow-[0_4px_14px_rgba(43,42,40,0.22),0_1px_3px_rgba(43,42,40,0.10)] px-2.5 py-2 transition-[opacity,transform] duration-300 ease-out pointer-events-none ${
+                  isActive ? 'opacity-100' : 'opacity-0'
                 }`}
                 style={{
                   top: '50%',
-                  width: '92px',
+                  width: '116px',
                   ...(h.tooltipDirection === 'right'
-                    ? { left: '11px' }
-                    : { right: '11px' }),
+                    ? { left: '24px' }
+                    : { right: '24px' }),
                   transform: `translateY(-50%) ${
                     isActive
                       ? 'translateX(0)'
@@ -188,10 +180,10 @@ export function BellaCardAnimation() {
                   direction: 'rtl',
                 }}
               >
-                <p className="text-[8.5px] font-semibold text-[#2b2a28] leading-tight tracking-tight mb-[2px]">
+                <p className="text-[9px] font-semibold text-[#2b2a28] leading-tight tracking-tight mb-[3px]">
                   {h.title}
                 </p>
-                <p className="text-[7.5px] text-[#2b2a28]/65 leading-[1.35]">
+                <p className="text-[8px] text-[#2b2a28]/70 leading-[1.4]">
                   {h.description}
                 </p>
               </div>
