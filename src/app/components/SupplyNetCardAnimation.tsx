@@ -27,7 +27,8 @@ const SEARCH_INPUT = {
 // image → 65.8% container).
 const JOIN_BUTTON = { x: 88.6, y: 65.8 };
 
-const ZOOM = 3;
+const SEARCH_ZOOM_SCALE = 3;
+const JOIN_ZOOM_SCALE = 2;
 const TYPING_MS = 75;
 
 const PHASE_DURATIONS = {
@@ -38,11 +39,13 @@ const PHASE_DURATIONS = {
   zoomIn: 700,
   pauseAfterTyping: 500,
   zoomOut: 700,
-  results: 1900,
+  results: 1700,
   cursorToJoin: 700,
   clickJoin: 180,
-  matchingFade: 380,
-  matching: 2400,
+  zoomInJoin: 650,
+  pauseAtJoin: 420,
+  zoomOutMatching: 700,
+  matching: 2300,
 };
 
 const EASING = 'cubic-bezier(0.65, 0, 0.35, 1)';
@@ -59,6 +62,9 @@ type Phase =
   | 'results'
   | 'cursorToJoin'
   | 'clickJoin'
+  | 'zoomInJoin'
+  | 'pauseAtJoin'
+  | 'zoomOutMatching'
   | 'matching';
 
 function CursorIcon() {
@@ -145,6 +151,18 @@ export function SupplyNetCardAnimation() {
         await wait(PHASE_DURATIONS.clickJoin);
         if (cancelled) return;
 
+        setPhase('zoomInJoin');
+        await wait(PHASE_DURATIONS.zoomInJoin);
+        if (cancelled) return;
+
+        setPhase('pauseAtJoin');
+        await wait(PHASE_DURATIONS.pauseAtJoin);
+        if (cancelled) return;
+
+        setPhase('zoomOutMatching');
+        await wait(PHASE_DURATIONS.zoomOutMatching);
+        if (cancelled) return;
+
         setPhase('matching');
         await wait(PHASE_DURATIONS.matching);
       }
@@ -157,14 +175,28 @@ export function SupplyNetCardAnimation() {
     };
   }, []);
 
-  const isZoomed = phase === 'zoomIn' || phase === 'typing' || phase === 'pauseAfterTyping';
-  const scale = isZoomed ? ZOOM : 1;
+  const isSearchZoomed = phase === 'zoomIn' || phase === 'typing' || phase === 'pauseAfterTyping';
+  const isJoinZoomed = phase === 'zoomInJoin' || phase === 'pauseAtJoin';
+  const scale = isSearchZoomed ? SEARCH_ZOOM_SCALE : isJoinZoomed ? JOIN_ZOOM_SCALE : 1;
+  // Camera origin: search input until results, then the Join button
+  const useJoinOrigin =
+    phase === 'cursorToJoin' ||
+    phase === 'clickJoin' ||
+    phase === 'zoomInJoin' ||
+    phase === 'pauseAtJoin' ||
+    phase === 'zoomOutMatching' ||
+    phase === 'matching';
+  const originX = useJoinOrigin ? JOIN_BUTTON.x : SEARCH_INPUT.clickX;
+  const originY = useJoinOrigin ? JOIN_BUTTON.y : SEARCH_INPUT.clickY;
   const showResults =
     phase === 'zoomOut' ||
     phase === 'results' ||
     phase === 'cursorToJoin' ||
-    phase === 'clickJoin';
-  const showMatching = phase === 'matching';
+    phase === 'clickJoin' ||
+    phase === 'zoomInJoin' ||
+    phase === 'pauseAtJoin' ||
+    phase === 'zoomOutMatching';
+  const showMatching = phase === 'zoomOutMatching' || phase === 'matching';
   const showMask =
     phase === 'click' ||
     phase === 'focused' ||
@@ -179,17 +211,15 @@ export function SupplyNetCardAnimation() {
     phase === 'click' ||
     phase === 'focused' ||
     phase === 'cursorToJoin' ||
-    phase === 'clickJoin';
+    phase === 'clickJoin' ||
+    phase === 'zoomInJoin' ||
+    phase === 'pauseAtJoin';
   const clickPulse = phase === 'click' || phase === 'clickJoin';
 
   let cursorPos: { left: string; top: string };
   if (phase === 'idle') {
     cursorPos = { left: '70%', top: '70%' };
-  } else if (
-    phase === 'cursorToJoin' ||
-    phase === 'clickJoin' ||
-    phase === 'matching'
-  ) {
+  } else if (useJoinOrigin) {
     cursorPos = { left: `${JOIN_BUTTON.x}%`, top: `${JOIN_BUTTON.y}%` };
   } else {
     cursorPos = { left: `${SEARCH_INPUT.clickX}%`, top: `${SEARCH_INPUT.clickY}%` };
@@ -197,12 +227,13 @@ export function SupplyNetCardAnimation() {
 
   return (
     <div className="relative w-full h-full bg-white overflow-hidden" dir="ltr">
-      {/* Camera — scales toward the start of the search input during typing */}
+      {/* Camera — scales toward the search input during typing, then toward
+          the Join button during the buying-group click */}
       <div
         className="absolute inset-0"
         style={{
           transform: `scale(${scale})`,
-          transformOrigin: `${SEARCH_INPUT.clickX}% ${SEARCH_INPUT.clickY}%`,
+          transformOrigin: `${originX}% ${originY}%`,
           transition: `transform ${PHASE_DURATIONS.zoomIn}ms ${EASING}`,
           willChange: 'transform',
         }}
@@ -230,7 +261,7 @@ export function SupplyNetCardAnimation() {
           draggable={false}
           style={{
             opacity: showMatching ? 1 : 0,
-            transition: `opacity ${PHASE_DURATIONS.matchingFade}ms ease-out`,
+            transition: `opacity ${PHASE_DURATIONS.zoomOutMatching}ms ease-out`,
           }}
         />
 
