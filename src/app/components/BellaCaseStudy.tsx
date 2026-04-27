@@ -110,17 +110,20 @@ const HOTSPOTS: Hotspot[] = [
 
 function InteractiveBodyMap() {
   const [hovered, setHovered] = useState<string | null>(null);
+  const [containerHovered, setContainerHovered] = useState(false);
   return (
     <div
       className="relative w-full max-w-4xl rounded-2xl overflow-hidden bg-[#f1eae2]"
       style={{ aspectRatio: '1100 / 618.75' }}
       dir="ltr"
+      onMouseEnter={() => setContainerHovered(true)}
+      onMouseLeave={() => setContainerHovered(false)}
     >
       <img
         src={bodyMapBg}
         alt="Pregnancy pillow feature highlights"
         className={`absolute inset-0 w-full h-full object-cover transition-transform duration-[700ms] ease-out ${
-          hovered ? 'scale-[1.04]' : 'scale-100'
+          containerHovered ? 'scale-[1.04]' : 'scale-100'
         }`}
       />
       <div className="absolute inset-0 bg-black/[0.06]" />
@@ -174,9 +177,11 @@ function InteractiveBodyMap() {
         );
       })}
 
-      {/* Persistent feature card — bottom-right, matches the BELLA site overlay */}
+      {/* Hover-triggered feature card — bottom-right, matches the BELLA site overlay */}
       <div
-        className="absolute bottom-4 right-4 md:bottom-6 md:right-6 w-[min(72%,360px)] px-5 py-4 md:px-6 md:py-5 rounded-2xl border border-white/50 bg-white/40 backdrop-blur-md shadow-[0_10px_30px_rgba(43,42,40,0.22)] z-40"
+        className={`absolute bottom-4 right-4 md:bottom-6 md:right-6 w-[min(72%,360px)] px-5 py-4 md:px-6 md:py-5 rounded-2xl border border-white/50 bg-white/40 backdrop-blur-md shadow-[0_10px_30px_rgba(43,42,40,0.22)] z-40 transition-all duration-300 ease-out ${
+          containerHovered ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3 pointer-events-none'
+        }`}
         style={{ direction: 'rtl' }}
       >
         <p className="text-[18px] md:text-[20px] font-semibold text-[#131313] leading-tight mb-1.5">
