@@ -145,28 +145,17 @@ export function Home({ onProjectClick }: HomeProps) {
                 className="rise-in group cursor-pointer"
                 style={{ animationDelay: `${600 + index * 100}ms` }}
               >
-                {/* Title row — title + category on the left, editorial index on the right */}
-                <div className="flex items-baseline justify-between mb-3 gap-4">
-                  <p className="text-sm md:text-[15px]">
-                    <span className="text-neutral-900 font-semibold">
-                      {project.title}
-                    </span>
-                    <span className="text-neutral-400"> {project.category}</span>
-                  </p>
-                  <p
-                    className="text-[18px] md:text-[20px] italic text-neutral-900 opacity-0 group-hover:opacity-50 transition-opacity duration-[500ms] leading-none"
-                    style={{ fontFamily: "'Instrument Serif', Georgia, serif" }}
-                  >
-                    {String(index + 1).padStart(2, '0')}
-                  </p>
-                </div>
+                {/* Inline title + category */}
+                <p className="text-sm md:text-[15px] mb-3">
+                  <span className="text-neutral-900 font-semibold">
+                    {project.title}
+                  </span>
+                  <span className="text-neutral-500"> {project.category}</span>
+                </p>
 
-                {/* Thin underline fills card width on hover */}
-                <div className="h-px w-full origin-left scale-x-0 bg-neutral-900 transition-transform duration-[500ms] ease-out group-hover:scale-x-100 mb-3" />
-
-                {/* Mockup — subtle scale-up + warm directional shadow on hover */}
+                {/* Mockup — subtle scale-up on hover, no shadow */}
                 <div
-                  className={`aspect-[4/3] rounded-lg overflow-hidden transition-all duration-[500ms] ease-out will-change-transform group-hover:scale-[1.01] group-hover:shadow-[0_28px_60px_-24px_rgba(184,85,46,0.22),0_8px_18px_-12px_rgba(43,42,40,0.14)] ${
+                  className={`aspect-[4/3] rounded-lg overflow-hidden transition-transform duration-[500ms] ease-out will-change-transform group-hover:scale-[1.01] ${
                     project.id === 'bella' || project.id === 'supply-net' || project.id === 'machon-chibur' || project.id === 'academic'
                       ? 'bg-[#ECEEF0] flex items-center justify-center p-6 md:p-8'
                       : 'bg-[#F2F0EC] flex items-center justify-center p-8'
@@ -196,6 +185,10 @@ export function Home({ onProjectClick }: HomeProps) {
                     />
                   )}
                 </div>
+
+                {/* Thin underline that fills card width on hover — sits between
+                    the card and the editorial caption */}
+                <div className="h-px w-full origin-left scale-x-0 bg-neutral-900 transition-transform duration-[500ms] ease-out group-hover:scale-x-100 mt-3" />
 
                 {/* Editorial caption row — fades in on hover, reserves space so layout never shifts */}
                 <div className="h-[18px] mt-3 overflow-hidden">
