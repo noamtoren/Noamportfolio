@@ -6,7 +6,6 @@ import entryScenariosImage from '../../assets/8f3d0f7f00dfebcc8a19cae89b91bdfa32
 import expertGridImage from '../../assets/5aa8c2c4647d1233c789d8f38d54bd734f24d03c.png';
 import expertPlayerImage from '../../assets/c6e46aec833b43f6d4425d7cc6a04b6fe9310a8d.png';
 import dashboardImage from '../../assets/5f857b4e1c1e4a7d4218a376633531836947dcd7.png';
-import desktopMockupImage from '../../assets/2ce63c0fab5bed905e4a9ef77a72b0e1c015b40b.png';
 import adaptiveToolboxImage from '../../assets/9b1f392b4896bf7fb9cf2624c06d952a48814049.png';
 
 interface AcademicCaseStudyProps {
@@ -213,7 +212,6 @@ export function AcademicCaseStudy({ onBack, onSelectProject }: AcademicCaseStudy
               body="The dashboard is built to survive a slip. Instead of a binary streak that resets to zero on relapse, it surfaces long-range trend lines, money saved, situation-by-situation analysis, and a chronological history that frames a slip as a logged event, not a reset. The header always reads as a partner (“היי נועם”), not a judge."
               images={[
                 { src: dashboardImage, alt: 'Dashboard — full overview', label: 'Dashboard — Full Overview' },
-                { src: desktopMockupImage, alt: 'Dashboard — landing context', label: 'Dashboard — Landing Context' },
               ]}
             />
 
