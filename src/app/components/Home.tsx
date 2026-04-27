@@ -44,7 +44,7 @@ export function Home({ onProjectClick }: HomeProps) {
 
   return (
     <div className="absolute inset-0 overflow-auto bg-white pb-32">
-      <div className="max-w-6xl mx-auto px-6 md:px-12 pt-7 md:pt-10">
+      <div className="max-w-[1080px] mx-auto px-6 md:px-12 pt-7 md:pt-10">
         {/* Hero — compact, left-aligned, all sans-serif */}
         <section className="mb-24 md:mb-32">
           {/* Line 1: role + name inline */}
