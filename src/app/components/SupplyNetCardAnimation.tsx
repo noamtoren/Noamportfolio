@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import searchEmptyState from '../../assets/supplynet-search-empty.png';
 import searchResultsState from '../../assets/supplynet-search-results.png';
+import buyingMatching from '../../assets/supplynet-buying-matching.png';
 
 const QUERY = 'sprinkler systems';
 
@@ -9,9 +10,6 @@ const QUERY = 'sprinkler systems';
 // container 1.5 → image_y * 1.0262).
 //   Search input white box: image y=750-820 → container y=37.2-40.6
 //   Search icon at image x≈9%; placeholder text starts at image x≈12%.
-// Zoom origin sits at the start of the input so the input stays in view and
-// the cursor "click" lands on the search-icon side; the typed text grows
-// rightward into the input.
 const SEARCH_INPUT = {
   clickX: 10,
   clickY: 39,
@@ -24,6 +22,11 @@ const SEARCH_INPUT = {
   textPaddingLeft: 0.5,
 };
 
+// Topmost "Join a group buy" button on the results PNG, pixel-sampled and
+// converted to container-%: x=2510-2850 (88.6% center), y=1305-1350 (64.1%
+// image → 65.8% container).
+const JOIN_BUTTON = { x: 88.6, y: 65.8 };
+
 const ZOOM = 3;
 const TYPING_MS = 75;
 
@@ -35,7 +38,11 @@ const PHASE_DURATIONS = {
   zoomIn: 700,
   pauseAfterTyping: 500,
   zoomOut: 700,
-  results: 2400,
+  results: 1900,
+  cursorToJoin: 700,
+  clickJoin: 180,
+  matchingFade: 380,
+  matching: 2400,
 };
 
 const EASING = 'cubic-bezier(0.65, 0, 0.35, 1)';
@@ -49,7 +56,10 @@ type Phase =
   | 'typing'
   | 'pauseAfterTyping'
   | 'zoomOut'
-  | 'results';
+  | 'results'
+  | 'cursorToJoin'
+  | 'clickJoin'
+  | 'matching';
 
 function CursorIcon() {
   return (
@@ -125,6 +135,18 @@ export function SupplyNetCardAnimation() {
 
         setPhase('results');
         await wait(PHASE_DURATIONS.results);
+        if (cancelled) return;
+
+        setPhase('cursorToJoin');
+        await wait(PHASE_DURATIONS.cursorToJoin);
+        if (cancelled) return;
+
+        setPhase('clickJoin');
+        await wait(PHASE_DURATIONS.clickJoin);
+        if (cancelled) return;
+
+        setPhase('matching');
+        await wait(PHASE_DURATIONS.matching);
       }
     }
 
@@ -137,9 +159,12 @@ export function SupplyNetCardAnimation() {
 
   const isZoomed = phase === 'zoomIn' || phase === 'typing' || phase === 'pauseAfterTyping';
   const scale = isZoomed ? ZOOM : 1;
-  const showResults = phase === 'zoomOut' || phase === 'results';
-  // Mask covers the placeholder from click onward, hidden once we cross-fade
-  // to the results PNG (which already has the typed query baked in).
+  const showResults =
+    phase === 'zoomOut' ||
+    phase === 'results' ||
+    phase === 'cursorToJoin' ||
+    phase === 'clickJoin';
+  const showMatching = phase === 'matching';
   const showMask =
     phase === 'click' ||
     phase === 'focused' ||
@@ -148,21 +173,31 @@ export function SupplyNetCardAnimation() {
     phase === 'pauseAfterTyping';
   const showCaret =
     phase === 'focused' || phase === 'zoomIn' || phase === 'typing';
-  const cursorAtSearch = phase !== 'idle';
   const cursorVisible =
     phase === 'idle' ||
     phase === 'cursorMove' ||
     phase === 'click' ||
-    phase === 'focused';
-  const clickPulse = phase === 'click';
+    phase === 'focused' ||
+    phase === 'cursorToJoin' ||
+    phase === 'clickJoin';
+  const clickPulse = phase === 'click' || phase === 'clickJoin';
 
-  const cursorPos = cursorAtSearch
-    ? { left: `${SEARCH_INPUT.clickX}%`, top: `${SEARCH_INPUT.clickY}%` }
-    : { left: '70%', top: '70%' };
+  let cursorPos: { left: string; top: string };
+  if (phase === 'idle') {
+    cursorPos = { left: '70%', top: '70%' };
+  } else if (
+    phase === 'cursorToJoin' ||
+    phase === 'clickJoin' ||
+    phase === 'matching'
+  ) {
+    cursorPos = { left: `${JOIN_BUTTON.x}%`, top: `${JOIN_BUTTON.y}%` };
+  } else {
+    cursorPos = { left: `${SEARCH_INPUT.clickX}%`, top: `${SEARCH_INPUT.clickY}%` };
+  }
 
   return (
     <div className="relative w-full h-full bg-white overflow-hidden" dir="ltr">
-      {/* Camera — scales toward the start of the search input */}
+      {/* Camera — scales toward the start of the search input during typing */}
       <div
         className="absolute inset-0"
         style={{
@@ -188,10 +223,19 @@ export function SupplyNetCardAnimation() {
             transition: 'opacity 320ms ease-out',
           }}
         />
+        <img
+          src={buyingMatching}
+          alt="Supply Net — joined buying group"
+          className="absolute inset-0 w-full h-full object-cover object-top select-none"
+          draggable={false}
+          style={{
+            opacity: showMatching ? 1 : 0,
+            transition: `opacity ${PHASE_DURATIONS.matchingFade}ms ease-out`,
+          }}
+        />
 
-        {/* White mask + typed text — covers the placeholder when the input
-            "gets focus" so the original placeholder is gone, and we type our
-            own query in its place. */}
+        {/* White mask + typed text — wipes the "Search for products"
+            placeholder once the input gains focus, then we type our own query. */}
         {showMask && (
           <div
             className="absolute bg-white flex items-center"
@@ -226,8 +270,7 @@ export function SupplyNetCardAnimation() {
         )}
       </div>
 
-      {/* Cursor — screen space, sits at the zoom origin so it stays glued to
-          the input regardless of scale. */}
+      {/* Cursor — screen space, glued to whichever target is active */}
       <div
         className="absolute z-40 pointer-events-none"
         style={{
