@@ -17,10 +17,10 @@ interface HomeProps {
 export function Home({ onProjectClick }: HomeProps) {
   const projects = [
     {
-      id: 'academic',
-      title: 'Deep Breath',
-      category: 'Smoking Cessation Platform',
-      image: deepBreathHero,
+      id: 'supply-net',
+      title: 'Supply Net',
+      category: 'B2B AI Procurement',
+      image: supplyNetHero,
     },
     {
       id: 'bella',
@@ -35,10 +35,10 @@ export function Home({ onProjectClick }: HomeProps) {
       image: machonChiburHero,
     },
     {
-      id: 'supply-net',
-      title: 'Supply Net',
-      category: 'B2B AI Procurement',
-      image: supplyNetHero,
+      id: 'academic',
+      title: 'Deep Breath',
+      category: 'Smoking Cessation Platform',
+      image: deepBreathHero,
     },
   ];
 

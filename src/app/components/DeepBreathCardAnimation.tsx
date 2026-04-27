@@ -143,7 +143,11 @@ export function DeepBreathCardAnimation() {
           } else if (p === 'scrollToCarousel') {
             setHomeScroll(HOME_CAROUSEL_SCROLL);
           } else if (p === 'cursorPanLeft') {
-            setCarouselPan(60);
+            // Small leftward pan to hint at carousel scrollability
+            setCarouselPan(18);
+          } else if (p === 'clickDashCard') {
+            // Return cursor to the rightmost card (Dashboard) for the click
+            setCarouselPan(0);
           } else if (p === 'dashScrollDown') {
             setDashScroll(DASH_END_SCROLL);
           } else if (p === 'dashScrollUp') {
@@ -168,8 +172,12 @@ export function DeepBreathCardAnimation() {
                  phase === 'dashScrollUp' || phase === 'cursorToHomeNav' ||
                  phase === 'clickHomeNav';
 
-  // Carousel cursor X: enters from RTL start (right, x=85%) and pans left to ~25%
-  const carouselCursorX = 85 - carouselPan;
+  // Carousel cursor X: enters at right (x=85% — Dashboard card position),
+  // does a small leftward pan to demonstrate the carousel scroll, then returns
+  // to the rightmost card for the click. Dashboard is the FIRST card from the
+  // right in RTL layout, so the click position is x=85%.
+  const DASH_CARD_X = 85;
+  const carouselCursorX = DASH_CARD_X - carouselPan;
   // Carousel cursor Y: middle of the carousel row in the viewport. Carousel
   // section spans image y=41.3–73.8. With scroll=36, top-of-viewport is at
   // image y=36, so center of viewport (50% container y) is at image y≈54.5%
