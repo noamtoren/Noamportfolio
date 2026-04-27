@@ -88,33 +88,6 @@ function Pillar({
   );
 }
 
-// ─────────────────── Pillar 1 — Solutions canvas with hover preview ──────────
-function Pillar1Showcase({ images }: { images: PillarImage[] }) {
-  const [hovered, setHovered] = useState(false);
-  return (
-    <div
-      className="relative w-full"
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-    >
-      <PillarImages images={images} />
-      <div
-        className={`absolute bottom-0 right-0 w-64 px-4 py-3 rounded-xl border border-white/50 bg-white/40 backdrop-blur-md shadow-[0_8px_24px_rgba(43,42,40,0.18)] transition-all duration-300 ease-out pointer-events-none ${
-          hovered ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'
-        }`}
-        style={{ direction: 'rtl' }}
-      >
-        <p className="text-[12px] font-semibold text-[#131313] mb-1 leading-tight">
-          הציצי לפי מצב, לא לפי קטגוריה
-        </p>
-        <p className="text-[11px] text-[rgba(19,19,19,0.75)] leading-snug">
-          שינה, ישיבה, כאב, אחרי לידה — כל כרטיסיה ב־hover מציגה תקציר מותאם של מה שמשתפר בגוף.
-        </p>
-      </div>
-    </div>
-  );
-}
-
 // ─────────────────── Pillar 5 — Live Interactive Body Map ──────────────────
 // Hotspot positions are derived from the original Figma feature (node 283:599):
 // container 1100×618.75; back at left=655/top=65.75, belly 602/274.75,
@@ -200,6 +173,25 @@ function InteractiveBodyMap() {
           </div>
         );
       })}
+
+      {/* Persistent feature card — bottom-right, matches the BELLA site overlay */}
+      <div
+        className="absolute bottom-4 right-4 md:bottom-6 md:right-6 w-[min(72%,360px)] px-5 py-4 md:px-6 md:py-5 rounded-2xl border border-white/50 bg-white/40 backdrop-blur-md shadow-[0_10px_30px_rgba(43,42,40,0.22)] z-40"
+        style={{ direction: 'rtl' }}
+      >
+        <p className="text-[18px] md:text-[20px] font-semibold text-[#131313] leading-tight mb-1.5">
+          תמיכה ב־5 נקודות מפתח בגוף
+        </p>
+        <p className="text-[12px] md:text-[13px] text-[rgba(19,19,19,0.75)] leading-snug mb-4">
+          נוחות ותמיכה מלאה בכל הגוף להקלה על כאבי הריון
+        </p>
+        <button
+          type="button"
+          className="bg-[#2b2a28] text-white text-[12px] md:text-[13px] px-5 py-2.5 rounded-full hover:bg-[#3a3835] transition-colors"
+        >
+          לרכישת כריות הריון
+        </button>
+      </div>
     </div>
   );
 }
@@ -285,19 +277,15 @@ export function BellaCaseStudy({ onBack, onSelectProject }: BellaCaseStudyProps)
           </h2>
 
           <div className="space-y-16 md:space-y-20">
-            {/* Pillar 1 — Solution-first Browsing (with hover preview card) */}
+            {/* Pillar 1 — Solution-first Browsing */}
             <Pillar
               label="Pillar 01 — Solution-first Browsing"
               heading="Architecture organised around the body, not the SKU."
-              body="The homepage opens with the four physical states a pregnant body actually moves through — sleep, sitting, pain, postpartum — and routes each one into a curated shop. The shop itself preserves the same logic: filters are framed around lived needs (week of pregnancy, sleeping position, back pain) rather than abstract product taxonomy, so the user is buying a solution, not browsing a catalogue. Hovering a solution card reveals a glass-frame preview of the matching outcome before any product is shown."
-              custom={
-                <Pillar1Showcase
-                  images={[
-                    { src: p1SolutionsImage, alt: 'Home — Solutions by Need', label: 'Home — Solutions by Need' },
-                    { src: p1ShopImage, alt: 'Shop — Filter by need', label: 'Shop — Filter by Need' },
-                  ]}
-                />
-              }
+              body="The homepage opens with the four physical states a pregnant body actually moves through — sleep, sitting, pain, postpartum — and routes each one into a curated shop. The shop itself preserves the same logic: filters are framed around lived needs (week of pregnancy, sleeping position, back pain) rather than abstract product taxonomy, so the user is buying a solution, not browsing a catalogue."
+              images={[
+                { src: p1SolutionsImage, alt: 'Home — Solutions by Need', label: 'Home — Solutions by Need' },
+                { src: p1ShopImage, alt: 'Shop — Filter by need', label: 'Shop — Filter by Need' },
+              ]}
             />
 
             {/* Pillar 2 — Personalised Quiz Path: 3 static screens, SupplyNet style */}
