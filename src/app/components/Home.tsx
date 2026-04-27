@@ -186,23 +186,18 @@ export function Home({ onProjectClick }: HomeProps) {
                   )}
                 </div>
 
-                {/* Thin underline that fills card width on hover — sits between
-                    the card and the editorial caption */}
-                <div className="h-px w-full origin-left scale-x-0 bg-neutral-900 transition-transform duration-[500ms] ease-out group-hover:scale-x-100 mt-3" />
+                {/* Thin underline — brand-orange, draws in smoothly on hover */}
+                <div className="h-px w-full origin-left scale-x-0 bg-[#B8552E] transition-transform duration-[700ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-x-100 mt-3" />
 
-                {/* Editorial caption row — fades in on hover, reserves space so layout never shifts */}
+                {/* CTA row — fades in on hover, reserves space so layout never shifts */}
                 <div className="h-[18px] mt-3 overflow-hidden">
                   <p
-                    className="text-[12px] tracking-[0.04em] text-neutral-500 opacity-0 -translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-[opacity,transform] duration-[500ms] ease-out flex items-center gap-2 leading-none"
+                    className="text-[12px] tracking-[0.02em] text-neutral-600 opacity-0 -translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-[opacity,transform] duration-[600ms] ease-[cubic-bezier(0.22,1,0.36,1)] flex items-center gap-1.5 leading-none"
                   >
-                    <span
-                      className="text-neutral-900 italic text-[14px]"
-                      style={{ fontFamily: "'Instrument Serif', Georgia, serif" }}
-                    >
-                      {project.year}
+                    <span className="italic" style={{ fontFamily: "'Instrument Serif', Georgia, serif", fontSize: '14px' }}>
+                      Read the case study
                     </span>
-                    <span className="text-neutral-300">—</span>
-                    <span>{project.meta}</span>
+                    <span className="text-[#B8552E] transition-transform duration-300 group-hover:translate-x-0.5">→</span>
                   </p>
                 </div>
               </div>
