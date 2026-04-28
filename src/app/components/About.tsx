@@ -132,6 +132,7 @@ export function About() {
               onMouseEnter={() => setVinylHovered(true)}
               onMouseLeave={() => setVinylHovered(false)}
             >
+              <span aria-hidden className="hotspot-pulse" style={{ animationDelay: '800ms' }} />
               {/* Spotify Icon appears ABOVE the turntable on hover */}
               {vinylHovered && (
                 <div
@@ -283,6 +284,7 @@ export function About() {
               onMouseLeave={() => setHoveredItem(null)}
               onClick={() => toggleItem('kobe')}
             >
+              <span aria-hidden className="hotspot-pulse" style={{ animationDelay: '0ms' }} />
               {hoveredItem === 'kobe' && (
                 <div
                   style={{
@@ -343,6 +345,7 @@ export function About() {
               onMouseLeave={() => setHoveredItem(null)}
               onClick={() => toggleItem('beret')}
             >
+              <span aria-hidden className="hotspot-pulse" style={{ animationDelay: '200ms' }} />
               {hoveredItem === 'beret' && (
                 <div
                   style={{
@@ -431,6 +434,7 @@ export function About() {
               onMouseLeave={() => setHoveredItem(null)}
               onClick={() => toggleItem('anemone')}
             >
+              <span aria-hidden className="hotspot-pulse" style={{ animationDelay: '400ms' }} />
               {hoveredItem === 'anemone' && (
                 <div
                   style={{
@@ -478,6 +482,7 @@ export function About() {
               onMouseLeave={() => setHoveredItem(null)}
               onClick={() => toggleItem('basketball')}
             >
+              <span aria-hidden className="hotspot-pulse" style={{ animationDelay: '600ms' }} />
               {hoveredItem === 'basketball' && (
                 <div
                   style={{
@@ -512,6 +517,27 @@ export function About() {
 
             {/* Enhanced CSS Animations for Tooltips */}
             <style>{`
+              .hotspot-pulse {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                width: 10px;
+                height: 10px;
+                margin: -5px 0 0 -5px;
+                border-radius: 50%;
+                background: rgba(184, 145, 90, 0.7);
+                box-shadow: 0 0 0 0 rgba(184, 145, 90, 0.55);
+                pointer-events: none;
+                animation: hotspotPulse 1.4s ease-out 3 both;
+              }
+              @keyframes hotspotPulse {
+                0%   { transform: scale(0.5); opacity: 0; box-shadow: 0 0 0 0 rgba(184, 145, 90, 0.55); }
+                15%  { opacity: 0.8; }
+                100% { transform: scale(1); opacity: 0; box-shadow: 0 0 0 14px rgba(184, 145, 90, 0); }
+              }
+              @media (prefers-reduced-motion: reduce) {
+                .hotspot-pulse { display: none; }
+              }
               @keyframes tooltipSlideUp {
                 from {
                   opacity: 0;
