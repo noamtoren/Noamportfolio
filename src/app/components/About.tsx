@@ -4,6 +4,7 @@ import shelfImage from '../../assets/03d57eb367e80d93c04f4eeced97b1e07dd810c3.pn
 import reichmanLogo from '../../assets/0eca1c1712117942a77aaf2eac0853d722a8d9db.png';
 import sapirLogo from '../../assets/10465119e0965d66c2f44af33ec2c1346d923774.png';
 import israelFlag from '../../assets/62542f660fa3bba0da99ce087f58a22bf4518361.png';
+import kobePoster from '../../assets/kobe-poster.png';
 
 // TODO: replace with Spotify URL — current value is the existing playlist link.
 const SPOTIFY_PLAYLIST_URL =
@@ -88,11 +89,11 @@ export function About() {
 
       {/* Section 2: Shelf Scene - Full Image */}
       <section className="px-8 py-12 relative overflow-hidden">
-        {/* Background */}
-        <div 
+        {/* Background — warm aged-paper cream, ties the shelf to the editorial palette */}
+        <div
           className="absolute inset-0"
           style={{
-            background: '#F8F8F8',
+            background: '#F1ECE2',
           }}
         />
         
@@ -117,7 +118,94 @@ export function About() {
                 display: 'block',
               }}
             />
-            
+
+            {/* ───── Per-item motion overlays ─────
+                Each is a clipped duplicate of the shelf image at the item's
+                exact location and scale, so it sits perfectly over the
+                original. CSS transforms run on the duplicate; the still
+                base image stays put. zIndex 4 — above the shelf, below the
+                hotspot capture divs and the Kobe poster. */}
+
+            {/* Vinyl disc — spins in place while hovered (rotation-in-place: no ghost) */}
+            <div
+              aria-hidden
+              className="absolute pointer-events-none"
+              style={{
+                left: '47%',
+                top: '81%',
+                width: '8%',
+                height: '11%',
+                backgroundImage: `url(${shelfImage})`,
+                backgroundSize: `${100 / 0.08}% ${100 / 0.11}%`,
+                backgroundPosition: `${(-0.47 / 0.08) * 100}% ${(-0.81 / 0.11) * 100}%`,
+                backgroundRepeat: 'no-repeat',
+                borderRadius: '50%',
+                animation: hoveredItem === 'vinyl' ? 'vinylSpin 3s linear infinite' : 'none',
+                transformOrigin: 'center',
+                zIndex: 4,
+              }}
+            />
+
+            {/* Anemone flower — sways gently around stem base while hovered */}
+            <div
+              aria-hidden
+              className="absolute pointer-events-none"
+              style={{
+                left: '71%',
+                top: '22%',
+                width: '7%',
+                height: '11%',
+                backgroundImage: `url(${shelfImage})`,
+                backgroundSize: `${100 / 0.07}% ${100 / 0.11}%`,
+                backgroundPosition: `${(-0.71 / 0.07) * 100}% ${(-0.22 / 0.11) * 100}%`,
+                backgroundRepeat: 'no-repeat',
+                transformOrigin: 'center bottom',
+                animation:
+                  hoveredItem === 'anemone' ? 'anemoneSway 1.8s ease-in-out infinite' : 'none',
+                zIndex: 4,
+              }}
+            />
+
+            {/* Beret — small tilt on hover */}
+            <div
+              aria-hidden
+              className="absolute pointer-events-none"
+              style={{
+                left: '87%',
+                top: '32%',
+                width: '10%',
+                height: '13%',
+                backgroundImage: `url(${shelfImage})`,
+                backgroundSize: `${100 / 0.10}% ${100 / 0.13}%`,
+                backgroundPosition: `${(-0.87 / 0.10) * 100}% ${(-0.32 / 0.13) * 100}%`,
+                backgroundRepeat: 'no-repeat',
+                transformOrigin: 'center bottom',
+                transition: 'transform 450ms cubic-bezier(0.4, 0, 0.2, 1)',
+                transform: hoveredItem === 'beret' ? 'rotate(-6deg)' : 'rotate(0)',
+                zIndex: 4,
+              }}
+            />
+
+            {/* Basketball — subtle "breath" on hover (scale + tiny tilt, no translate) */}
+            <div
+              aria-hidden
+              className="absolute pointer-events-none"
+              style={{
+                left: '14%',
+                top: '70%',
+                width: '13%',
+                height: '20%',
+                backgroundImage: `url(${shelfImage})`,
+                backgroundSize: `${100 / 0.13}% ${100 / 0.20}%`,
+                backgroundPosition: `${(-0.14 / 0.13) * 100}% ${(-0.70 / 0.20) * 100}%`,
+                backgroundRepeat: 'no-repeat',
+                transformOrigin: 'center bottom',
+                animation:
+                  hoveredItem === 'basketball' ? 'basketballBreath 1.6s ease-in-out infinite' : 'none',
+                zIndex: 4,
+              }}
+            />
+
             {/* Interactive Vinyl Turntable Overlay - Updated position for new layout */}
             <div
               className="absolute cursor-pointer"
@@ -270,21 +358,82 @@ export function About() {
 
             {/* Refined Hover Interactions - Updated positions for new layout */}
             
-            {/* Hotspot 1: Kobe Image - Top shelf LEFT side - opens UPWARD */}
+            {/* Kobe magazine poster — replaces the original Kobe region on the shelf */}
             <div
-              className="absolute cursor-pointer"
+              className="absolute cursor-pointer kobe-poster"
               style={{
-                left: '15%',
-                top: '15%',
-                width: '18%',
-                height: '25%',
-                zIndex: 6,
+                left: '5%',
+                top: '7%',
+                width: '28%',
+                height: '44%',
+                zIndex: 7,
+                transition: 'transform 450ms cubic-bezier(0.4, 0, 0.2, 1), filter 450ms ease',
+                transform:
+                  hoveredItem === 'kobe' ? 'scale(1.035) translateY(-2px)' : 'none',
+                filter:
+                  hoveredItem === 'kobe'
+                    ? 'drop-shadow(0 10px 22px rgba(0,0,0,0.20)) drop-shadow(0 2px 5px rgba(0,0,0,0.10))'
+                    : 'drop-shadow(0 3px 8px rgba(0,0,0,0.14)) drop-shadow(0 1px 2px rgba(0,0,0,0.08))',
               }}
               onMouseEnter={() => setHoveredItem('kobe')}
               onMouseLeave={() => setHoveredItem(null)}
               onClick={() => toggleItem('kobe')}
             >
-              <span aria-hidden className="hotspot-pulse" style={{ animationDelay: '0ms' }} />
+              <span aria-hidden className="hotspot-pulse" style={{ animationDelay: '0ms', zIndex: 3 }} />
+
+              {/* Black frame */}
+              <div
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  background: '#1A1715',
+                  boxSizing: 'border-box',
+                  padding: '2.5%',
+                }}
+              >
+                {/* Passe-partout (cream mat) */}
+                <div
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    background: '#F5F0E8',
+                    boxSizing: 'border-box',
+                    padding: '5% 5% 11% 5%',
+                    position: 'relative',
+                  }}
+                >
+                  <img
+                    src={kobePoster}
+                    alt="Kobe Bryant — Lakers"
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
+                      objectPosition: 'top center',
+                      display: 'block',
+                    }}
+                  />
+                  {/* Editorial caption */}
+                  <div
+                    style={{
+                      position: 'absolute',
+                      bottom: '2.5%',
+                      left: 0,
+                      right: 0,
+                      textAlign: 'center',
+                      fontFamily: "'DM Serif Display', Georgia, serif",
+                      fontStyle: 'italic',
+                      fontSize: 'clamp(8px, 1.1vw, 13px)',
+                      lineHeight: 1,
+                      color: '#1A1715',
+                      letterSpacing: '0.04em',
+                    }}
+                  >
+                    Bryant
+                  </div>
+                </div>
+              </div>
+
               {hoveredItem === 'kobe' && (
                 <div
                   style={{
@@ -301,7 +450,7 @@ export function About() {
                     animation: 'tooltipSlideUp 300ms cubic-bezier(0.16, 1, 0.3, 1)',
                     pointerEvents: 'none',
                     border: '1px solid rgba(255, 255, 255, 0.08)',
-                    marginBottom: '8px',
+                    marginBottom: '12px',
                   }}
                 >
                   <p
@@ -534,6 +683,19 @@ export function About() {
                 0%   { transform: scale(0.5); opacity: 0; box-shadow: 0 0 0 0 rgba(184, 145, 90, 0.55); }
                 15%  { opacity: 0.8; }
                 100% { transform: scale(1); opacity: 0; box-shadow: 0 0 0 14px rgba(184, 145, 90, 0); }
+              }
+              @keyframes vinylSpin {
+                from { transform: rotate(0deg); }
+                to   { transform: rotate(360deg); }
+              }
+              @keyframes anemoneSway {
+                0%, 100% { transform: rotate(0deg); }
+                25%      { transform: rotate(-3.5deg); }
+                75%      { transform: rotate(3.5deg); }
+              }
+              @keyframes basketballBreath {
+                0%, 100% { transform: scale(1) rotate(0deg); }
+                50%      { transform: scale(1.05) rotate(-1.5deg); }
               }
               @media (prefers-reduced-motion: reduce) {
                 .hotspot-pulse { display: none; }
