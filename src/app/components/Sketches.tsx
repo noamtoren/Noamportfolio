@@ -105,13 +105,13 @@ export function Sketches() {
               'radial-gradient(ellipse 75% 60% at center, rgba(255,255,255,0.94) 0%, rgba(255,255,255,0.85) 45%, rgba(255,255,255,0.5) 75%, rgba(255,255,255,0) 100%)',
           }}
         >
-          <h1 className="font-display text-xl md:text-2xl leading-[1.2] font-normal mb-3 text-[#B8552E]">
+          <h1 className="font-display text-[19px] md:text-[20px] leading-[1.2] font-normal mb-3 text-[#B8552E]">
             Welcome to my design sketches.
           </h1>
-          <p className="font-['Inter'] text-sm text-neutral-700 leading-relaxed mb-3 font-light">
+          <p className="font-['Inter'] text-[14px] text-neutral-700 font-normal leading-[1.6] tracking-[-0.2px] mb-3">
             Here you can find a variety of features and screens from different projects, alongside personal artwork &mdash; including some of my paintings.
           </p>
-          <p className="font-['Inter'] text-xs leading-relaxed font-medium" style={{ color: '#7A2A1F' }}>
+          <p className="font-['Inter'] text-[14px] leading-[1.6] font-medium" style={{ color: '#7A2A1F' }}>
             {isTouch ? 'Long-press to drag and explore' : 'Click and drag to explore the designs'}
           </p>
         </div>
