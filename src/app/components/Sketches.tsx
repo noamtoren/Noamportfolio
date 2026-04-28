@@ -95,25 +95,24 @@ export function Sketches() {
           }}
         >
         
-        {/* Hero Text — Helin-style: italic serif headline, sans body with muted tail, italic red CTA. Soft radial white halo blends into the grid. */}
+        {/* Hero Text — italic serif headline (Helin-style typeface) but at the
+            site's original quiet scale; sans-serif body and CTA so it reads
+            cleanly. Soft radial halo melts into the paper grid. */}
         <div
-          className="absolute left-1/2 -translate-x-1/2 top-[280px] md:top-[320px] max-w-3xl text-center px-8 py-10"
+          className="absolute left-1/2 -translate-x-1/2 top-[280px] md:top-[320px] max-w-2xl text-center px-6 py-5"
           style={{
             background:
-              'radial-gradient(ellipse 78% 65% at center, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.88) 42%, rgba(255,255,255,0.55) 75%, rgba(255,255,255,0) 100%)',
+              'radial-gradient(ellipse 75% 60% at center, rgba(255,255,255,0.94) 0%, rgba(255,255,255,0.85) 45%, rgba(255,255,255,0.5) 75%, rgba(255,255,255,0) 100%)',
           }}
         >
-          <h1
-            className="font-display text-3xl md:text-[42px] leading-[1.15] font-normal mb-6 md:mb-7 text-neutral-900"
-          >
-            Welcome to my design sketches!
+          <h1 className="font-display text-xl md:text-2xl leading-[1.2] font-normal mb-3 text-[#B8552E]">
+            Welcome to my design sketches.
           </h1>
-          <p className="font-['Inter'] text-base md:text-[19px] leading-[1.55] text-neutral-900 mb-10 md:mb-12">
-            Don&rsquo;t be misled by the word &lsquo;sketch&rsquo;, most of the designs here belong to projects I&rsquo;ve been working on.{' '}
-            <span className="text-neutral-400">Enjoy browsing!</span>
+          <p className="font-['Inter'] text-sm text-neutral-700 leading-relaxed mb-3 font-light">
+            Here you can find a variety of features and screens from different projects, alongside personal artwork &mdash; including some of my paintings.
           </p>
-          <p className="font-display italic text-base md:text-lg leading-relaxed text-[#B8552E]">
-            {isTouch ? 'Long-press to drag and explore the designs' : 'Feel free to drag and explore the designs'}
+          <p className="font-['Inter'] text-xs leading-relaxed font-medium" style={{ color: '#7A2A1F' }}>
+            {isTouch ? 'Long-press to drag and explore' : 'Click and drag to explore the designs'}
           </p>
         </div>
 
@@ -149,16 +148,16 @@ export function Sketches() {
           isTouch={isTouch}
         />
 
-        {/* HALF IPHONE IMAGE — static decoration (not draggable), bigger
-            and positioned so the bottom-right corner of the phone sits in
-            the top-left of the page, matching the Helin reference. */}
+        {/* HALF IPHONE IMAGE — static decoration (not draggable). Sized so
+            the bottom-right corner of the phone sits in the top-left of the
+            page, matching the Helin reference. */}
         <div
           className="absolute pointer-events-none"
           style={{
-            left: `${(-110 / BASE_WIDTH) * containerWidth}px`,
-            top: '-560px',
-            width: `${(540 / BASE_WIDTH) * containerWidth}px`,
-            height: `${(1080 / BASE_WIDTH) * containerWidth}px`,
+            left: `${(-90 / BASE_WIDTH) * containerWidth}px`,
+            top: '-460px',
+            width: `${(380 / BASE_WIDTH) * containerWidth}px`,
+            height: `${(760 / BASE_WIDTH) * containerWidth}px`,
             zIndex: 5,
           }}
         >
