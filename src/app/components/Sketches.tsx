@@ -63,38 +63,46 @@ export function Sketches() {
   }, []);
 
   return (
-    <div className="absolute inset-0 overflow-auto bg-white">
-      {/* EDIT MODE TOGGLE + LOG POSITIONS BUTTONS - REMOVED */}
-
-      {/* Grid Paper Background - FIXED, doesn't scale */}
-      <div 
+    <div className="absolute inset-0 overflow-y-auto overflow-x-hidden bg-white">
+      {/* Grid Paper Background — fixed, larger cells, slightly stronger lines */}
+      <div
         className="fixed inset-0 pointer-events-none z-0"
         style={{
           backgroundImage: `
-            linear-gradient(rgba(0, 0, 0, 0.015) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(0, 0, 0, 0.015) 1px, transparent 1px)
+            linear-gradient(rgba(0, 0, 0, 0.05) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(0, 0, 0, 0.05) 1px, transparent 1px)
           `,
-          backgroundSize: '20px 20px',
+          backgroundSize: '48px 48px',
           backgroundColor: '#FFFFFF',
         }}
       />
 
       {/* Main Container - Responsive Canvas */}
       <div className="w-full relative min-h-full" ref={containerRef}>
-        <div 
-          className="relative z-10 mx-auto overflow-hidden"
-          style={{ 
+        {/*
+          Canvas intentionally has NO overflow-hidden — items with negative
+          initialXPx (e.g. shalom-itai at -147, iPhone at -70) extend past the
+          centered 1440px canvas and would otherwise be clipped on the left.
+          Horizontal containment is enforced by overflow-x: hidden on the
+          outer scroll wrapper.
+        */}
+        <div
+          className="relative z-10 mx-auto"
+          style={{
             minHeight: `${BASE_HEIGHT}px`,
             width: `${containerWidth}px`,
             maxWidth: '1440px',
-            // If on mobile (containerWidth > viewport), center it or let it scroll?
-            // Default behavior of overflow-auto parent is start-aligned (left).
-            // To center initially would require scroll manipulation, but left-aligned scroll is fine for sketches.
           }}
         >
         
-        {/* Hero Text */}
-        <div className="absolute left-1/2 -translate-x-1/2 top-[280px] md:top-[320px] max-w-2xl text-center px-4">
+        {/* Hero Text — sits on a very soft radial halo so the grid behind doesn't intrude on the type */}
+        <div
+          className="absolute left-1/2 -translate-x-1/2 top-[280px] md:top-[320px] max-w-2xl text-center px-6 py-4"
+          style={{
+            background:
+              'radial-gradient(ellipse at center, rgba(255,255,255,0.92) 0%, rgba(255,255,255,0.78) 55%, rgba(255,255,255,0) 90%)',
+          }}
+        >
           <h1 className="font-display text-xl md:text-2xl leading-relaxed font-normal mb-3 text-[#B8552E]">
             Welcome to my design sketches.
           </h1>
@@ -444,46 +452,51 @@ function DraggableImage({
 
   // DEVICE-SPECIFIC HANDLERS
 
-  // DESKTOP (Mouse) - Immediate drag
+  // DESKTOP (Mouse) — start drag; the actual move/up listeners live on
+  // window so dragging continues smoothly when the cursor leaves the element.
   const handleMouseDown = (e: React.MouseEvent) => {
-    if (isTouch) return; // Ignore on touch devices
-    
+    if (isTouch) return;
+
     e.preventDefault();
     dragStartPos.current = { x: e.clientX, y: e.clientY };
     setIsDragging(true);
     setIsLifted(true);
   };
 
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (!isTouch && isDragging) {
+  useEffect(() => {
+    if (!isDragging || isTouch) return;
+
+    const onMove = (e: MouseEvent) => {
       const deltaX = e.clientX - dragStartPos.current.x;
       const deltaY = e.clientY - dragStartPos.current.y;
 
       const deltaXPercent = (deltaX / containerWidth) * 100;
       const deltaYPercent = (deltaY / BASE_HEIGHT) * 100;
 
-      const newXPercent = positionPercent.x + deltaXPercent;
-      const newYPercent = positionPercent.y + deltaYPercent;
-
-      setPositionPercent({ x: newXPercent, y: newYPercent });
-      globalPositions[id] = { xPercent: newXPercent, yPercent: newYPercent };
+      setPositionPercent((prev) => {
+        const next = { x: prev.x + deltaXPercent, y: prev.y + deltaYPercent };
+        globalPositions[id] = { xPercent: next.x, yPercent: next.y };
+        return next;
+      });
 
       dragStartPos.current = { x: e.clientX, y: e.clientY };
-    }
-  };
+    };
 
-  const handleMouseUp = () => {
-    if (!isTouch) {
+    const onUp = () => {
       setIsDragging(false);
       setIsLifted(false);
-    }
-  };
+    };
+
+    window.addEventListener('mousemove', onMove);
+    window.addEventListener('mouseup', onUp);
+    return () => {
+      window.removeEventListener('mousemove', onMove);
+      window.removeEventListener('mouseup', onUp);
+    };
+  }, [isDragging, isTouch, containerWidth, id]);
 
   const handleMouseLeave = () => {
-    if (!isTouch) {
-      setIsHovered(false);
-      // Don't stop dragging on mouse leave to allow continuous drag
-    }
+    if (!isTouch) setIsHovered(false);
   };
 
   // MOBILE/TABLET (Touch) - Long press to drag
@@ -573,15 +586,13 @@ function DraggableImage({
         touchAction: isLifted ? 'none' : 'auto', // Prevent scroll when dragging
       }}
       onMouseDown={handleMouseDown}
-      onMouseMove={handleMouseMove}
-      onMouseUp={handleMouseUp}
       onMouseLeave={handleMouseLeave}
       onMouseEnter={() => !isTouch && setIsHovered(true)}
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
     >
-      <div 
+      <div
         className="relative w-full h-full overflow-hidden"
         style={{
           borderRadius: `${borderRadius * scaleFactor}px`,
@@ -598,8 +609,11 @@ function DraggableImage({
           alt={id}
           className="w-full h-full object-cover pointer-events-none select-none"
           draggable={false}
+          loading="lazy"
           style={{
-            clipPath: `inset(0 round ${borderRadius * scaleFactor}px)`,
+            imageRendering: 'auto',
+            backfaceVisibility: 'hidden',
+            WebkitFontSmoothing: 'antialiased',
           }}
         />
         
@@ -660,46 +674,48 @@ function DraggableCard({
   const actualX = (positionPercent.x / 100) * containerWidth + containerWidth / 2;
   const actualY = (positionPercent.y / 100) * BASE_HEIGHT;
 
-  // DESKTOP (Mouse) - Immediate drag
+  // DESKTOP (Mouse) — start drag; window-level move/up so dragging
+  // continues smoothly when the cursor leaves the card.
   const handleMouseDown = (e: React.MouseEvent) => {
     if (isTouch) return;
-    
+
     e.preventDefault();
     dragStartPos.current = { x: e.clientX, y: e.clientY };
     setIsDragging(true);
     setIsLifted(true);
   };
 
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (!isTouch && isDragging) {
+  useEffect(() => {
+    if (!isDragging || isTouch) return;
+
+    const onMove = (e: MouseEvent) => {
       const deltaX = e.clientX - dragStartPos.current.x;
       const deltaY = e.clientY - dragStartPos.current.y;
 
       const deltaXPercent = (deltaX / containerWidth) * 100;
       const deltaYPercent = (deltaY / BASE_HEIGHT) * 100;
 
-      const newXPercent = positionPercent.x + deltaXPercent;
-      const newYPercent = positionPercent.y + deltaYPercent;
-
-      setPositionPercent({ x: newXPercent, y: newYPercent });
-      globalPositions[id] = { xPercent: newXPercent, yPercent: newYPercent };
+      setPositionPercent((prev) => {
+        const next = { x: prev.x + deltaXPercent, y: prev.y + deltaYPercent };
+        globalPositions[id] = { xPercent: next.x, yPercent: next.y };
+        return next;
+      });
 
       dragStartPos.current = { x: e.clientX, y: e.clientY };
-    }
-  };
+    };
 
-  const handleMouseUp = () => {
-    if (!isTouch) {
+    const onUp = () => {
       setIsDragging(false);
       setIsLifted(false);
-    }
-  };
+    };
 
-  const handleMouseLeave = () => {
-    if (!isTouch) {
-      // Don't stop dragging
-    }
-  };
+    window.addEventListener('mousemove', onMove);
+    window.addEventListener('mouseup', onUp);
+    return () => {
+      window.removeEventListener('mousemove', onMove);
+      window.removeEventListener('mouseup', onUp);
+    };
+  }, [isDragging, isTouch, containerWidth, id]);
 
   // MOBILE/TABLET (Touch) - Long press to drag
   const handleTouchStart = (e: React.TouchEvent) => {
@@ -778,9 +794,6 @@ function DraggableCard({
         touchAction: isLifted ? 'none' : 'auto',
       }}
       onMouseDown={handleMouseDown}
-      onMouseMove={handleMouseMove}
-      onMouseUp={handleMouseUp}
-      onMouseLeave={handleMouseLeave}
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
