@@ -241,23 +241,12 @@ export function AcademicCaseStudy({ onBack, onSelectProject }: AcademicCaseStudy
             Together, the four pillars convert qualitative smoker research into a working surface — three entry pathways, an eight-episode expert curriculum, a self-efficacy dashboard, and an adaptive toolkit — all governed by the same principle: keep the user in the system after a slip.
           </p>
 
-          <div className="mt-10 md:grid md:grid-cols-3">
-            <div className="py-6 border-b md:py-0 md:pr-8 md:border-b-0 md:border-r border-neutral-200">
-              <p className="text-[48px] font-semibold tracking-[-1.5px] leading-none text-[#131313]">3</p>
-              <p className="text-[13px] text-[rgba(19,19,19,0.6)] mt-3 leading-[1.5]">Smoker profiles mapped to dedicated emotional and behavioural patterns</p>
-            </div>
-            <div className="py-6 border-b md:py-0 md:px-8 md:border-b-0 md:border-r border-neutral-200">
-              <p className="text-[48px] font-semibold tracking-[-1.5px] leading-none text-[#131313]">4</p>
-              <p className="text-[13px] text-[rgba(19,19,19,0.6)] mt-3 leading-[1.5]">Entry pathways sized to cognitive load — from one-tap urgency to deep planning</p>
-            </div>
-            <div className="py-6 md:py-0 md:pl-8">
-              <p className="text-[48px] font-semibold tracking-[-1.5px] leading-none text-[#131313]">8ep</p>
-              <p className="text-[13px] text-[rgba(19,19,19,0.6)] mt-3 leading-[1.5]">Expert-led video curriculum with Dr. Eli Katz, sequenced as a behaviour-change arc</p>
-            </div>
-          </div>
+          <p className="text-[14px] font-normal leading-[1.6] tracking-[-0.2px] text-[#131313] max-w-2xl mt-6">
+            What emerged is a platform that meets a quitter at the moment of doubt rather than after it. Three entry pathways are tuned to cognitive load &mdash; one-tap urgency, structured weekly support, or deeper planning &mdash; so a user can show up at any energy level and still find a way in. An eight-episode curriculum sequences the change as a calm arc; a self-efficacy dashboard reframes a slip as data, not failure; and an adaptive toolkit responds to the user&rsquo;s emotional state on that day. The outcome is a softer, paced surface for one of the hardest decisions a person makes &mdash; built to hold the user through the moment they want to give up, instead of letting them quit the app first.
+          </p>
 
-          <p className="text-[11px] text-[rgba(19,19,19,0.4)] mt-4 leading-[1.5]">
-            Figures reflect academic research scope and design system shipped in Figma, not measured production results.
+          <p className="text-[11px] text-[rgba(19,19,19,0.4)] mt-6 leading-[1.5]">
+            Outcome reflects academic research scope and the design system shipped in Figma, not measured production results.
           </p>
         </section>
 

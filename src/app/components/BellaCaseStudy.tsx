@@ -354,23 +354,12 @@ export function BellaCaseStudy({ onBack, onSelectProject }: BellaCaseStudyProps)
             The five pillars turn a typical maternity catalogue into a paced, calm, Hebrew-native journey. Product, content, real voices, and personalised recommendation share the same surface, so trust is built before conversion is asked for.
           </p>
 
-          <div className="mt-10 md:grid md:grid-cols-3">
-            <div className="py-6 border-b md:py-0 md:pr-8 md:border-b-0 md:border-r border-neutral-200">
-              <p className="text-[48px] font-semibold tracking-[-1.5px] leading-none text-[#131313]">10</p>
-              <p className="text-[13px] text-[rgba(19,19,19,0.6)] mt-3 leading-[1.5]">Desktop screens shipped in Figma — Home, Shop, Pillows, Product, Quiz, Content Hub, 2 articles, Checkout, About</p>
-            </div>
-            <div className="py-6 border-b md:py-0 md:px-8 md:border-b-0 md:border-r border-neutral-200">
-              <p className="text-[48px] font-semibold tracking-[-1.5px] leading-none text-[#131313]">6q</p>
-              <p className="text-[13px] text-[rgba(19,19,19,0.6)] mt-3 leading-[1.5]">A six-step quiz collapses the catalogue into a single matched product — feeling-led, not spec-led</p>
-            </div>
-            <div className="py-6 md:py-0 md:pl-8">
-              <p className="text-[48px] font-semibold tracking-[-1.5px] leading-none text-[#131313]">100%</p>
-              <p className="text-[13px] text-[rgba(19,19,19,0.6)] mt-3 leading-[1.5]">Hebrew RTL, including nav, breadcrumbs, progress bars, and form flows — no translation patches</p>
-            </div>
-          </div>
+          <p className="text-[14px] font-normal leading-[1.6] tracking-[-0.2px] text-[#131313] max-w-2xl mt-6">
+            What emerged is a store organised around lived experience, not catalogue logic. The homepage routes shoppers by the four body states a pregnancy actually moves through &mdash; sleep, sitting, pain, postpartum &mdash; so discovery starts from how someone is feeling rather than which aisle a product belongs to. Filters inside the shop speak the same language; a six-question quiz collapses the catalogue into a single matched recommendation; and trust is built through real voices and editorial articles before conversion is ever asked for. The outcome is a Hebrew-native e-commerce that reads as a guided companion through a temporary, sensitive period &mdash; not a shelf of mom-products.
+          </p>
 
-          <p className="text-[11px] text-[rgba(19,19,19,0.4)] mt-4 leading-[1.5]">
-            Figures reflect design scope shipped in Figma, not measured production results.
+          <p className="text-[11px] text-[rgba(19,19,19,0.4)] mt-6 leading-[1.5]">
+            Outcome reflects design scope shipped in Figma, not measured production results.
           </p>
         </section>
 

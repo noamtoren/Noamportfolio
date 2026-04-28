@@ -220,23 +220,12 @@ export function MachonChiburCaseStudy({ onBack, onSelectProject }: MachonChiburC
             Together, the three pillars turn a cold directory of services into a private, paced pathway — meeting users where they are, not where services assume they'd be.
           </p>
 
-          <div className="mt-10 md:grid md:grid-cols-3">
-            <div className="py-6 border-b md:py-0 md:pr-8 md:border-b-0 md:border-r border-neutral-200">
-              <p className="text-[48px] font-semibold tracking-[-1.5px] leading-none text-[#131313]">100%</p>
-              <p className="text-[13px] text-[rgba(19,19,19,0.6)] mt-3 leading-[1.5]">Anonymous by default — no account required to use intake, knowledge, or toolbox</p>
-            </div>
-            <div className="py-6 border-b md:py-0 md:px-8 md:border-b-0 md:border-r border-neutral-200">
-              <p className="text-[48px] font-semibold tracking-[-1.5px] leading-none text-[#131313]">~15m</p>
-              <p className="text-[13px] text-[rgba(19,19,19,0.6)] mt-3 leading-[1.5]">From first question to a personalized rights map, instead of hours of self-research</p>
-            </div>
-            <div className="py-6 md:py-0 md:pl-8">
-              <p className="text-[48px] font-semibold tracking-[-1.5px] leading-none text-[#131313]">3 tiers</p>
-              <p className="text-[13px] text-[rgba(19,19,19,0.6)] mt-3 leading-[1.5]">Of graduated trust before any identifying data is exchanged</p>
-            </div>
-          </div>
+          <p className="text-[14px] font-normal leading-[1.6] tracking-[-0.2px] text-[#131313] max-w-2xl mt-6">
+            What emerged is a quiet, private space for the moment before someone is ready to ask for help out loud. Anonymity is the default &mdash; no account is required to read, browse, or take the intake &mdash; and identity is exchanged in graduated tiers as the user&rsquo;s confidence grows. The intake becomes a personal rights map within minutes; the knowledge base translates legal and emotional concepts into language that doesn&rsquo;t label the reader; and a matched professional waits at the end of the path, not at the start of it. The outcome is a clinical bridge with the warmth of a private clinic &mdash; clear enough to act on, sensitive enough to trust.
+          </p>
 
-          <p className="text-[11px] text-[rgba(19,19,19,0.4)] mt-4 leading-[1.5]">
-            Figures reflect design projections from research, not measured production results.
+          <p className="text-[11px] text-[rgba(19,19,19,0.4)] mt-6 leading-[1.5]">
+            Outcome reflects design projections from research, not measured production results.
           </p>
         </section>
 
