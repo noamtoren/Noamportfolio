@@ -64,15 +64,15 @@ export function Sketches() {
 
   return (
     <div className="absolute inset-0 overflow-y-auto overflow-x-hidden bg-white">
-      {/* Grid Paper Background — fixed, larger cells, slightly stronger lines */}
+      {/* Grid Paper Background — fine, very subtle (matches the Helin reference) */}
       <div
         className="fixed inset-0 pointer-events-none z-0"
         style={{
           backgroundImage: `
-            linear-gradient(rgba(0, 0, 0, 0.05) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(0, 0, 0, 0.05) 1px, transparent 1px)
+            linear-gradient(rgba(0, 0, 0, 0.02) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(0, 0, 0, 0.02) 1px, transparent 1px)
           `,
-          backgroundSize: '48px 48px',
+          backgroundSize: '20px 20px',
           backgroundColor: '#FFFFFF',
         }}
       />
@@ -95,22 +95,25 @@ export function Sketches() {
           }}
         >
         
-        {/* Hero Text — sits on a very soft radial halo so the grid behind doesn't intrude on the type */}
+        {/* Hero Text — Helin-style: italic serif headline, sans body with muted tail, italic red CTA. Soft radial white halo blends into the grid. */}
         <div
-          className="absolute left-1/2 -translate-x-1/2 top-[280px] md:top-[320px] max-w-2xl text-center px-6 py-4"
+          className="absolute left-1/2 -translate-x-1/2 top-[280px] md:top-[320px] max-w-3xl text-center px-8 py-10"
           style={{
             background:
-              'radial-gradient(ellipse at center, rgba(255,255,255,0.92) 0%, rgba(255,255,255,0.78) 55%, rgba(255,255,255,0) 90%)',
+              'radial-gradient(ellipse 78% 65% at center, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.88) 42%, rgba(255,255,255,0.55) 75%, rgba(255,255,255,0) 100%)',
           }}
         >
-          <h1 className="font-display text-xl md:text-2xl leading-relaxed font-normal mb-3 text-[#B8552E]">
-            Welcome to my design sketches.
+          <h1
+            className="font-display text-3xl md:text-[42px] leading-[1.15] font-normal mb-6 md:mb-7 text-neutral-900"
+          >
+            Welcome to my design sketches!
           </h1>
-          <p className="font-['Inter'] text-sm text-neutral-500 leading-relaxed mb-2">
-            Here you can find a variety of features and screens from different projects, alongside personal artwork — including some of my paintings.
+          <p className="font-['Inter'] text-base md:text-[19px] leading-[1.55] text-neutral-900 mb-10 md:mb-12">
+            Don&rsquo;t be misled by the word &lsquo;sketch&rsquo;, most of the designs here belong to projects I&rsquo;ve been working on.{' '}
+            <span className="text-neutral-400">Enjoy browsing!</span>
           </p>
-          <p className="font-['Inter'] text-xs text-[#A85C2E] leading-relaxed">
-            {isTouch ? 'Long-press to drag and explore' : 'Click and drag to explore the designs'}
+          <p className="font-display italic text-base md:text-lg leading-relaxed text-[#B8552E]">
+            {isTouch ? 'Long-press to drag and explore the designs' : 'Feel free to drag and explore the designs'}
           </p>
         </div>
 
@@ -146,27 +149,29 @@ export function Sketches() {
           isTouch={isTouch}
         />
 
-        {/* HALF IPHONE IMAGE - STATIC DECORATION (NOT DRAGGABLE) - NEGATIVE OFFSET ALLOWED */}
-        <div 
+        {/* HALF IPHONE IMAGE — static decoration (not draggable), bigger
+            and positioned so the bottom-right corner of the phone sits in
+            the top-left of the page, matching the Helin reference. */}
+        <div
           className="absolute pointer-events-none"
           style={{
-            left: `${(-70 / BASE_WIDTH) * containerWidth}px`,
-            top: '-380px',
-            width: `${(340 / BASE_WIDTH) * containerWidth}px`,
-            height: `${(680 / BASE_WIDTH) * containerWidth}px`,
+            left: `${(-110 / BASE_WIDTH) * containerWidth}px`,
+            top: '-560px',
+            width: `${(540 / BASE_WIDTH) * containerWidth}px`,
+            height: `${(1080 / BASE_WIDTH) * containerWidth}px`,
             zIndex: 5,
           }}
         >
-          <div className="w-full h-full overflow-hidden rounded-[40px]">
+          <div className="w-full h-full overflow-hidden rounded-[56px]">
             <img
               src={imgNewIphone}
               alt="iPhone home screen"
               className="w-full h-full object-cover select-none"
               draggable={false}
-              style={{ 
+              style={{
                 objectPosition: 'center center',
-                imageRendering: '-webkit-optimize-contrast',
-                filter: 'contrast(1.05) saturate(1.1) brightness(1.02)',
+                imageRendering: 'auto',
+                filter: 'contrast(1.04) saturate(1.08) brightness(1.01)',
                 backfaceVisibility: 'hidden',
                 WebkitFontSmoothing: 'antialiased',
               }}
