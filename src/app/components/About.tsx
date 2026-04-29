@@ -77,9 +77,17 @@ export function About() {
           </h2>
 
           {/* Body paragraph — same family as the Hero, slightly smaller than the original */}
-          <p className="text-[15px] md:text-[16px] leading-relaxed text-neutral-700 font-light max-w-2xl">
-            I&rsquo;m Noam Toren, a UX designer based in Tel Aviv. I build digital products end-to-end &mdash; from research and structure to interface and the small details that decide whether something feels right or off by half a degree. The work runs across early-stage startups, social-impact platforms, and a handful of solo ideas I keep returning to. I studied Communication at Reichman University and earned a Data Analyst certificate at Sapir College in the south, where the human side of design met the structured side of how you measure it. The wall behind me says the rest.
-          </p>
+          <div className="text-[15px] md:text-[16px] leading-relaxed text-neutral-700 font-light max-w-2xl space-y-4">
+            <p>
+              I&rsquo;m Noam Toren, a UX/UI designer from Herzliya. I build digital products end-to-end &mdash; from research and structure to a complete interface, with attention to the small details.
+            </p>
+            <p>
+              My work moves between early-stage startups, social-impact platforms, and a few independent ideas I keep returning to again and again. I studied Communication at Reichman University and earned a Data Analyst certificate at Sapir College in the Gaza Envelope, the place where I grew up.
+            </p>
+            <p>
+              The wall below tells the rest.
+            </p>
+          </div>
 
           {/* Divider */}
           <div className="h-px bg-neutral-100 mt-10" />
