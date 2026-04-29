@@ -82,7 +82,7 @@ export function About() {
               I&rsquo;m Noam Toren, a UX/UI designer from Herzliya. I build digital products end-to-end &mdash; from research and structure to a complete interface, with attention to the small details.
             </p>
             <p>
-              My work moves between early-stage startups, social-impact platforms, and a few independent ideas I keep returning to again and again. I studied Communication at Reichman University and earned a Data Analyst certificate at Sapir College in the Gaza Envelope, the place where I grew up.
+              My work moves between early-stage startups, social-impact platforms, and a few independent ideas I keep returning to again and again. I studied Communication at Reichman University and earned a Data Analyst certificate at Sapir College in the Gaza Envelope, the place where I grew&nbsp;up.
             </p>
             <p>
               The wall below tells the rest.
