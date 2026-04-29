@@ -79,7 +79,7 @@ export function About() {
           {/* Body paragraph — same family as the Hero, slightly smaller than the original */}
           <div className="text-[15px] md:text-[16px] leading-relaxed text-neutral-700 font-light max-w-2xl space-y-4">
             <p>
-              I&rsquo;m Noam Toren, a UX/UI designer from Herzliya. I build digital products end-to-end &mdash; from research and structure to a complete interface, with attention to the small details.
+              I&rsquo;m Noam Toren, a UX/UI designer from Herzliya. I build digital products end-to-end - from research and structure to a complete interface, with attention to the small details.
             </p>
             <p>
               My work moves between early-stage startups, social-impact platforms, and a few independent ideas I keep returning to again and again. I studied Communication at Reichman University and earned a Data Analyst certificate at Sapir College in the Gaza Envelope, the place where I grew&nbsp;up.
